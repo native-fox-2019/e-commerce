@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
-function hash(password) {
+function hashing(password) {
     return bcrypt.hashSync(password, saltRounds)
 }
 
@@ -10,6 +10,6 @@ function compare(password, hash) {
 }
 
 module.exports = {
-    hash,
+    hashing,
     compare
 }

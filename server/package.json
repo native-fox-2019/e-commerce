@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& jest --forceExit",
-    "testw": "set NODE_ENV=test&& jest --forceExit --watch",
-    "dev": "set NODE_ENV=test&& nodemon index.js"
+    "test": "set NODE_ENV=test&& jest --forceExit --detectOpenHandles",
+    "testw": "set NODE_ENV=test&& jest --forceExit --watch --detectOpenHandles",
+    "dev": "set NODE_ENV=test&& nodemon bin/httpServer.js"
   },
   "keywords": [],
   "author": "",

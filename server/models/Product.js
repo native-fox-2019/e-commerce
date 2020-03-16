@@ -44,7 +44,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, { sequelize });
   Product.associate = function (models) {
-    Product.belongsTo(models.User) // not working?
+    // Product.belongsTo(models.User) // not working?
+    // Product.belongsTo(models.User)
   };
   return Product;
 };
