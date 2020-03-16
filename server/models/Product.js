@@ -2,9 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
 
-  class produce extends Model { }
+  class Product extends Model { }
 
-  produce.init = ({
+  Product.init = ({
     name: {
       type: DataTypes.STRING,
       validation: {
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     stock: {
-      type: DataTypes.INTEGER,,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validation: {
         notNull: {
@@ -42,10 +42,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     }
-  }
   }, { sequelize });
-produce.associate = function (models) {
-  produce.belongsTo(models.user)
-};
-return produce;
+  Product.associate = function (models) {
+    Product.belongsTo(models.User) // not working?
+  };
+  return Product;
 };

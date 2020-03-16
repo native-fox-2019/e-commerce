@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "testw": "jest --watch",
-    "dev": "nodemon index.js"
+    "test": "set NODE_ENV=test&& jest --forceExit",
+    "testw": "set NODE_ENV=test&& jest --forceExit --watch",
+    "dev": "set NODE_ENV=test&& nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.2",
+    "sequelize-cli": "^5.5.1",
     "supertest": "^4.0.2"
   }
 }
