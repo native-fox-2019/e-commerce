@@ -9,20 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       image_url: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       price: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       stock: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -33,11 +29,9 @@ module.exports = {
         type: Sequelize.DATE
       },
       UsersId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
-        references : {
-          model: `Users`,
-          key: `id`
+        references: {
+          model: `Users`
         }
       }
     });

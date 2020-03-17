@@ -1,40 +1,42 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Model = sequelize.Sequelize.Model
   const bcrypt = require(`../helpers/bcrypt`)
-
-  class User extends Model { }
-
-  User.init = ({
+  const User = sequelize.define('User', {
     email: {
       type: DataTypes.STRING,
-      validation: {
+      unique: true,
+      validate: {
+        notEmpty: {
+          msg: `Email can't be empty`
+        },
         isEmail: {
-          msg: `Not a valid email format!`
+          msg: `Invalid email format!`
         }
       }
     },
     password: {
       type: DataTypes.STRING,
-      validation: {
+      validate: {
         notEmpty: {
-          msg: `Password can't be empty!`
+          msg: `Password can't be empty`
         }
       }
     },
     role: {
       type: DataTypes.STRING,
-      defaultValue: `user`
-    }
-  }, {
-    hooks: {
-      beforeCreate: (instance, options) => {
-        instance.password = bcrypt.hashing(instance.password)
+      validate: {
+        notEmpty: {
+          msg: `Role can't be empty`
+        }
       }
-    },
-    sequelize
-  });
-  User.associate = function (models) {
+    }
+  }, { hooks: {
+    beforeCreate: (instance, option) => {
+      instance.password = bcrypt.hashing(instance.password)
+    }
+  }});
+  User.associate = function(models) {
+    // associations can be defined here
   };
   return User;
 };

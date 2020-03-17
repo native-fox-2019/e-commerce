@@ -1,4 +1,8 @@
-{
+if (process.env.NODE_ENV === `test` || process.env.NODE_ENV === `development`) {
+  require(`dotenv`).config()
+}
+
+module.exports = {
   "development": {
     "username": "postgres",
     "password": "postgres",

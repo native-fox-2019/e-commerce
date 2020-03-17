@@ -1,51 +1,44 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Model = sequelize.Sequelize.Model
-
-  class Product extends Model { }
-
-  Product.init = ({
+  const Product = sequelize.define('Product', {
     name: {
       type: DataTypes.STRING,
-      validation: {
+      validate: {
         notEmpty: {
-          msg: `Name must not be empty!`
+          msg: `Product Name can't be empty!`
         }
       }
     },
     image_url: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `Image url can't be empty!`
+        }
+      }
     },
     price: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validation: {
-        notNull: {
-          msg: `Price can't be empty`
-        },
+      validate: {
         min: {
           args: 1,
-          msg: `Price can't be 0 or less!`
+          msg: `Price must be at least 1`
         }
       }
     },
     stock: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validation: {
-        notNull: {
-          msg: `Stock can't be empty`
-        },
+      validate: {
         min: {
           args: 1,
-          msg: `Stock can't be 0 or less!`
+          msg: `Stock must be at least 1`
         }
       }
     }
-  }, { sequelize });
+  }, {});
   Product.associate = function (models) {
-    // Product.belongsTo(models.User) // not working?
-    // Product.belongsTo(models.User)
+    // associations can be defined here
+    Product.belongsTo(models.User)
   };
   return Product;
 };
