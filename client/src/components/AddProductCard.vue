@@ -1,7 +1,7 @@
 <template>
 <div>
   <Loading v-if="loading" />
-  <form class="mx-auto mt-3" style="width: 400px;" @submit.prevent="addProduct">
+  <form class="mx-auto mt-3" style="width: 400px;" @submit.prevent="addProduct" v-if="!loading">
     <div class="form-group">
       <label>Name</label>
       <input type="text" class="form-control" v-model="name">
@@ -18,8 +18,10 @@
       <label>Stock</label>
       <input type="number" class="form-control" v-model="stock" min="0">
     </div>
-    <button type="submit" class="btn btn-primary mx-1">Submit</button>
-    <button type="button" class="btn btn-danger mx-1" @click.prevent="cancel">Cancel</button>
+    <div>
+      <button type="submit" class="btn btn-primary mx-1">Submit</button>
+      <button type="button" class="btn btn-danger mx-1" @click.prevent="cancel">Cancel</button>
+    </div>
   </form>
 </div>
 </template>

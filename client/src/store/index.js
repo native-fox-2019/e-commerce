@@ -11,7 +11,8 @@ export default new Vuex.Store({
   state: {
     loading: false,
     products: [],
-    editData: null
+    editData: null,
+    slide: true
   },
   mutations: {
     GET_PRODUCTS(state, data) {
@@ -40,6 +41,7 @@ export default new Vuex.Store({
       })
         .then(() => {
           router.push('/admin');
+          dispatch('swalMixin', 'Product Edited');
           dispatch('getProducts');
           state.loading = false;
         }).catch(err => {
@@ -107,6 +109,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           state.loading = false;
           router.push('/admin');
+          dispatch('swalMixin', 'Product Added');
           commit('ADD_PRODUCT', data);
         }).catch(err => {
           dispatch('showError', err);
@@ -129,8 +132,9 @@ export default new Vuex.Store({
           dispatch('showError', err);
         });
     },
-    logoutUser() {
+    logoutUser({ dispatch }) {
       localStorage.removeItem('token');
+      dispatch('swalMixin', 'Signed Out Successfully');
       router.push('/login');
     },
     registerUser({ state, dispatch }, data) {
@@ -142,22 +146,7 @@ export default new Vuex.Store({
       })
         .then(() => {
           state.loading = false;
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            onOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-          })
-          Toast.fire({
-            icon: 'success',
-            title: 'Registered successfully'
-          })
-          router.push('/login');
+          dispatch('swalMixin', 'Registered Successfully');
         }).catch(err => {
           dispatch('showError', err);
         });
@@ -177,6 +166,7 @@ export default new Vuex.Store({
           } else {
             router.push('/');
           }
+          dispatch('swalMixin', 'Signed In Successfully');
         }).catch(err => {
           dispatch('showError', err);
         })
@@ -201,6 +191,23 @@ export default new Vuex.Store({
         icon: 'error',
         title: 'Oops...',
         html: `${msg}`,
+      })
+    },
+    swalMixin({ commit }, message) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        onOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'success',
+        title: `${message}`
       })
     }
   },

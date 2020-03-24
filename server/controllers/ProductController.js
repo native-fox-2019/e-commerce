@@ -59,10 +59,6 @@ class ProductController {
       if (stock < 0) {
         throw createError(400, 'Please enter the stock number');
       }
-      const product = await Product.findOne({ where: { id } });
-      if (stock > product.stock) {
-        throw createError(400, 'Out of Stock');
-      }
       const obj = { name, image_url, price, stock };
       await Product.update(obj, { where: { id } });
       res.status(201).json({

@@ -2,8 +2,8 @@
   <div style="height: 60px; position: fixed; width: 100%; top: 0;" class="bg-dark">
     <button class="btn btn-primary"
     style="left: 20px; top: 10px; position: fixed"
-    @click.prevent="addProductForm">
-      Add Product
+    @click.prevent="showCart">
+      Cart
     </button>
     <button class="btn btn-danger"
     style="right: 20px; top: 10px; position: fixed;"
@@ -19,9 +19,6 @@ export default {
     logoutUser() {
       this.$store.dispatch('logoutUser');
     },
-    addProductForm() {
-      this.$router.push('/add');
-    }
   }
 }
 </script>

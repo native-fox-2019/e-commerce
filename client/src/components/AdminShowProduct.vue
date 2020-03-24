@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="table">
+    <table class="table" style="margin-top: 60px;">
       <thead>
         <tr>
           <th scope="col">Name</th>
@@ -14,8 +14,8 @@
         <Loading v-if="loading" />
         <tr v-for="product in products" :key="product.id">
           <td> {{ product.name }} </td>
-          <td> <img class="img-fluid" :src="product.image_url" :alt="product.name"> </td>
-          <td> {{ product.price }} </td>
+          <td> <img class="img-fluid" :src="product.image_url" :alt="product.name" style="width: 300px;"> </td>
+          <td> IDR {{ product.price.toLocaleString() }} </td>
           <td> {{ product.stock }} </td>
           <td>
             <button class="btn btn-primary mx-1" @click.prevent="editDataForm(product.id)">
