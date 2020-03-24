@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     product_id: DataTypes.INTEGER,
     address: DataTypes.STRING,
     phone: DataTypes.STRING,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    qty: DataTypes.INTEGER,
+    seller_id: DataTypes.INTEGER
   }, {
     sequelize
   })
@@ -19,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     })
     Order.belongsTo(models.Product, {
       foreignKey: 'product_id'
+    })
+    Order.belongsTo(models.User, {
+      foreignKey: 'seller_id'
     })
   };
   return Order;

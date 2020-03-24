@@ -4,6 +4,18 @@ const {
 } = require('../models')
 
 class ProductController {
+    static listAllProduct(request, response, next) {
+        Product.findAll({
+                attributes: ['id', 'name', 'image_url', 'price', 'stock', 'category']
+            })
+            .then(result => {
+                response.status(200).json(result)
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
     static create(request, response, next) {
         let data_product = {
             name: request.body.name,

@@ -35,6 +35,15 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER,
     category: DataTypes.STRING
   }, {
+    // hooks: {
+    //   beforeSave: (instance, option) => {
+    //     let arr = instance.name.split(' ')
+    //     for (let i = 0; i < arr.length; i++) {
+    //       arr[i][0] = arr[i][0].toUpperCase()
+    //     }
+    //     instance.name = arr.join(' ')
+    //   }
+    // },
     sequelize
   })
 
@@ -42,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     Product.belongsTo(models.User, {
       foreignKey: 'user_id'
     })
-    Product.belongsTo(models.Order, {
+    Product.hasMany(models.Order, {
       foreignKey: 'product_id'
     })
   };

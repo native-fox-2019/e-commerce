@@ -3,6 +3,8 @@ const ProductController = require('../controllers/ProductController')
 const Authentication = require('../middlewares/Authentication')
 const Authorization = require('../middlewares/Authorization')
 
+productRouter.get('/all', ProductController.listAllProduct)
+
 productRouter.post('/', Authentication, ProductController.create)
 productRouter.get('/', Authentication, ProductController.read)
 productRouter.get('/:id', Authentication, Authorization, ProductController.readById)

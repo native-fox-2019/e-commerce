@@ -7,7 +7,8 @@ const orderCoder = require('../helpers/orderCoder')
 const groupByAndCount = require('../helpers/groupByAndCount')
 
 class OrderController {
-    static readAll(request, response, next) {
+
+    static readAll(request, response, next) { //SUDAH
         Order.findAll({
                 where: {
                     user_id: request.userData.id
@@ -15,9 +16,8 @@ class OrderController {
             })
             .then(result => {
                 let result_ = groupByAndCount(result)
-                console.log(result_)
                 let data_response = []
-                for (let i = 0; i < result_[0]; i++) {
+                for (let i = 0; i < result_[0].length; i++) {
                     data_response.push({
                         order_code: result_[0][i],
                         total_product: result_[1][i],
@@ -31,7 +31,7 @@ class OrderController {
             })
     }
 
-    static readByCode(request, response, next) {
+    static readByCode(request, response, next) { //SUDAH
         Order.findAll({
                 where: {
                     code: request.params.code
@@ -55,15 +55,84 @@ class OrderController {
             })
     }
 
-    static createOrder(request, response, next) {
+    static readBySellerId(request, response, next) {
+        Order.findAll({
+                where: {
+                    seller_id: request.userData.id
+                },
+                include: {
+                    model: Product
+                }
+            })
+            .then(result => {
+                response.status(200).json(result)
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static sellerConfirm(request, response, next) {
+        let data_order
+        Order.update({
+                status: 'On Process'
+            }, {
+                where: {
+                    id: request.params.id
+                }
+            })
+            .then(result => {
+                return Order.findByPk(request.params.id)
+            })
+            .then(result => {
+                data_order = result
+                return Product.findByPk(data_order.product_id)
+            })
+            .then(result => {
+                data_product = result
+                return Product.update({
+                    stock: Number(data_product.stock - data_order.qty)
+                })
+            })
+            .then(result => {
+                response.status(200).json({
+                    message: 'confirmed by seller'
+                })
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static buyerConfirm(request, response, next) {
+        Order.update({
+                status: 'Finished'
+            }, {
+                where: {
+                    id: request.params.id
+                }
+            })
+            .then(result => {
+                response.status(200).json({
+                    message: 'Order Finished'
+                })
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static createOrder(request, response, next) { //SUDAH
         let order_code = orderCoder(10)
-        for (let i = 0; i < request.body; i++) {
+        for (let i = 0; i < request.body.length; i++) {
             request.body[i].code = order_code
             request.body[i].user_id = request.userData.id
+            request.body[i].status = 'Waiting confirmation'
         }
         Order.bulkCreate(request.body)
             .then(result => {
                 response.status(201).json({
+                    order_code: order_code,
                     message: 'order successfully created'
                 })
             })
@@ -72,17 +141,17 @@ class OrderController {
             })
     }
 
-    static deleteOrder(request, response, next) {
+    static deleteOrder(request, response, next) { //SUDAH
         Order.findAll({
                 where: {
-                    code: request.params.code
+                    id: request.params.id
                 }
             })
             .then(result => {
                 if (result.length != 0) {
                     return Order.destroy({
                         where: {
-                            code: request.params.code
+                            id: request.params.id
                         }
                     })
                 } else {
