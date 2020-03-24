@@ -32,6 +32,34 @@ class adminController {
       });
   }
 
+  static userRegister(req, res, next) {
+    var { email, password } = req.body;
+
+    model.User.create({
+      email,
+      password,
+      role: `user`
+    })
+      .then(data => {
+        var token = jwt.sign({
+          id: data.id,
+          role: data.role
+        });
+
+        res.status(201).json({
+          token,
+          role: data.role
+        });
+      })
+      .catch(err => {
+        if (err.name == `SequelizeUniqueConstraintError`) {
+          next(createError(400, `Email is already used`));
+        } else {
+          next(err);
+        }
+      });
+  }
+
   static login(req, res, next) {
     var { email, password } = req.body;
 
