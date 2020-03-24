@@ -55,7 +55,7 @@ class OrderController {
             })
     }
 
-    static readBySellerId(request, response, next) {
+    static readBySellerId(request, response, next) { //SUDAH
         Order.findAll({
                 where: {
                     seller_id: request.userData.id
@@ -72,8 +72,9 @@ class OrderController {
             })
     }
 
-    static sellerConfirm(request, response, next) {
+    static sellerConfirm(request, response, next) { //SUDAH
         let data_order
+        let data_product
         Order.update({
                 status: 'On Process'
             }, {
@@ -91,7 +92,11 @@ class OrderController {
             .then(result => {
                 data_product = result
                 return Product.update({
-                    stock: Number(data_product.stock - data_order.qty)
+                    stock: Number(Number(data_product.stock) - Number(data_order.qty))
+                }, {
+                    where: {
+                        id: data_product.id
+                    }
                 })
             })
             .then(result => {
@@ -104,7 +109,7 @@ class OrderController {
             })
     }
 
-    static buyerConfirm(request, response, next) {
+    static buyerConfirm(request, response, next) { //SUDAH
         Order.update({
                 status: 'Finished'
             }, {

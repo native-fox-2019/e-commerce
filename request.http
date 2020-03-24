@@ -2,8 +2,8 @@ POST http://localhost:3000/user/registration
 Content-Type: application/json
 
 {
-    "name": "User 1",
-    "email": "user1@mail.com",
+    "name": "User 2",
+    "email": "user2@mail.com",
     "password": "qwerty"
 }
 
@@ -19,7 +19,7 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/product
 Content-Type: application/json
-access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IlVzZXIgMiIsImVtYWlsIjoidXNlcjJAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NTA2NDIzM30.FykXHj3x9MwacX4gwDUL1G95v6XyVYyhVXdutlXTZyk
 
 {
     "name": "laptop asus XY",
@@ -31,7 +31,7 @@ access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgM
 ###
 GET  http://localhost:3000/product
 Content-Type: application/json
-access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IlVzZXIgMiIsImVtYWlsIjoidXNlcjJAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NTA2NDIzM30.FykXHj3x9MwacX4gwDUL1G95v6XyVYyhVXdutlXTZyk
 
 ###
 GET http://localhost:3000/product/all
@@ -40,12 +40,12 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/order
 Content-Type: application/json
-access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IlVzZXIgMiIsImVtYWlsIjoidXNlcjJAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NTA2NDIzM30.FykXHj3x9MwacX4gwDUL1G95v6XyVYyhVXdutlXTZyk
 
 ###
 POST  http://localhost:3000/order
 Content-Type: application/json
-access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IlVzZXIgMiIsImVtYWlsIjoidXNlcjJAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NTA2NDIzM30.FykXHj3x9MwacX4gwDUL1G95v6XyVYyhVXdutlXTZyk
 
 [
     {
@@ -56,7 +56,7 @@ access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgM
         "qty": "2"
     },
     {
-        "product_id": "2",
+        "product_id": "3",
         "seller_id": "2",
         "address": "bogor",
         "phone": "08922891231",
@@ -65,12 +65,27 @@ access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgM
 ]
 
 ###
-GET http://localhost:3000/order/y58o6gsp80
+GET http://localhost:3000/order/ugoxf3gt7m
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IlVzZXIgMiIsImVtYWlsIjoidXNlcjJAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NTA2NDIzM30.FykXHj3x9MwacX4gwDUL1G95v6XyVYyhVXdutlXTZyk
+
+###
+DELETE http://localhost:3000/order/8
 Content-Type: application/json
 access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
 
 ###
-DELETE http://localhost:3000/order/3
+GET  http://localhost:3000/order/seller/incomingOrder
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
+
+###
+PATCH http://localhost:3000/order/seller/confirmOrder/12
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
+
+###
+PATCH http://localhost:3000/order/finishOrder/12
 Content-Type: application/json
 access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
 
