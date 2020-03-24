@@ -7,16 +7,19 @@
       v-if="$store.state.role === 'admin'"
       @update="getList"
        />
+      <cardUser v-if="$store.state.role === `user`" :data="data" />
     </div>
   </div>
 </template>
 <script>
 import axios from 'axios';
 import cardAdmin from '@/components/cardAd.vue';
+import cardUser from '@/components/cardUser.vue';
 
 export default {
   components: {
     cardAdmin,
+    cardUser,
   },
   created() {
     this.getList();
@@ -32,11 +35,11 @@ export default {
           token: localStorage.token,
         },
       })
-        .then((response) => {
-          this.$store.state.list = response.data;
+        .then(({ data }) => {
+          this.$store.state.list = data;
         })
         .catch((err) => {
-          this.$store.dispatch('toast', { vm: this, message: err.response.data.status_message.join(', ') });
+          this.$store.dispatch('toast', { vm: this, message: err });
         });
     },
   },

@@ -23,7 +23,7 @@ const routes = [
     },
   },
   {
-    path: '/admins/login',
+    path: '/users/login',
     name: 'login',
     component: login,
     beforeEnter(to, from, next) {
@@ -37,7 +37,7 @@ const routes = [
     },
   },
   {
-    path: '/admins/login',
+    path: '/users/login',
     name: 'logout',
     component: login,
     beforeEnter(to, from, next) {
@@ -49,7 +49,7 @@ const routes = [
     },
   },
   {
-    path: '/admins/register',
+    path: '/users/register',
     name: 'register',
     component: register,
     beforeEnter(to, from, next) {

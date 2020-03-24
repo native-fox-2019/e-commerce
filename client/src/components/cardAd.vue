@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     title() {
-      if (this.data.name.length > 0) {
+      if (this.data.name.length > 14) {
         return `${this.data.name.slice(0, 14)}...`;
       }
       return this.data.name;

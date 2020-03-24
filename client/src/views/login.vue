@@ -41,7 +41,7 @@ export default {
       event.preventDefault();
 
       axios({
-        url: `${this.$store.state.url}admins/login`,
+        url: `${this.$store.state.url}users/login`,
         method: 'post',
         data: {
           email: this.form.email,

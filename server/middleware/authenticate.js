@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     try {
         req.user = jwt.verify(token)
     }
-    catch (err) {
+    catch(err) {
         next(err)
     }
 
@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
             if (data || (data && req.user.role === `admin`)) {
                 next()
             } else {
-                throw createError(404, `User does not exist`)
+                throw createError(401, `invalid Token`)
             }
         })
         .catch(next)

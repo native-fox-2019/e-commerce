@@ -41,7 +41,7 @@ export default {
       event.preventDefault();
 
       axios({
-        url: `${this.$store.state.url}admins/register`,
+        url: `${this.$store.state.url}users/register`,
         method: 'post',
         data: {
           email: this.form.email,

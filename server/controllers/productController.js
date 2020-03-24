@@ -22,7 +22,6 @@ class productController {
   }
 
   static read(req, res, next) {
-
     model.Product.findAll()
       .then(data => {
         res.status(200).json(data);
