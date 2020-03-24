@@ -24,6 +24,9 @@ class ProductController {
       if (stock > product.stock) {
         throw createError(400, 'Out of stock');
       }
+      if (stock < 0) {
+        throw createError(400, 'Please enter the stock number');
+      }
       const newStock = Number(product.stock) - Number(stock);
       await Product.update({ stock: newStock }, { where: { id } });
       res.status(200).json({
@@ -36,6 +39,9 @@ class ProductController {
   static async createData (req, res, next) {
     try {
       const { name, image_url, price, stock } = req.body;
+      if (stock < 0) {
+        throw createError(400, 'Please enter the stock number');
+      }
       const obj = { name, image_url, price, stock };
       const newProduct = await Product.create(obj);
       res.status(201).json(newProduct);
@@ -50,6 +56,13 @@ class ProductController {
         throw createError(400, 'Params must be an integer');
       }
       const { name, image_url, price, stock } = req.body;
+      if (stock < 0) {
+        throw createError(400, 'Please enter the stock number');
+      }
+      const product = await Product.findOne({ where: { id } });
+      if (stock > product.stock) {
+        throw createError(400, 'Out of Stock');
+      }
       const obj = { name, image_url, price, stock };
       await Product.update(obj, { where: { id } });
       res.status(201).json({

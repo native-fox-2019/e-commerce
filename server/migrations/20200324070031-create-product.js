@@ -29,10 +29,6 @@ module.exports = {
             args: true,
             msg: 'Price cannot be empty'
           },
-          min: {
-            args: 1,
-            msg: 'Price must be greater than 0'
-          },
           isInt: {
             args: true,
             msg: 'Price must be a number'
