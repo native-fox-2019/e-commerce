@@ -10,7 +10,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loading: false,
-    products: []
+    products: [],
+    editData: null
   },
   mutations: {
     GET_PRODUCTS(state, data) {
@@ -21,9 +22,41 @@ export default new Vuex.Store({
     },
     DELETE_DATA(state, data) {
       state.products = data;
+    },
+    EDIT_DATA_FORM(state, data) {
+      state.editData = data;
     }
   },
   actions: {
+    editProduct({ state, dispatch }, data) {
+      state.loading = true;
+      axios({
+        method: 'PUT',
+        url: baseUrl + '/products/' + data.id,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: data.obj
+      })
+        .then(() => {
+          router.push('/admin');
+          dispatch('getProducts');
+          state.loading = false;
+        }).catch(err => {
+          dispatch('showError', err);
+        });
+    },
+    editDataForm({ state, dispatch, commit }, id) {
+      let editData = state.products.filter(x => {
+        return x.id === id;
+      })[0];
+      if (!editData) {
+        dispatch('showError', { message: 'Error not Found' });
+      } else {
+        router.push('/edit');
+        commit('EDIT_DATA_FORM', editData);
+      }
+    },
     deleteDataConfirmation({ dispatch }, id) {
       Swal.fire({
         title: 'Are you sure?',
@@ -120,7 +153,6 @@ export default new Vuex.Store({
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
-          
           Toast.fire({
             icon: 'success',
             title: 'Registered successfully'
@@ -158,10 +190,10 @@ export default new Vuex.Store({
           msg = err.response.data.msg;
         }
       } else if (err.request) {
-        msg = err.response.data.msg;
+        msg = err.request;
         console.log(err.request);
       } else {
-        msg = err.response.data.msg;
+        msg = err.message;
         console.log('err', err.message);
       }
       state.loading = false;

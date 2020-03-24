@@ -18,7 +18,7 @@
           <td> {{ product.price }} </td>
           <td> {{ product.stock }} </td>
           <td>
-            <button class="btn btn-primary mx-1" @click.prevent="editData(product.id)">
+            <button class="btn btn-primary mx-1" @click.prevent="editDataForm(product.id)">
               Edit
             </button>
             <button class="btn btn-danger mx-1" @click.prevent="deleteData(product.id)">
@@ -48,6 +48,9 @@ export default {
     },
     deleteData(id) {
       this.$store.dispatch('deleteDataConfirmation', id);
+    },
+    editDataForm(id) {
+      this.$store.dispatch('editDataForm', id);
     }
   }
 }

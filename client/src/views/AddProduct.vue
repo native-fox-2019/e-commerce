@@ -1,7 +1,9 @@
 <template>
 <div>
   <AdminNavbar />
-  <h1>Add a new Product</h1>
+  <div class="mt-4">
+    <h1>Add a new Product</h1>
+  </div>
   <AddProductCard />
 </div>
 </template>
