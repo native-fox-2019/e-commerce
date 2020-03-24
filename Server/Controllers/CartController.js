@@ -54,6 +54,48 @@ class CartController {
             next({status: 500, msg: 'Server Error'})
         })
     }
+    static deleteCart(req, res, next){
+        let id = Number(req.params.id)
+        let foundCart = null;
+        Cart.findByPk(id)
+        .then(cart => {
+            if(cart){
+                foundCart = cart
+               return Product.findByPk(cart.ProductId)
+            }else{
+                next({status: 404, msg: 'Cart Not Found'})
+            }
+        })
+        .then(product => {
+            if(product){
+                let stock = Number(product.stock) + Number(foundCart.amount);
+                let updatedProduct = {
+                    name: product.name,
+                    image_url: product.image_url,
+                    price: product.price,
+                    stock,
+                }
+                return Product.update(updatedProduct, {where: {id: product.id}})
+            }
+
+        })
+        .then(updated => {
+            if(updated){
+                return Cart.destroy({where: {id}})
+            }
+        })
+        .then(deleted => {
+            if(deleted){
+                res.status(200).json({message: 'Cart successfully deleted'});
+            }else{
+                next({status: 400, msg: 'Unsuccessfully delete cart'})
+            }
+        })
+        .catch(err => {
+            console.log(err, '<<< dari delete cart');
+            next({status: 500, msg: 'Server Error'})
+        })
+    }
 }
 
 module.exports = CartController
