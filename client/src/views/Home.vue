@@ -1,16 +1,18 @@
 <template>
   <div class="home">
-    <Navbar />
+    <div class="home-wrapper">
+      <Carousel />
+    </div>
   </div>
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue';
+import Carousel from '../components/Carousel.vue';
 
 export default {
   name: 'Home',
   components: {
-    Navbar,
+    Carousel,
   },
 };
 </script>
