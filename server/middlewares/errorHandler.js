@@ -23,6 +23,21 @@ function errorHandler (err, req, res, next) {
       status: 404,
       msg: err.message
     })
+  } else if (err.name === 'JsonWebTokenError') {
+    res.status(401).json({
+      status: 401,
+      msg: 'You have to login first'
+    });
+  } else if (err.name === 'UnauthorizedError') {
+    res.status(401).json({
+      status: 401,
+      msg: err.message
+    })
+  } else if (err.name === 'ForbiddenError') {
+    res.status(403).json({
+      status: 403,
+      msg: err.message
+    })
   }
   else {
     console.log(err);

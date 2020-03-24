@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { generateToken, verifyToken } = require('../helpers/jwt');
+const { generateToken } = require('../helpers/jwt');
 const createError = require('../helpers/createError');
 const { compare } = require('../helpers/bcrypt');
 
@@ -28,25 +28,6 @@ class UserController {
       const token = generateToken({ id: userRegistered.id });
       const role = userRegistered.role;
       res.status(200).json({ token, role });
-    } catch (err) {
-      next(err);
-    }
-  }
-  static async checkAdmin (req, res, next) {
-    try {
-      const { token } = req.body;
-      const decoded = verifyToken(token);
-      const user = await User.findOne({ where: { id: decoded.id } });
-      if (!user) {
-        throw createError(404, 'Error Not Found');
-      }
-      let role;
-      if (user.role === 'Admin') {
-        role = 'Admin';
-      } else {
-        role = 'User';
-      }
-      res.status(200).json({ role });
     } catch (err) {
       next(err);
     }
