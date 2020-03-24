@@ -1,34 +1,16 @@
 <template>
-  <div>
-    <table class="table" style="margin-top: 60px;">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Image</th>
-          <th scope="col">Price</th>
-          <th scope="col">Stock</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <Loading v-if="loading" />
-        <tr v-for="product in products" :key="product.id">
-          <td> {{ product.name }} </td>
-          <td> <img class="img-fluid" :src="product.image_url" :alt="product.name" style="width: 300px;"> </td>
-          <td> IDR {{ product.price.toLocaleString() }} </td>
-          <td> {{ product.stock }} </td>
-          <td>
-            <button class="btn btn-primary mx-1" @click.prevent="editDataForm(product.id)">
-              Edit
-            </button>
-            <button class="btn btn-danger mx-1" @click.prevent="deleteData(product.id)">
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div style="margin-top: 80px;" id="card">
+  <div class="card mx-3 mb-2 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;" v-for="product in products" :key="product.id">
+    <img class="card-img-top img-fluid rounded" :src="product.image_url" :alt="product.name">
+    <div class="card-body">
+      <h4 class="card-title">{{ product.name }}</h4>
+      <h5 class="card-text">Rp. {{ product.price }}</h5>
+      <h5 class="card-text">Stock: {{ product.stock }}</h5>
+      <a href="" @click.prevent="editDataForm(product.id)" class="btn btn-primary mx-1">Edit</a>
+      <a href="" @click.prevent="deleteData(product.id)" class="btn btn-danger mx-1">Delete</a>
+    </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -55,3 +37,15 @@ export default {
   }
 }
 </script>
+
+<style>
+#card {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-start;
+}
+
+</style>

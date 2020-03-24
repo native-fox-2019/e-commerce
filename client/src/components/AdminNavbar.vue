@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 60px; position: fixed; width: 100%; top: 0;" class="bg-dark">
+  <div style="height: 60px; position: fixed; width: 100%; top: 0; z-index: 1000;" class="bg-dark">
     <button class="btn btn-primary"
     style="left: 20px; top: 10px; position: fixed"
     @click.prevent="addProductForm">
