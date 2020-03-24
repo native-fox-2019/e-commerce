@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     product_id: DataTypes.INTEGER,
     address: DataTypes.STRING,
     phone: DataTypes.STRING,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.STRING
   }, {
     sequelize
   })

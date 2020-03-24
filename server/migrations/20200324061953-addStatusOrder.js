@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn('Orders', 'status', {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.STRING
     })
     /*
       Add altering commands here.
