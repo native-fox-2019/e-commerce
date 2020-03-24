@@ -28,9 +28,22 @@ export default new Vuex.Store({
       state.cartList.push(payload);
     },
     login(state, payload){
+      Swal.fire({
+        icon:'success',
+        title:'Login successfull'
+      })
       state.isLogin = true
       localStorage.setItem('access_token', payload.access_token)
       localStorage.setItem('role', payload.role)
+    },
+    logout(state, condition) {
+      Swal.fire({
+        icon:'success',
+        title:'See you again soon!'
+      })
+      state.isLogin = condition
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("role");
     }
   },
   actions: {
@@ -59,14 +72,17 @@ export default new Vuex.Store({
         data: payload
       })
         .then(data => {
-          console.log(data);
+          console.log(data)
+          if (isNaN(payload.amount) || payload.amount == 0) {
+            throw Error ('cannot be 0')
+          }
           context.commit("addToCart", payload);
         })
-        .catch(response => {
-          console.log(response.response);
+        .catch((response) => {
+          console.log(response);
           Swal.fire({
             icon:'warning',
-            title:'You have to login first'
+            title: response == 'Error: cannot be 0' ? 'amount cannot be 0' : 'You have to login first'
           })
         });
     },
@@ -102,6 +118,7 @@ export default new Vuex.Store({
       .then(data => {
         console.log(data.data)
         context.commit('login', data.data)
+        
       })
       .catch(response => {
         Swal.fire({

@@ -45,12 +45,14 @@
           type="email"
           placeholder="Email"
           v-model="email"
+          required
         />
         <input
           class="form-control mr-sm-2"
           type="password"
           placeholder="Password"
           v-model="password"
+          required
         />
         <button
           class="btn btn-primary my-2 my-sm-0"
@@ -78,14 +80,10 @@ export default {
   created() {
       this.checkLogin()
   },
-  watcher: {
-      isLoggedin: () => {
-          this.isLoggedin = this.$store.state.isLogin
-      }
-  },
+
   data() {
     return {
-      isLoggedin: false,
+      isLoggedin: "",
       email: "",
       password: ""
     };
@@ -95,19 +93,19 @@ export default {
       this.$router.push({ name: route });
     },
     logout() {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("role");
-      this.isLoggedin = false;
+      this.$store.commit("logout", false);
+      this.$router.push({ name: "Home" });
+      this.checkLogin()
     },
     login() {
-      this.isLoggedin = true
       let dataLogin = {
         email: this.email,
         password: this.password
       };
       this.$store.dispatch("login", dataLogin);
-      this.email = ''
-      this.password = ''
+      this.$router.push({ name: "Home" });
+      this.$store.commit("logout", true);
+      this.checkLogin()
     },
     checkLogin(){
         if (localStorage.access_token) {
