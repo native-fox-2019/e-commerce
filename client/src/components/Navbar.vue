@@ -20,16 +20,23 @@
       <h4>LOGO</h4>
       <ul class="navlist end">
         <li>
-          <button class="nav-button">
-            <div class="nav-button-content">
-              <p class="nav-content-description">CART</p>
+          <button v-if="isLoggedIn" class="nav-button">
+            <div class="nav-button-content nohover">
+              <!-- <p class="nav-content-description">CART</p> -->
+              <i class="fas fa-shopping-cart fa-2x"></i>
             </div>
           </button>
         </li>
         <li>
-          <button class="nav-button">
+          <button @click="logout" v-if="isLoggedIn" style="margin-right: 18px" class="nav-button">
             <div class="nav-button-content">
               <p class="nav-content-description">LOGOUT</p>
+            </div>
+          </button>
+
+          <button @click="login" v-if="!isLoggedIn" style="margin-right: 18px" class="nav-button">
+            <div class="nav-button-content">
+              <p class="nav-content-description">LOGIN</p>
             </div>
           </button>
         </li>
@@ -41,6 +48,28 @@
 <script>
 export default {
   name: 'Navbar',
+  created() {
+    if (localStorage.getItem('token')) {
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
+    }
+  },
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  methods: {
+    login() {
+      this.$router.push('/login');
+    },
+
+    logout() {
+      localStorage.removeItem('token');
+      this.$router.push('/');
+    },
+  },
 };
 </script>
 
@@ -63,6 +92,7 @@ export default {
   .header {
     display: flex;
     position: fixed;
+    top: 0px;
     z-index: 100;
     width: 100%;
   }
@@ -115,13 +145,18 @@ export default {
   }
 
   .nav-button-content:hover {
-    border-color: black;
+    border-color: white;
+  }
+
+  .nav-button-content.nohover:hover {
+    border-bottom: none;
   }
 
   .nav-content-description {
-    font-weight: 700;
+    font-weight: 900;
     font-size: 12px;
     line-height: 1.75;
     letter-spacing: 1.7px;
+    color: white;
   }
 </style>
