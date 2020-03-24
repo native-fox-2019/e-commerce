@@ -1,5 +1,6 @@
 module.exports = (ArrOfObj) => {
     let code = []
+    let date = []
     let count = []
     for (let i = 0; i < ArrOfObj.length; i++) {
         let flag = true
@@ -11,6 +12,7 @@ module.exports = (ArrOfObj) => {
         }
         if (flag) {
             code.push(ArrOfObj[i].code)
+            date.push(ArrOfObj[i].createdAt)
         }
     }
 
@@ -24,5 +26,5 @@ module.exports = (ArrOfObj) => {
         count.push(count_temp)
     }
 
-    return [code, count]
+    return [code, count, date]
 }

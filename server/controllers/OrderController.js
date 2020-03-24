@@ -21,7 +21,7 @@ class OrderController {
                     data_response.push({
                         order_code: result_[0][i],
                         total_product: result_[1][i],
-                        order_date: result[i].createdAt
+                        order_date: result_[2][i]
                     })
                 }
                 response.status(200).json(data_response)
