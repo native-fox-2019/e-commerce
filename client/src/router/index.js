@@ -16,6 +16,10 @@ const routes = [
     name: 'Login',
     component: Login,
   },
+  {
+    path: '/admin',
+    name: 'Admin',
+  },
 ];
 
 const router = new VueRouter({
