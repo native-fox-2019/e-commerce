@@ -32,23 +32,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    user_id: DataTypes.INTEGER
+    user_id: DataTypes.INTEGER,
+    category: DataTypes.STRING
   }, {
-    // hooks: {
-    //   beforeSave: (instance, option) => {
-    //     let arr = instance.name.split(' ')
-    //     for (let i = 0; i < arr.length; i++) {
-    //       arr[i][0] = arr[i][0].toUpperCase()
-    //     }
-    //     instance.name = arr.join(' ')
-    //   }
-    // },
     sequelize
   })
 
   Product.associate = function (models) {
     Product.belongsTo(models.User, {
       foreignKey: 'user_id'
+    })
+    Product.belongsTo(models.Order, {
+      foreignKey: 'product_id'
     })
   };
   return Product;
