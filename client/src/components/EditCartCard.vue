@@ -14,7 +14,7 @@
     <h1>Enter how many do you want to buy</h1>
     <form style="width: 300px; margin: auto" @submit.prevent="editCartUser">
       <input type="number" :max="stock" min="0" v-model="newEditStock">
-      <div class="mt-2">
+      <div class="mt-2 mb-4" style="width: 400px;">
         <button class="btn btn-primary mx-1" type="submit">Submit</button>
         <button class="btn btn-danger mx-1" @click.prevent="cancel">Cancel</button>
       </div>

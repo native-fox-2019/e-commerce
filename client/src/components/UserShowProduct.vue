@@ -75,7 +75,7 @@ export default {
 }
 
 #banner {
-  background-image: url('https://i.shgcdn.com/48271d5a-3d8e-4da5-a6e2-7832e4985ed9/-/format/auto/-/preview/3000x3000/-/quality/lighter/');
+  background-image:url('../assets/banner.webp');
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 450px;
