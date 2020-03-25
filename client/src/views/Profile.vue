@@ -37,7 +37,6 @@ export default {
     computed:mapGetters(['isLoading']),
     methods:{
         updateProfile(){
-            console.log(this.form)
             this.$store.dispatch('updateProfile',this.form)
             .then((result)=>{
                 if(result.error===0)

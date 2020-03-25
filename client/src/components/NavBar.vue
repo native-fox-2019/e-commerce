@@ -48,7 +48,6 @@ export default {
            this.$store.dispatch('logout')
        },
        onSearch(){
-           console.log(this.search)
            this.$store.state.searchText=this.search
            this.$router.push({name:'Product',query:{search:this.search}})
        }

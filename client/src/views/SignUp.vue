@@ -44,12 +44,11 @@ export default {
             var self=this;
             this.signUp(this.form)
             .then((result)=>{
-                console.log({result})
                 if(result.err===0)
                     self.$router.push('/login')
                 else{
                     var listErrors=result.error.response.data.errors;
-                    console.log(listErrors)
+                    
                     self.$bvModal.msgBoxOk('Sign Up Failed: '+listErrors.join(','))
                 }
             })
