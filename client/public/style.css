@@ -1,0 +1,43 @@
+@font-face{
+    font-family: "gotham";
+    src: url(./font/Gotham-Book.otf);
+    font-weight: normal;
+}
+@font-face{
+    font-family: "gotham";
+    src: url(./font/Gotham-Medium.otf);
+    font-weight: 500;
+}
+@font-face{
+    font-family: "montserrat";
+    src: url(./font/montserrat.regular.ttf);
+    font-weight: 400;
+}
+
+body{
+    margin: 0;
+    font-family: gotham;
+    min-height: 100vh;
+    position: relative;
+}
+
+.header{
+    width: 100%; height: 90px; background-color: rgb(0, 0, 0); padding: 10px 0px; display: flex; flex-direction: column; justify-content: center;
+    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.432); margin-bottom: 80px; position: fixed; top: 0; z-index: 99;
+}
+.title{
+    color: white; display: inline; font-size: 20px; margin-left: 20px; font-family: montserrat;
+}
+.nav{
+    float: right; margin-right: 20px; color: white; text-decoration: none; margin-top: 5px;
+}
+.nav a{
+    color: white; text-decoration: none; margin: 0px 10px; text-transform: uppercase;
+}
+.footer{
+    width: 100%; height: 70px; bottom: 0; display: flex; align-items: center; font-size: 13px; justify-content: center;
+    background-color: black; position: absolute; color: white; box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.432);
+}
+.home{
+    height: 120vh;
+}
