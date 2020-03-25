@@ -72,6 +72,11 @@ export default {
     computed:{
         isLoading(){
             return this.$store.getters.isLoading
+        },
+        stockInCart(){
+            var id=this.product.id
+            var listP=this.$store.state.cart.filter((c)=>c.id===id).reduce((prev,curr)=>prev+Number(curr.stock),0)
+            return listP
         }
     },
     created(){
@@ -80,6 +85,7 @@ export default {
         this.$store.dispatch('getProductById',id)
         .then((data)=>{
             self.product=data
+            self.product.stock-=this.stockInCart
         })
     },
     methods:{

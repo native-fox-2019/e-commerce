@@ -6,6 +6,7 @@ import ProductDetail from '../views/ProductDetail.vue'
 import Cart from '../views/Cart.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
+import Profile from '../views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path:'/sign-up',
     name:'Register',
     component:SignUp
+  },
+  {
+    path:'/profile',
+    name:'Profile',
+    component:Profile
   }
 ]
 

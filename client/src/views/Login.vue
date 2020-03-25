@@ -35,7 +35,13 @@ export default {
     methods:{
         onSubmit(){
             this.login(this.form)
-            this.$router.push({name:'Home'})
+            .then((token)=>{
+                if(token)
+                    this.$router.push({name:'Home'})
+                else
+                     this.$bvModal.msgBoxOk('Login Failed')
+            })
+            
             
         },
         ...mapActions(['login'])

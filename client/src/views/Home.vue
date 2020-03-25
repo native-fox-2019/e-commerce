@@ -1,25 +1,17 @@
 <template>
   <div>
     <b-carousel id="shoes-carousel"  img-width="1024" img-height="100" controls indicators :interval="4000">
-        <b-carousel-slide>
-           <template v-slot:img>
-          <img
-            class="shoes-carousel-img"
-            src="/banner.jpg"
-            alt="image slot"
-          >
-        </template>
-        </b-carousel-slide>
-        <b-carousel-slide>
-           <template v-slot:img>
-          <img
-            class="shoes-carousel-img"
-            src="/banner.jpg"
-            alt="image slot"
-          >
-        </template>
+        <b-carousel-slide v-for="banner in banners" :key="banner.id">
+        <template v-slot:img>
+            <img
+              class="shoes-carousel-img"
+              :src="$store.state.BANNER_SERVER+banner.name"
+              alt="image slot"
+            >
+          </template>
         </b-carousel-slide>
     </b-carousel>
+    <hr>
     <div class="container">
       <h1 class="font-weight-bold mt-3">Our Product</h1>
       <Loading v-if="isLoading" />
@@ -48,20 +40,36 @@ export default {
   name: 'Home',
   data(){
     return {
-      products:[]
+      products:[],
+      banners:[],
+      currPage:1
     }
   },
   computed:mapGetters(['isLoading']),
   created(){
-    var self=this
-    this.$store.dispatch('loadHomeProducts')
-    .then((data)=>{
-      self.products=data
-    })
+    this.loadHomeProduct(this.currPage)
   },
   components: {
     Loading,
     ProductCard
+  },
+  methods:{
+    loadMore(){
+      this.currPage++;
+      this.loadHomeProduct()
+
+    },
+    loadHomeProduct(){
+      var self=this
+      this.$store.dispatch('loadHomeProducts')
+      .then((data)=>{
+        self.products=data
+      })
+      this.$store.dispatch('loadBanners')
+      .then((data)=>{
+        self.banners=data
+      })
+    }
   }
 }
 </script>

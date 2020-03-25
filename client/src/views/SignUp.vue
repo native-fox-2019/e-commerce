@@ -43,9 +43,17 @@ export default {
         onSubmit(){
             var self=this;
             this.signUp(this.form)
-            .then(()=>{
-                self.$router.push('/login')
+            .then((result)=>{
+                console.log({result})
+                if(result.err===0)
+                    self.$router.push('/login')
+                else{
+                    var listErrors=result.error.response.data.errors;
+                    console.log(listErrors)
+                    self.$bvModal.msgBoxOk('Sign Up Failed: '+listErrors.join(','))
+                }
             })
+           
         },
          ...mapActions(['signUp'])
     },

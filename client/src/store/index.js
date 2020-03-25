@@ -13,11 +13,21 @@ function HEADERS(){
   }
 }
 
+function FORM(data){
+  let _form=new FormData()
+  for(var i in data){
+    let d=data[i]
+    _form.append(i,d)
+  }
+  return _form
+}
+
 export default new Vuex.Store({
   state: {
     _isLoading:false,
     _isLogin:false,
     IMG_SERVER:'http://localhost:3001/img/',
+    BANNER_SERVER:'http://localhost:3001/banner/',
     cart:[]
   },
   mutations: {
@@ -43,9 +53,16 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    loadHomeProducts({commit}){
+    loadHomeProducts({commit},page){
+      var _page=page?page:page;
       commit('setIsLoading',true)
-      return server.get('product',{
+      var url='product'
+      if(_page){
+        url+='?page='+_page
+      }
+      return server.get(url,{
+        page:_page
+      },{
         headers:HEADERS()
       })
       .then((response)=>{
@@ -82,6 +99,15 @@ export default new Vuex.Store({
       })
       .finally(()=>commit('setIsLoading',false))
     },
+    loadBanners(){
+      return server.get('banner')
+      .then((response)=>{
+        return response.data
+      })
+      .catch((err)=>{
+        console.log('Ada error saat loadBanner',err)
+      })
+    },
     addToCart({state},product){
       state.cart.push(product)
       var cart_str=JSON.stringify(state.cart)
@@ -111,9 +137,11 @@ export default new Vuex.Store({
         var token=res.data.token
         localStorage.setItem('token',token)
         commit('setIsLogin',true)
+        return token
       })
       .catch((err)=>{
         console.log('Ada error saat login',err)
+        return null
       })
       .finally(()=>{
         commit('setIsLoading',false)
@@ -123,8 +151,12 @@ export default new Vuex.Store({
     signUp({commit},form){
       commit('setIsLoading',true)
       return server.post('register',form)
+      .then((result)=>{
+        return {err:0,result}
+      })
       .catch(err=>{
         console.log('Ada error saat register',err)
+        return {err:1,error:err}
       })
       .finally(()=>{
         commit('setIsLoading',false)
@@ -134,6 +166,22 @@ export default new Vuex.Store({
     logout({commit}){
       localStorage.removeItem('token')
       commit('setIsLogin',false)
+    },
+    updateProfile({commit},form){
+      commit('setIsLoading',true)
+      var sentForm=FORM(form)
+      return server.put('profile',sentForm,{
+        headers:HEADERS()
+      })
+      .then((result)=>{
+        return {error:0,result}
+      })
+      .catch((err)=>{
+        return {error:1,err}
+      })
+      .finally(()=>{
+        commit('setIsLoading',false)
+      })
     }
   },
   modules: {

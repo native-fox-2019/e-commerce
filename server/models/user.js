@@ -5,6 +5,24 @@ module.exports = (sequelize, DataTypes) => {
   const md5=require('md5');
 
   class User extends Model{
+    static validateRegisterInput(body,errors){
+      if(!body.username){
+        errors.push('Username must be filled')
+      }
+      if(!body.password){
+        errors.push('password must be filled')
+      }
+      if(!body.email){
+        errors.push('email must be filled')
+      }
+      if(!body.name){
+        errors.push('name must be filled')
+      }
+      if(errors.length)
+        return false
+      return true
+    }
+
     get tokendata(){
       return {
         id:this.id,
@@ -16,10 +34,25 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   User.init({
-    email: DataTypes.STRING,
+    email: {
+      type:DataTypes.STRING,
+      validate:{
+        isEmail:true
+      }
+    },
     password: DataTypes.STRING,
     role: DataTypes.ENUM(['user','admin']),
-    username: DataTypes.STRING,
+    username: {
+      type:DataTypes.STRING,
+      validate:{
+        isUsername(value){
+          let spaceReg=/\s+/g;
+          if(spaceReg.test(value)){
+            throw new Error('Username contains white space')
+          }
+        }
+      }
+    },
     name: DataTypes.STRING
   }, {sequelize,modelName:'User'})
 
@@ -29,6 +62,11 @@ module.exports = (sequelize, DataTypes) => {
 
   User.beforeCreate((instance,options)=>{
     instance.password=md5(instance.password);
+  })
+
+  User.beforeBulkUpdate((instance)=>{
+    if(instance.password)
+      instance.password=md5(instance.password);
   })
 
   return User;

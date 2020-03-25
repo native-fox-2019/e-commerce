@@ -22,15 +22,30 @@ class AuthController{
         } 
     }
 
-    static async register(req,res){
+    static async register(req,res,next){
         let body=req.body
 
         try{
+            let errors=[];
+            if(!User.validateRegisterInput(body,errors)){
+                res.status(400).json({message:'Error on validation',errors})
+                return
+            }
             let user=await User.create({...body,role:'user'});
             res.status(201).json(user);
         }catch(err){
-            console.log(err);
-            res.status(500).json(err);
+            next(err)
+        }
+    }
+
+    static async profile(req,res,next){
+        let userId=req.user.id
+        let body=req.body
+        try{
+            let result=await User.update(body,{where:{id:userId}})
+            res.status(200).json({message:'Updated',result})
+        }catch(err){
+            next(err)
         }
     }
 }
