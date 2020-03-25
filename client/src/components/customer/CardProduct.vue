@@ -8,11 +8,11 @@
       </div>
       <div class="priceNicon">
         <div id="priceNstock">
-          <p>Price : {{listProduct.price}}</p>
+          <p>Price : {{idr(listProduct.price)}}</p>
           <p>Stock :{{listProduct.stock}}</p>
         </div>
         <div id="iconDetailnAddCart">
-          <div class="iconCard">
+          <div class="iconCard" @click="addCart">
             <!-- <img src="@/assets/shopping-cart.svg" alt /> -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import rupiah from "../helper/idr";
 export default {
   name: "CardProduct",
   props: ["listProduct"],
@@ -68,6 +69,12 @@ export default {
       this.$router.push({
         path: `/detail/${id}`
       });
+    },
+    addCart() {
+      alert("nambah ke cart");
+    },
+    idr(value) {
+      return rupiah(value);
     }
   }
 };

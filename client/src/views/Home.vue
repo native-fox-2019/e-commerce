@@ -1,12 +1,12 @@
 <template>
   <div class="bigContainer">
     <nav>
-      <div id="logo">WearIsysm</div>
+      <div id="logo" @click="toHome">WearIsysm</div>
       <div id="menu">
-        <div class="menuCategory">Baju</div>
-        <div class="menuCategory">Jaket</div>
-        <div class="menuCategory">Celana</div>
-        <div class="menuCategory">Sepatu</div>
+        <router-link class="menuCategory" to="/baju">Baju</router-link>
+        <router-link class="menuCategory" to="/jaket">Jaket</router-link>
+        <router-link class="menuCategory" to="/celana">Celana</router-link>
+        <router-link class="menuCategory" to="/sepatu">Sepatu</router-link>
       </div>
       <div id="iconNav">
         <div id="cart">
@@ -38,7 +38,8 @@ export default {
   },
   data() {
     return {
-      isLoginPage: false
+      isLoginPage: false,
+      category: ""
     };
   },
   mounted() {
@@ -50,11 +51,23 @@ export default {
         this.isLoginPage = false;
       }
     }
+    this.$store.dispatch("getAll");
   },
+  created() {
+    this.$store.dispatch("getAll");
+  },
+  computed: {},
   methods: {
     logoutUser() {
       localStorage.clear();
       isLoginPage = false;
+      this.$router
+        .push({
+          path: "/"
+        })
+        .catch(() => {});
+    },
+    toHome() {
       this.$router
         .push({
           path: "/"
@@ -65,6 +78,10 @@ export default {
 };
 </script>
 <style  scoped>
+a {
+  text-decoration: none;
+  color: #707070;
+}
 nav {
   height: 70px;
   width: 100%;
@@ -104,6 +121,9 @@ nav {
   cursor: pointer;
 }
 #login {
+  cursor: pointer;
+}
+#logo {
   cursor: pointer;
 }
 </style>

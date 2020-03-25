@@ -53,7 +53,7 @@ export default new Vuex.Store({
 
   },
   actions: {
-    getAll(context) {
+    getAll(context, params = '') {
       axios({
         method: 'GET',
         url: `${server}/products`,
@@ -62,8 +62,12 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          context.commit('allItem', data)
-
+          if (params) {
+            const filterData = data.filter(item => item.Category.name == params)
+            context.commit('allItem', filterData)
+          } else {
+            context.commit('allItem', data)
+          }
         })
         .catch(err => {
           console.log(err)

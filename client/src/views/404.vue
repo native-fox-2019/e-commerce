@@ -149,7 +149,7 @@ body::after {
   color: #fff;
 }
 .bottomconvo {
-  color: #fff;
+  color: #707070;
   padding-top: 15px;
 }
 

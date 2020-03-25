@@ -131,9 +131,11 @@ export default {
     logOut() {
       localStorage.clear();
       this.$store.commit("toIsLoginFalse");
-      this.$router.push({
-        path: "/"
-      });
+      this.$router
+        .push({
+          path: "/"
+        })
+        .catch(() => {});
     }
   }
 };

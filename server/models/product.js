@@ -41,20 +41,10 @@ module.exports = (sequelize, DataTypes) => {
     CategoryId: DataTypes.INTEGER
   }, { sequelize })
 
-
-
-  // const Product = sequelize.define('Product', {
-  //   name: DataTypes.STRING,
-  //   image_url: DataTypes.STRING,
-  //   price: DataTypes.INTEGER,
-  //   stock: DataTypes.STRING,
-  //   UserId: DataTypes.INTEGER
-  // }, {});
   Product.associate = function (models) {
     // associations can be defined here
     Product.belongsTo(models.Category)
-    // Product.hasMany(models.User)
-    // Product.belongsToMany(models.User, { through: models.Cart })
+    Product.belongsToMany(models.User, { through: models.Cart })
   };
   return Product;
 };

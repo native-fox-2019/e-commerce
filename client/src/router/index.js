@@ -36,6 +36,11 @@ const routes = [
         path: '/',
         name: 'ListProduct',
         component: ListProduct
+      },
+      {
+        path: ':category',
+        name: 'ListProduct',
+        component: ListProduct
       }
     ]
 

@@ -37,12 +37,19 @@ export default {
       return temp;
     }
   },
+  watch: {
+    $route(to, from) {
+      this.$store.dispatch("getAll", to.params.category);
+    }
+  },
   created() {
+    // console.log(this.$route);
     this.$store.dispatch("getAll");
-  }
-  // mounted() {
-  //   console.log(this.$store.dispatch("getAll"));
-  // }
+  },
+  mounted() {
+    // console.log(this.$store.dispatch("getAll"));
+  },
+  methods: {}
 };
 </script>
 
