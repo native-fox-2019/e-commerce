@@ -14,7 +14,7 @@
                         <span>Total Price: Rp{{cart.total_price}}</span>
                     </div>
                 </div>
-                <div class="cart-action">
+                <div class="cart-action" @click="deleteCart(cart.id)">
                     <i class="fa fa-trash" style="font-size: 25px; color: red"></i>
                 </div>
             </div>
@@ -52,6 +52,23 @@ export default {
         .then(({ data }) => {
           this.carts = data.carts;
           this.isLoading = false;
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        });
+    },
+    deleteCart(id) {
+      const options = {
+        url: `${this.$store.state.baseUrl}/cart/${id}`,
+        method: 'delete',
+        headers: {
+          token: localStorage.token,
+        },
+      };
+      axios(options)
+        .then(({ data }) => {
+          console.log(data.message);
+          this.carts = this.carts.filter((item) => item.id !== id);
         })
         .catch(({ response }) => {
           console.log(response);

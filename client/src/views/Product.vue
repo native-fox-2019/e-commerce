@@ -88,12 +88,27 @@ export default {
     addCart() {
       if (!this.$store.state.isLogin) {
         this.$router.push('/login');
+      } else {
+        const options = {
+          url: `${this.$store.state.baseUrl}/cart`,
+          method: 'post',
+          data: {
+            amount: this.amount,
+            ProductId: this.$route.params.id,
+          },
+          headers: {
+            token: localStorage.token,
+          },
+        };
+        axios(options)
+          .then(({ data }) => {
+            console.log(data);
+            this.$router.push('/cart');
+          })
+          .catch(({ response }) => {
+            console.log(response);
+          });
       }
-      //   else {
-      //     const options = {
-      //       url: `${this.$store.state.baseUrl}/products/${this.$route.params.id}`,
-      //     }
-      //   }
     },
   },
 };

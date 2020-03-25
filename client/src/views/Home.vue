@@ -40,7 +40,6 @@ export default {
       axios(options)
         .then(({ data }) => {
           this.products = data.products;
-          console.log(data);
         })
         .catch(({ response }) => {
           console.log(response);
