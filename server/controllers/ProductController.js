@@ -1,4 +1,4 @@
-const { Product } = require('../models');
+const { Product, User, Cart } = require('../models');
 
 class ProductController {
   static async getProducts(req, res, next) {
@@ -77,6 +77,22 @@ class ProductController {
       next(err);
     }
   };
+
+  static async addToCart(req, res, next) {
+    try {
+      const ProductId = req.params.id;
+      const UserId = req.userData.id;
+
+      const obj = {
+        UserId,
+        ProductId,
+      };
+      const newCartProduct = await Cart.create(obj);
+      res.status(201).json(newCartProduct);
+    } catch (err) {
+      next(err);
+    }
+  }
 
   static async updateStock(req, res, next) {
     try {

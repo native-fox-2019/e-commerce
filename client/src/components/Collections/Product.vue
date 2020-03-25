@@ -6,17 +6,18 @@
           <h2 class="typography-h2">Men's Shoes</h2>
         </div>
         <div class="product-child-results">
-          <div class="product-child-result">
+          <div v-for="product in products" :key="product.id" class="product-child-result">
             <a class="product-link">
               <div class="product-image-container">
                 <div class="aspect-ratio">
-                  <img src="https://cdn.allbirds.com/image/fetch/q_auto,f_auto/w_265,f_auto,q_auto,b_rgb:f5f5f5/https://cdn.shopify.com/s/files/1/1104/4168/products/Allbirds_FY19_August_PDP_WL_RN_Savanna_Night_LAT_9dbb2f9d-8a67-4fcc-a0fe-1bcc2a28e2eb.png?v=1571655947" alt="" class="product-image">
+                  <img :src="product.image_url" alt="" class="product-image">
+                  <button @click="addToCart(product)" class="product-image-btn">Add To Cart</button>
                 </div>
               </div>
               <div class="product-title">
-                <p class="typography-title">Natural Grey (Light Grey Sole)</p>
+                <p class="typography-title">{{ product.name }}</p>
               </div>
-              <p class="typography-price">IDR 300000</p>
+              <p class="typography-price">IDR {{ product.price }}</p>
             </a>
           </div>
         </div>
@@ -30,6 +31,16 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Product',
+  created() {
+    this.fetchProducts();
+  },
+  computed: mapGetters(['products']),
+  methods: {
+    ...mapActions(['fetchProducts']),
+    addToCart(product) {
+      console.log(product);
+    },
+  },
 };
 </script>
 
@@ -86,6 +97,23 @@ export default {
   .product-image {
     max-width: 100%;
     color: transparent;
+    transition: all 300ms ease-in-out 0s;
+    z-index: 1;
+  }
+
+  .product-image-btn {
+    position: absolute;
+    height: 37px;
+    width: 100px;
+    top: 75%;
+    left: 30%;
+    border-radius: 14%;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    z-index: 0;
+    opacity: 0;
+    transition: all 300ms ease-in-out 0s;
   }
 
   .product-title {
@@ -104,5 +132,20 @@ export default {
     letter-spacing: 0.5px;
     font-size: 15px;
     color: black;
+  }
+
+  /* .product-link {
+    cursor: pointer;
+  } */
+
+  .product-link:hover
+  .product-image {
+    opacity: 0.5;
+  }
+
+  .product-link:hover
+  .product-image-btn {
+    opacity: 1;
+    z-index: 3;
   }
 </style>

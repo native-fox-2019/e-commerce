@@ -8,7 +8,7 @@
         <div class="banner-titles">
           <h1 class="title-typography">Men's Shoes</h1>
         </div>
-        <p class="description-typography">Kicks for life's everyday adventure</p>
+        <p class="description-typography">Solid kicks for life's everyday adventure</p>
       </div>
     </div>
   </div>
