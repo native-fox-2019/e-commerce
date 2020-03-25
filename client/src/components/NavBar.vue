@@ -33,6 +33,9 @@ export default {
     computed:{
         isLogin(){
             return this.$store.state._isLogin
+        },
+        searchText(){
+            return this.$store.state.searchText
         }
     },
     data(){
@@ -46,6 +49,7 @@ export default {
        },
        onSearch(){
            console.log(this.search)
+           this.$store.state.searchText=this.search
            this.$router.push({name:'Product',query:{search:this.search}})
        }
     }

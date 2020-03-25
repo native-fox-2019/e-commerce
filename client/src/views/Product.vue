@@ -30,6 +30,8 @@ import Loading from '../components/Loading'
 import ProductCard from '../components/ProductCard'
 import {mapGetters} from 'vuex'
 
+var vm=null;
+
 export default {
     name:'Product',
     data(){
@@ -46,9 +48,22 @@ export default {
         let search=this.$route.query.search;
         if(search)
             this.isSearch=true
-        this.loadProduct(search?search:category,search?true:false)
+        this.loadProduct(search?search:category,this.isSearch)
+        vm=this
     },
-    computed:mapGetters(['isLoading']),
+    computed:{
+        searchText(){
+            return this.$store.state.searchText
+        },
+        ...mapGetters(['isLoading'])
+    },
+    watch:{
+        searchText:(oldVal,newVal)=>{
+            if(vm){
+                vm.loadProduct(newVal,vm.isSearch)
+            }
+        }
+    },
     methods:{
         onLoaded(appended){
             var self=this;

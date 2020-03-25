@@ -4,7 +4,8 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 const server=axios.create({
-  baseURL: 'http://localhost:3000/',
+  // baseURL: 'http://localhost:3000/',
+  baseURL:'https://aqueous-wildwood-99814.herokuapp.com/'
 })
 
 function HEADERS(){
@@ -26,9 +27,12 @@ export default new Vuex.Store({
   state: {
     _isLoading:false,
     _isLogin:false,
-    IMG_SERVER:'http://localhost:3001/img/',
-    BANNER_SERVER:'http://localhost:3001/banner/',
-    cart:[]
+    // IMG_SERVER:'http://localhost:3001/img/',
+    // BANNER_SERVER:'http://localhost:3001/banner/',
+    IMG_SERVER:'https://aqueous-badlands-12134.herokuapp.com/img/',
+    BANNER_SERVER:'https://aqueous-badlands-12134.herokuapp.com/banner/',
+    cart:[],
+    searchText:''
   },
   mutations: {
     setIsLoading(state,payload){
@@ -50,6 +54,9 @@ export default new Vuex.Store({
     },
     islogin:(state)=>{
       return state._isLogin
+    },
+    searchText:(state)=>{
+      return state.searchText
     }
   },
   actions: {
