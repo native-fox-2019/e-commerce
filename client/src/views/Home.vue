@@ -27,16 +27,16 @@
             title="Sepatu hehe"
             img-src="/sepatu.jpg"
             img-alt="Image"
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-4 col-sm-4 ml-5"
+            class="mb-4 col-sm-3 ml-5"
             v-for="i in [1,2,3,4,5]" :key="i"
           >
             <b-card-text>
               Some quick example text to build on the card title and make up the bulk of the card's content.
             </b-card-text>
 
-            <b-button href="#" variant="primary">Go somewhere</b-button>
+            <router-link to="/product">
+              <b-button variant="primary">Go somewhere</b-button>
+            </router-link>
           </b-card>
       </b-row>
       <b-row class="justify-content-md-center mb-5"> 

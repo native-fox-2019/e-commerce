@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavBar/>
-    <router-view></router-view>
+    <router-view id="view"></router-view>
     <Footer/>
   </div>
 </template>
@@ -44,5 +44,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#view{
+  min-height: 500px;
 }
 </style>

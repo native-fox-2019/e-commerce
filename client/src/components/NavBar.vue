@@ -1,7 +1,9 @@
 <template>
     <b-navbar variant="faded" fixed type="light">
       <b-navbar-brand tag="h1" class="mb-0">
-        <img src="/logo.jfif" alt="" class="logo-img">
+          <router-link to="/">
+            <img src="/logo.jfif" alt="" class="logo-img">
+          </router-link>
       </b-navbar-brand>
 
       <b-nav-form right >
