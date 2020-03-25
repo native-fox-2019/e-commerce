@@ -38,7 +38,11 @@ export default {
       this.$store.dispatch('getProducts');
     },
     addToCartForm(id) {
-      this.$store.dispatch('addToCartForm', id);
+      if (!localStorage.getItem('token')) {
+        this.$store.dispatch('showError', { message: 'You need to login first' });
+      } else {
+        this.$store.dispatch('addToCartForm', id);
+      }
     }
   }
 }

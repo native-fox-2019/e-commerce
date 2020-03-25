@@ -25,6 +25,9 @@
           </div>
       </div>
   </div>
+  <div class="mt-4">
+    <button class="btn btn-primary" @click.prevent="home">Back To Home</button>
+  </div>
 </div>
 </template>
 
@@ -54,6 +57,9 @@ export default {
     loginForm() {
       this.panel = 'container'
       this.$store.state.slide = !this.$store.state.slide;
+    },
+    home() {
+      this.$router.push('/');
     }
   }
 }

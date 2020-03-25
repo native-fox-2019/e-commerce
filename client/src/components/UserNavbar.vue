@@ -11,8 +11,15 @@
     </div>
     <button class="btn btn-danger"
     style="right: 20px; top: 10px; position: fixed;"
+    v-if="storage"
     @click.prevent="logoutUser">
       Logout
+    </button>
+    <button class="btn btn-primary"
+    style="right: 20px; top: 10px; position: fixed;"
+    v-if="!storage"
+    @click.prevent="loginUser">
+      Login
     </button>
   </div>
 </template>
@@ -23,6 +30,14 @@ export default {
     logoutUser() {
       this.$store.dispatch('logoutUser');
     },
+    loginUser() {
+      this.$router.push('/login');
+    }
+  },
+  computed: {
+    storage() {
+      return localStorage.getItem('token');
+    }
   }
 }
 </script>
