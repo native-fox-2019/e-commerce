@@ -24,6 +24,11 @@ export default {
     else{
       this.$store.commit('setIsLogin',false);
     }
+    var cart=localStorage.cart
+    if(cart){
+      var cartObj=JSON.parse(cart)
+      this.$store.commit('setCart',cartObj)
+    }
   },
 }
 </script>

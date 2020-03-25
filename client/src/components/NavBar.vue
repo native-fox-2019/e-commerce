@@ -20,6 +20,9 @@
          <router-link to="/login" v-if="isLogin">
             <b-nav-item href="/login">Profile</b-nav-item>
         </router-link>
+          <router-link to="/cart" v-if="isLogin">
+            <b-nav-item href="/cart">Cart</b-nav-item>
+        </router-link>
         <b-nav-item v-if="isLogin" @click="logout">Logout</b-nav-item>
       </b-navbar-nav>
     </b-navbar>

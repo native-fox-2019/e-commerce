@@ -22,37 +22,46 @@
     </b-carousel>
     <div class="container">
       <h1 class="font-weight-bold mt-3">Our Product</h1>
+      <Loading v-if="isLoading" />
+      <div v-else>
       <b-row>
-          <b-card
-            title="Sepatu hehe"
-            img-src="/sepatu.jpg"
-            img-alt="Image"
-            class="mb-4 col-sm-3 ml-5"
-            v-for="i in [1,2,3,4,5]" :key="i"
-          >
-            <b-card-text>
-              Some quick example text to build on the card title and make up the bulk of the card's content.
-            </b-card-text>
+        <ProductCard v-for="product in products" :key="product.id" :product="product" />
+      </b-row>
+      <b-row class="justify-content-md-center mb-5">
+        <router-link to="/product">
+          View more product
+        </router-link> 
+      </b-row>
+      </div>
 
-            <router-link to="/product">
-              <b-button variant="primary">Go somewhere</b-button>
-            </router-link>
-          </b-card>
-      </b-row>
-      <b-row class="justify-content-md-center mb-5"> 
-        <button class="btn btn-success">View more product</button>
-      </b-row>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import Loading from '../components/Loading'
+import ProductCard from '../components/ProductCard'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Home',
+  data(){
+    return {
+      products:[]
+    }
+  },
+  computed:mapGetters(['isLoading']),
+  created(){
+    var self=this
+    this.$store.dispatch('loadHomeProducts')
+    .then((data)=>{
+      self.products=data
+    })
+  },
   components: {
-
+    Loading,
+    ProductCard
   }
 }
 </script>

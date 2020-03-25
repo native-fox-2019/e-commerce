@@ -10,26 +10,49 @@
                 </b-list-group>
             </b-col>
             <b-col sm="9">
-                <b-row>
-                    <b-card
-                        title="Sepatu hehe"
-                        img-src="/sepatu.jpg"
-                        img-alt="Image"
-                        class="mb-4 col-sm-3 ml-5"
-                        v-for="i in [1,2,3,4,5]" :key="i">
-                        <b-card-text>
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                        </b-card-text>
+                <Loading v-if="isLoading"/>
+                <div v-else>
+                    <b-row>
+                        <ProductCard v-for="product in products" :key="product.id" :product="product" />
+                    </b-row>
+                    <b-row class="justify-content-md-center mb-5">
+                        <a href="">View more product</a> 
+                    </b-row>
+                </div>
 
-                        <router-link to="/product-detail">
-                            <b-button variant="primary">Go somewhere</b-button>
-                        </router-link> 
-                    </b-card>
-                </b-row>
-                 <b-row class="justify-content-md-center mb-5"> 
-                    <button class="btn btn-success">View more product</button>
-                </b-row>
             </b-col>
         </b-row>
     </b-container>
 </template>
+<script>
+import Loading from '../components/Loading'
+import ProductCard from '../components/ProductCard'
+import {mapGetters} from 'vuex'
+
+export default {
+    name:'Product',
+    data(){
+        return {
+            products:[]
+        }
+    },
+    created(){
+        let category=this.$route.query.category;
+        var self=this
+        if(category){
+            console.log('This is form category')
+        }
+        else{
+            this.$store.dispatch('loadHomeProducts')
+            .then((data)=>{
+                self.products=data
+            })
+        }
+    },
+    computed:mapGetters(['isLoading']),
+    components:{
+        Loading,
+        ProductCard
+    }
+}
+</script>
