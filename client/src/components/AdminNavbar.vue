@@ -1,7 +1,10 @@
 <template>
     <div id="nav" class="navbar bg-dark justify-content-start">
       <div class="Home mr-3" v-if="!this.$store.state.token">
-        <router-link to="/">Home</router-link>
+        <router-link to="/">Store Page</router-link>
+      </div>
+      <div class="Home mr-3" v-if="!this.$store.state.token">
+        <router-link to="/admin">Home</router-link>
       </div>
       <router-link to="/panel">Admin Panel</router-link>
       <div class="Add ml-3" v-if="this.$store.state.token">

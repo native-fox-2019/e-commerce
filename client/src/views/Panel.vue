@@ -4,10 +4,10 @@
     <img alt="logo" src="../assets/logowatch.png">
     <div class="panel">
     <h3> Welcome Back Admin! </h3>
-              <router-link to="/view">
+              <router-link to="/admin/view">
               <input type="button" class="btn btn-dark" value="View Product">
               </router-link>
-              <router-link to="/add">
+              <router-link to="/admin/add">
               <input type="button" class="btn btn-dark" value="Add Product">
               </router-link>
               <input type="button" class="btn btn-warning" value="Logout" v-on:click="logout">

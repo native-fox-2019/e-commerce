@@ -142,6 +142,19 @@ class productController{
         })
     }
 
+    static getCart(req,res,next){
+        Product.findAll()
+        .then(product=>{
+            Transaction.findAll({include:Product,where:{UserId:req.userData.id}})
+            .then(result=>{
+                res.status(200).json(result)
+            })
+        })
+        .catch(err=>{
+            next({status: 500, msg: 'Internal server error!'}) 
+        })
+    }
+
 }
 
 module.exports = productController

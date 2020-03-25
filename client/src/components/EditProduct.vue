@@ -16,7 +16,7 @@
                 type="submit" class="btn btn-dark mr-2" value="Edit Product"
                 v-on:click.prevent="edit"
                 >
-                <router-link to="/panel">
+                <router-link to="/admin/panel">
                 <input type="button" class="btn btn-warning" value="Back">
                 </router-link>
             </form>

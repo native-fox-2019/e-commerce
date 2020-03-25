@@ -122,7 +122,7 @@ export default new Vuex.Store({
     },
     addToCart(context, id) {
       swal({
-        title: 'Are you sure want to add product?',
+        title: 'Are you sure want to add product to cart?',
         buttons: true,
         dangerMode: true,
       })
@@ -138,6 +138,19 @@ export default new Vuex.Store({
             })
               .then((data) => {
                 console.log(data);
+                axios({
+                  method: 'PUT',
+                  url: `http://localhost:3000/editstock/${id}`,
+                  headers: { token: localStorage.getItem('token') },
+                  data: {
+                    stock: Number(this.state.eachProduct.stock - 1),
+                  },
+                })
+                  .then((result) => {
+                    console.log(result);
+                    this.state.eachProduct = null;
+                    context.dispatch('Products');
+                  });
               })
               .catch((err) => {
                 console.log(err.err);
@@ -151,23 +164,6 @@ export default new Vuex.Store({
             swal('Add To Cart cancelled');
             this.$router.push({ name: 'Home' });
           }
-        });
-    },
-    editStock(context, id) {
-      axios({
-        method: 'PUT',
-        url: `http://localhost:3000/editstock/${id}`,
-        headers: { token: localStorage.getItem('token') },
-        data: {
-          stock: Number(this.state.eachProduct.stock - 1),
-        },
-      })
-        .then((data) => {
-          console.log(data);
-          this.state.eachProduct = null;
-        })
-        .catch((error) => {
-          console.log(error);
         });
     },
   },

@@ -5,7 +5,7 @@ import Register from '../views/Register.vue';
 import Login from '../views/Login.vue';
 import Panel from '../views/Panel.vue';
 import Add from '../views/AddProduct.vue';
-import ViewProduct from '../views/Product.vue';
+import ViewProduct from '../views/ViewProduct.vue';
 import Home from '../views/Home.vue';
 import UserLogin from '../views/UserLogin.vue';
 import UserRegister from '../views/UserRegister.vue';

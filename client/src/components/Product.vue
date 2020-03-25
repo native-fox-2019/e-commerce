@@ -55,7 +55,6 @@ export default {
         }
       });
       this.$store.dispatch('addToCart', id);
-      this.$store.dispatch('editStock', id);
     },
   },
 };
