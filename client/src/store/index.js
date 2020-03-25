@@ -14,6 +14,8 @@ export default new Vuex.Store({
     token: null,
     usertoken: null,
     eachProduct: null,
+    eachCart: null,
+    total: 0,
   },
   mutations: {
     viewProducts(state, params) {
@@ -171,20 +173,63 @@ export default new Vuex.Store({
         });
     },
     getCart(context) {
+      this.state.total = 0;
       axios({
         method: 'GET',
         url: 'http://localhost:3000/getcart',
         headers: { token: localStorage.getItem('token') },
       })
         .then((data) => {
+          data.data.forEach((element) => {
+            this.state.total += element.Product.price;
+          });
           context.commit('viewCart', data.data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    deleteCart(context, id) {
+      swal({
+        title: 'Are you sure want to remove this?',
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            axios({
+              method: 'DELETE',
+              url: `http://localhost:3000/deletecart/${id}`,
+              headers: { token: localStorage.getItem('token') },
+            })
+              .then((data) => {
+                console.log(data);
+                axios({
+                  method: 'PUT',
+                  url: `http://localhost:3000/editstock/${this.state.eachCart.Product.id}`,
+                  headers: { token: localStorage.getItem('token') },
+                  data: {
+                    stock: Number(this.state.eachCart.Product.stock + 1),
+                  },
+                })
+                  .then((result) => {
+                    console.log(result);
+                    this.state.eachProduct = null;
+                    context.dispatch('getCart');
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            swal('product has removed from cart!', {
+              icon: 'success',
+            });
+          } else {
+            swal('removing product cancelled!');
+          }
+        });
+    },
   },
-
   modules: {
   },
 });

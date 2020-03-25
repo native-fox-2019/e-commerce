@@ -1,29 +1,39 @@
 <template>
 <div>
     <UserNavbar/>
-    <table class="table">
-    <thead class="thead">
-        <tr>
-        <th scope="col">Product</th>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="data in this.$store.state.cartList" :key="data.id">
-        <td><img :src='data.Product.image_url'></td>
-        <td>{{ data.Product.name }}</td>
-        <td>Rp. {{ data.Product.price.toLocaleString('ID') }}</td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr class="bottom">
-            <td></td>
-            <td>Total</td>
-            <td>Rp. {{ (20000000).toLocaleString('ID') }}</td>
-        </tr>
-    </tbody>
-</table>
+
+    <div class="tablebox">
+        <h2>Order Summary</h2>
+        <table class="table">
+        <thead class="thead">
+            <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="data in this.$store.state.cartList" :key="data.id">
+            <td><img :src='data.Product.image_url'></td>
+            <td>{{ data.Product.name }}</td>
+            <td>Rp. {{ data.Product.price.toLocaleString('ID') }}</td>
+            <td>
+            <input type="button" class="btn btn-danger" value="Delete"
+            v-on:click.prevent="deleteCarts(data.id)">
+            </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr class="bottom">
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td>Rp. {{ this.$store.state.total.toLocaleString('ID') }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 </div>
 </template>
 <script>
@@ -46,6 +56,15 @@ export default {
       this.$store.dispatch('getCart');
       console.log(this.$store.state.cartList);
     },
+    deleteCarts(id) {
+      this.$store.state.cartList.forEach((element) => {
+        if (element.id === id) {
+          this.$store.state.eachCart = element;
+          console.log(this.$store.state.eachCart);
+        }
+      });
+      this.$store.dispatch('deleteCart', id);
+    },
   },
 };
 </script>
@@ -56,9 +75,12 @@ export default {
   text-align: center;
   font-family: 'Lato';
   font-weight: 300;
-  margin : 100px auto;
   background: white;
-  padding: 15px;
+  margin : 10px auto;
+}
+.tablebox{
+  margin : 40px auto;
+  text-align: center;
 }
 .thead{
     background-color: rgb(5, 5, 5);
@@ -72,5 +94,10 @@ export default {
 img{
     width: 50px;
     height: 50px;
+}
+h2{
+    text-align: center;
+    font-family: 'Lato';
+    font-weight: 300;
 }
 </style>

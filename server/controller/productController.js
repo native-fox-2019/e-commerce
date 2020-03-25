@@ -155,6 +155,17 @@ class productController{
         })
     }
 
+    static deleteCart(req,res,next){
+        let id = req.params.id
+        Transaction.destroy({where:{id:id}})
+        .then(result=>{
+            res.status(200).json({status: result, msg: 'file has been deleted'})
+        })
+        .catch(err=>{
+            next({status: 500, msg: 'Internal server error!'})
+        })
+    }
+
 }
 
 module.exports = productController

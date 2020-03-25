@@ -10,6 +10,7 @@ router.get('/userproduct',productController.getProduct)
 router.post('/addtocart',authentication,productController.addToCart)
 router.put('/editstock/:id',authentication,productController.editStock)
 router.get('/getcart',authentication,productController.getCart)
+router.delete('/deletecart/:id',authentication,productController.deleteCart)
 
 router.post('/user/register',userController.userRegister)
 router.post('/user/login',userController.userLogin)
