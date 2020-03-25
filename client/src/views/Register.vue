@@ -9,6 +9,7 @@
               v-model="alert"
               dismissible
               type="error"
+              v-for="message in messages" :key="message.id"
             >
               {{ message }}
             </v-alert>
@@ -18,19 +19,55 @@
                 dark
                 flat
               >
-                <v-btn>
-                  <v-icon>mdi-back</v-icon>
-                </v-btn>
+                <v-icon @click="back">mdi-arrow-left-thick</v-icon>
+                <v-spacer></v-spacer>
                 <v-toolbar-title>Register</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form @submit.prevent="login">
+                <v-form @submit.prevent="register"
+                  :disabled="dialog"
+                  :loading="dialog"
+                >
+                  <v-dialog
+                    v-model="dialog"
+                    hide-overlay
+                    persistent
+                    width="300"
+                  >
+                    <v-card
+                      color="green darken-3"
+                      dark
+                    >
+                      <v-card-text>
+                        Please stand by
+                        <v-progress-linear
+                          indeterminate
+                          color="white"
+                          class="mb-0"
+                        ></v-progress-linear>
+                      </v-card-text>
+                    </v-card>
+                  </v-dialog>
+                  <v-text-field
+                    label="First Name"
+                    v-model="first_name"
+                    prepend-icon="mdi-account"
+                    type="text"
+                  ></v-text-field>
+
+                  <v-text-field
+                    label="Last Name"
+                    v-model="last_name"
+                    prepend-icon="mdi-account"
+                    type="text"
+                  ></v-text-field>
+
                   <v-text-field
                     label="Email"
                     v-model="email"
                     prepend-icon="mdi-account"
-                    type="text"
+                    type="email"
                   ></v-text-field>
 
                   <v-text-field
@@ -42,7 +79,7 @@
                   ></v-text-field>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn block color="green darken-4" dark type="submit">Login</v-btn>
+                  <v-btn block color="green darken-4" dark type="submit">Register</v-btn>
                 </v-card-actions>
 
                 </v-form>
@@ -51,9 +88,6 @@
                 <v-spacer></v-spacer>
                 <p class="text-center">OR</p>
               </div>
-              <v-card-actions>
-                <v-btn block color="white darken-4" type="button">Register With Email</v-btn>
-              </v-card-actions>
               <v-card-actions>
                 <v-btn block color="white darken-4" type="button">Login With Google</v-btn>
               </v-card-actions>
@@ -72,24 +106,36 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      message: '',
+      dialog: false,
+      messages: null,
+      first_name: '',
+      last_name: '',
       email: '',
       password: '',
       alert: false,
     };
   },
   methods: {
-    login() {
-      axios.post('http://localhost:3000/login', {
+    back() {
+      this.$router.push('/login');
+    },
+    register() {
+      axios.post('http://localhost:3000/register', {
+        first_name: this.first_name,
+        last_name: this.last_name,
         email: this.email,
         password: this.password,
       })
-        .then((result) => {
-          console.log(result);
+        .then(() => {
+          this.dialog = true;
+          setTimeout(() => {
+            this.dialog = false;
+            this.$router.push('/login');
+          }, 2000);
         })
         .catch((err) => {
           this.alert = true;
-          this.message = err.response.data.message;
+          this.messages = err.response.data;
         });
     },
   },

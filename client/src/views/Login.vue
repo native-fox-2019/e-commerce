@@ -27,18 +27,40 @@
                 dark
                 flat
               >
+                <v-icon @click="back">mdi-arrow-left-thick</v-icon>
+                <v-spacer></v-spacer>
                 <v-toolbar-title>Login</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form @submit.prevent="login">
+                <v-form @submit.prevent="login" :disabled="dialog"
+                  :loading="dialog">
                   <v-text-field
                     label="Email"
                     v-model="email"
                     prepend-icon="mdi-account"
-                    type="text"
+                    type="email"
                   ></v-text-field>
-
+                  <v-dialog
+                    v-model="dialog"
+                    hide-overlay
+                    persistent
+                    width="300"
+                  >
+                    <v-card
+                      color="green darken-3"
+                      dark
+                    >
+                      <v-card-text>
+                        Please stand by
+                        <v-progress-linear
+                          indeterminate
+                          color="white"
+                          class="mb-0"
+                        ></v-progress-linear>
+                      </v-card-text>
+                    </v-card>
+                  </v-dialog>
                   <v-text-field
                     id="password"
                     label="Password"
@@ -78,6 +100,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      dialog: false,
       message: '',
       email: '',
       password: '',
@@ -85,19 +108,29 @@ export default {
     };
   },
   methods: {
+    back() {
+      this.$router.push('/');
+    },
     login() {
       axios.post('http://localhost:3000/login', {
         email: this.email,
         password: this.password,
       })
         .then((result) => {
-          console.log(result);
+          this.dialog = true;
+          setTimeout(() => {
+            this.dialog = false;
+            localStorage.setItem('usertoken', result.data.usertoken);
+            this.$router.push('/');
+          }, 4000);
         })
         .catch((err) => {
           this.alert = true;
           this.message = err.response.data.message;
         });
     },
+  },
+  watch: {
   },
 };
 </script>
