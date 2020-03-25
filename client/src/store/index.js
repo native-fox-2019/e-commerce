@@ -13,7 +13,11 @@ export default new Vuex.Store({
     products: [],
     editData: null,
     slide: true,
-    cart: null
+    cart: null,
+    userCart: {},
+    total: 0,
+    editCart: null,
+    editStock: null
   },
   mutations: {
     GET_PRODUCTS(state, data) {
@@ -30,9 +34,87 @@ export default new Vuex.Store({
     },
     ADD_TO_CART_FORM(state, data) {
       state.cart = data;
+    },
+    GET_CART(state, data) {
+      state.userCart = data.data;
+      state.total = data.total;
+    },
+    EDIT_CART_FORM(state, data) {
+      state.editCart = data.editCartData;
+      state.editStock = data.newStock;
     }
   },
   actions: {
+    editCartForm({ state, dispatch, commit }, data) {
+      let editCartData = state.products.filter(x => {
+        return x.id === data.productId;
+      })[0];
+      if (!editCartData) {
+        dispatch('showError', { message: 'Error not Found' });
+      } else {
+        let cartStock = state.userCart.filter(x => {
+          return x.Cart.id === data.cartId;
+        })[0];
+        if (!cartStock) {
+          dispatch('showError', { message: 'Error not Found' });
+        } else {
+          commit('EDIT_CART_FORM', { editCartData, newStock: cartStock.Cart.stock });
+          router.push('/editcart');
+        }
+      }
+    },
+    deleteCart({ state, dispatch }, id) {
+      state.loading = true;
+      axios({
+        method: 'DELETE',
+        url: baseUrl + '/carts/' + id,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(() => {
+          state.loading = false;
+          dispatch('getCart');
+          dispatch('swalMixin', 'Your Cart has been deleted');
+        }).catch(err => {
+          dispatch('showError', err);
+        });
+    },
+    deleteCartConfirmation({ dispatch }, id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          dispatch('deleteCart', id);
+        }
+      })
+    },
+    getCart({ state, dispatch, commit }) {
+      state.loading = true;
+      axios({
+        method: 'GET',
+        url: baseUrl + '/carts',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          state.loading = false;
+          let total = 0;
+          data.Products.forEach(x => {
+            total += x.price;
+          });
+          commit('GET_CART', { data: data.Products, total });
+        }).catch(err => {
+          dispatch('showError', err);
+        });
+    },
     addToCart({ state, dispatch, commit }, data) {
       state.loading = true;
       axios({

@@ -12,8 +12,8 @@
       <h3>{{ stock }}</h3>
     </div>
     <h1>Enter how many do you want to buy</h1>
-    <form style="width: 300px; margin: auto" @submit.prevent="addToCart">
-      <input type="number" :max="stock" min="0" v-model="newStock">
+    <form style="width: 300px; margin: auto" @submit.prevent="">
+      <input type="number" :max="stock" min="0" v-model="newEditStock">
       <div class="mt-2">
         <button class="btn btn-primary mx-1">Submit</button>
         <button class="btn btn-danger mx-1" @click.prevent="cancel">Cancel</button>
@@ -24,45 +24,36 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import Loading from './Loading.vue';
+import { mapState } from 'vuex';
 export default {
   components: {
     Loading
   },
+  computed: mapState(['loading', 'editCart', 'editStock']),
   data() {
     return {
-      id: null,
+      newEditStock: null,
       name: '',
       image_url: '',
       price: '',
       stock: '',
-      newStock: 0
     }
   },
-  computed: mapState(['loading', 'cart']),
   created() {
-    if (!this.$store.state.cart) {
-      this.$router.push('/');
+    if (!this.editCart || !this.editStock) {
+      this.$router.push('/cart');
     } else {
-      this.id = this.$store.state.cart.id;
-      this.name = this.$store.state.cart.name;
-      this.image_url = this.$store.state.cart.image_url;
-      this.price = this.$store.state.cart.price;
-      this.stock = this.$store.state.cart.stock;
+      this.name = this.editCart.name;
+      this.image_url = this.editCart.image_url;
+      this.price = this.editCart.price;
+      this.stock = this.editCart.stock;
+      this.newEditStock = this.editStock;
     }
   },
   methods: {
     cancel() {
-      this.$router.push('/');
-    },
-    addToCart() {
-      if (this.newStock > 0) {
-        const obj = { stock: this.newStock, ProductId: this.cart.id };
-        this.$store.dispatch('addToCart', obj);
-      } else {
-        this.$store.dispatch('showError', { message: 'Enter the amount of stock you want to buy!' });
-      }
+      this.$router.push('/cart');
     }
   }
 }

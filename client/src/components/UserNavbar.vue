@@ -1,7 +1,10 @@
 <template>
   <div style="height: 60px; position: fixed; width: 100%; top: 0; z-index: 1000;" class="bg-dark">
     <a href="">
-      <img src="../assets/cart-36-32.png" alt="Shopping Cart" style="position: fixed; z-index:2000;left: 20px; top: 10px; position: fixed">
+      <img src="../assets/cart-36-32.png"
+      alt="Shopping Cart"
+      style="position: fixed; z-index:2000;left: 20px; top: 10px; position: fixed"
+      @click.prevent="showCart">
     </a>
     <div class="mt-2" v-if="this.$route.path === '/'">
       <a href="#featuredProduct" style="text-decoration: none;">
@@ -32,6 +35,9 @@ export default {
     },
     loginUser() {
       this.$router.push('/login');
+    },
+    showCart() {
+      this.$router.push('/cart');
     }
   },
   computed: {
