@@ -5,7 +5,7 @@
         v-if="isLoading">LOADING...<p>
         <div class="product-content" v-if="!isLoading">
             <div class="product-image">
-            <img :src="image_url" width="300px" height="auto">
+                <img :src="image_url" width="300px" height="auto">
             </div>
             <div class="product-details">
                 <div class="product-name">
@@ -32,6 +32,7 @@
 </template>
 <script>
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default {
   name: 'Product',
@@ -60,6 +61,8 @@ export default {
     amount() {
       if (this.amount > this.stock) {
         this.amount = this.stock;
+      } else if (this.amount < 0) {
+        this.amount = 1;
       }
     },
   },
@@ -103,6 +106,7 @@ export default {
         axios(options)
           .then(({ data }) => {
             console.log(data);
+            swal(data.message);
             this.$router.push('/cart');
           })
           .catch(({ response }) => {

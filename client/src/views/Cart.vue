@@ -1,12 +1,12 @@
 <template>
     <div class="page">
-        <h2 style="text-align: center">{{$store.state.name}}'s Carts</h2>
+        <h2 style="text-align: center">{{$store.state.name}}'s Cart</h2>
         <div class="carts">
             <span v-if="isLoading">LOADING...</span>
             <div class="cart" v-for="cart in carts" :key="cart.id">
                 <div class="cart-content">
                     <div class="cart-image">
-                        <img :src="cart.Product.image_url" width="130px" height="auto">
+                        <img :src="cart.Product.image_url" width="auto" height="130px">
                     </div>
                     <div class="cart-details">
                         <h3>{{cart.Product.name}}</h3>
@@ -23,6 +23,7 @@
 </template>
 <script>
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default {
   name: 'Cart',
@@ -65,13 +66,28 @@ export default {
           token: localStorage.token,
         },
       };
-      axios(options)
-        .then(({ data }) => {
-          console.log(data.message);
-          this.carts = this.carts.filter((item) => item.id !== id);
-        })
-        .catch(({ response }) => {
-          console.log(response);
+      swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this cart',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            axios(options)
+              .then(({ data }) => {
+                console.log(data.message);
+                swal(data.message);
+                this.carts = this.carts.filter((item) => item.id !== id);
+              })
+              .catch(({ response }) => {
+                console.log(response);
+                swal(response.data.message);
+              });
+          } else {
+            swal('Your cart is safe!');
+          }
         });
     },
   },

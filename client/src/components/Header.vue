@@ -2,7 +2,9 @@
     <div class="header">
         <div class="header-content">
             <div class="title">
-                <span>Footsalt.com</span>
+                <router-link to="/">
+                    <span style="color: white">Footsalt.com</span>
+                </router-link>
             </div>
             <div class="nav">
                 <router-link to="/" :class="{active: isHome}">Home</router-link>
