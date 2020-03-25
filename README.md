@@ -1,14 +1,7 @@
 # e-commerce-cms
 
-admin email: admin@admin.com
+admin email: admin@mail.com
 admin password :tests
-
-user email: user@user.com 
-user password : tests
-
-user email:joni@dangdut.mail.com
-user password :tests
-https://dascomix.firebaseapp.com/
 
 
 GET PRODUCT ROUTE
