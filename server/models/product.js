@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
 
   const Model=sequelize.Sequelize.Model;
+  const path=require('path');
 
   class Product extends Model{
 
@@ -11,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     image_url: DataTypes.STRING,
     price: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER
+    stock: DataTypes.INTEGER,
+    category:DataTypes.STRING,
+    description:DataTypes.TEXT
   }, {sequelize,modelName:'Product'})
 
 
