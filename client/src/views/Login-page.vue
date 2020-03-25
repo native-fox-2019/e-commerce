@@ -1,6 +1,7 @@
 <template>
   <div class="form-container">
     <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
+    <Success v-show="success.status" :success="success" @hide="isError.status=!isError.status"/>
     <form @submit.prevent="login">
       <div class="input-email">
         <label for="email">EMAIL</label>
@@ -28,20 +29,25 @@
 <script>
 import axios from 'axios'
 import Alert from '../components/Alert'
+import Success from '../components/SuccessAlert'
 // const url = 'http://localhost:3000'
-// const url = 'http://secure-eyrie-18193.herokuapp.com'
 const url = 'https://secure-eyrie-18193.herokuapp.com'
 
 export default {
   name: 'Login-page',
   components: {
-    Alert
+    Alert,
+    Success
   },
   data () {
     return {
       email: '',
       password: '',
       isError: {
+        status: false,
+        msg: ''
+      },
+      success: {
         status: false,
         msg: ''
       }
@@ -60,6 +66,8 @@ export default {
         .then(data => {
           localStorage.setItem('access_token', data.data.access_token)
           this.$router.push({ name: 'Home' })
+          this.success.status = true
+          this.success.msg = data.data.message
         })
         .catch(err => {
           this.isError.msg = err.response.data.msg

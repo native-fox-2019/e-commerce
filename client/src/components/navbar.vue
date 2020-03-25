@@ -1,5 +1,6 @@
 <template>
   <div class="navbar-list">
+    <button @click.prevent="goToCart" class="signOut"><i class="fas fa-shopping-cart"></i></button>
     <button @click.prevent="signout" class="signOut">sign out</button>
   </div>
 </template>
@@ -11,6 +12,9 @@ export default {
     signout () {
       localStorage.removeItem('access_token')
       this.$router.push({ name: 'Login' })
+    },
+    goToCart () {
+      this.$router.push({ name: 'Cart' })
     }
   }
 }

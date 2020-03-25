@@ -3,9 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login-page.vue'
 import Register from '../views/Register-page.vue'
 import Home from '../views/Home.vue'
-import Add from '../views/Add-page.vue'
-import Edit from '../views/Edit-page.vue'
-
+import Cart from '../views/Cart.vue'
 Vue.use(VueRouter)
 
 const beforeEnter = async (to, from, next) => {
@@ -25,25 +23,14 @@ const routes = [
     beforeEnter
   },
   {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
+  },
+  {
     path: '/register',
     name: 'Register',
     component: Register
-  },
-  {
-    path: '/add',
-    name: 'Add',
-    component: Add,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/edit/:id',
-    name: 'Edit',
-    component: Edit,
-    meta: {
-      requiresAuth: true
-    }
   },
   {
     path: '/home',

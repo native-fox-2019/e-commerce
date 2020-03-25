@@ -3,6 +3,18 @@
     <Navbar/>
     <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
     <Banner/>
+    <div>
+      <b-modal id="modal-1" title="BootstrapVue">
+          <form @submit.prevent="addToCart(id)">
+            <div>
+              <label for="amount">AMOUNT</label>
+            </div>
+            <div>
+              <input type="number" name="amount">
+            </div>
+          </form>
+      </b-modal>
+    </div>
     <div class="container">
       <div class="add-container">
       </div>
@@ -10,49 +22,29 @@
         <h1>Products List</h1>
       </div>
       <div class="card-container">
-        <div class="d-flex felx-row flex-wrap justify-content-center align-center ">
-   <b-card
-    v-for="product in products" :key="product.id"
-    :title="product.name"
-    :img-src="product.imageURL"
-    img-top
-    style="max-width: 20rem; margin: 1vh"
-    class="mb-2 shadow p-3 mb-5 bg-white rounded"
-  >
-    <b-card-text>
-      <h6>{{product.price}}</h6>
-      <h4>{{product.stock}}</h4>
-    </b-card-text>
-    <b-button variant="primary">add to cart</b-button>
-  </b-card>
-  <b-card
-    v-for="product in products" :key="product.id"
-    :title="product.name"
-    :img-src="product.imageURL"
-    img-top
-    style="max-width: 20rem; margin: 1vh"
-    class="mb-2 shadow p-3 mb-5 bg-white rounded"
-  >
-    <b-card-text>
-      <h6>{{product.price}}</h6>
-      <h4>{{product.stock}}</h4>
-    </b-card-text>
-    <b-button variant="primary">add to cart</b-button>
-  </b-card>
-        </div>
-        <div class="card add" @click="add">
-          <i class="fas fa-plus-circle fa-8x" style=""></i>
-        </div>
+        <b-card
+          v-for="product in products" :key="product.id"
+          :title="product.name"
+          :img-src="product.imageURL"
+          img-top
+          style="max-width: 20rem; margin: 1vh"
+          class="mb-2 shadow p-3 mb-5 bg-white rounded">
+          <b-card-text>
+            <h6>{{product.price}}</h6>
+            <h4>{{product.stock}}</h4>
+          </b-card-text>
+          <b-button @click="setId(product.id)" v-b-modal.modal-1>add to cart</b-button>
+        </b-card>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/navbar'
+import Navbar from '../components/navbar'
 import axios from 'axios'
-import Alert from '@/components/Alert'
-import Banner from '@/components/Banner'
+import Alert from '../components/Alert'
+import Banner from '../components/Banner'
 // const url = 'http://localhost:3000'
 const url = 'https://secure-eyrie-18193.herokuapp.com'
 
@@ -68,7 +60,8 @@ export default {
       isError: {
         status: false,
         msg: ''
-      }
+      },
+      id: null
     }
   },
   computed: {
@@ -83,9 +76,9 @@ export default {
     edit (id) {
       this.$router.push(`/edit/${id}`)
     },
-    remove (id) {
+    addToCart (id) {
       axios({
-        url: `${url}/admin/products/${id}`,
+        url: `${url}/user/addtocart/${id}`,
         method: 'delete',
         headers: {
           access_token: localStorage.access_token
@@ -98,6 +91,9 @@ export default {
           this.isError.msg = err.response.data.msg
           this.isError.status = true
         })
+    },
+    setId (id) {
+      this.id = id
     }
   },
   created () {
