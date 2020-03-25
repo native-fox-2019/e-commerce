@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import baseUrl from "../baseUrl";
+
 export default {
   name: "Register",
   data() {
@@ -51,7 +53,7 @@ export default {
   },
   methods: {
     submit() {
-      fetch("http://localhost:3000/users/register", {
+      fetch(`${baseUrl}users/register`, {
         method: "post",
         body: JSON.stringify({
           email: this.email,
@@ -63,7 +65,7 @@ export default {
           this.$store.commit("setJwt", data.token);
           this.$router.push("/");
         })
-        .catch(err => console.log(err));
+        .catch(() => {});
     }
   }
 };

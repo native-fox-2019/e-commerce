@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import baseUrl from "../baseUrl";
+
 export default {
   name: "Home",
   computed: {
@@ -27,12 +29,12 @@ export default {
   },
   methods: {
     getAllProduct() {
-      fetch("http://localhost:3000/products")
+      fetch(`${baseUrl}products`)
         .then(response => response.json())
         .then(data => {
           this.$store.commit("setProducts", data);
         })
-        .catch(err => console.log(err));
+        .catch(() => {});
     }
   },
   mounted() {

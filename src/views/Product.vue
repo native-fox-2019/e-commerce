@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import baseUrl from "../baseUrl";
+
 export default {
   name: "Product",
   computed: {
@@ -58,12 +60,12 @@ export default {
   },
   methods: {
     getProduct() {
-      fetch(`http://localhost:3000/products/${this.$route.params.id}`)
+      fetch(`${baseUrl}products/${this.$route.params.id}`)
         .then(response => response.json())
         .then(data => {
           this.$store.commit("updateProduct", data);
         })
-        .catch(err => console.log(err));
+        .catch(() => {});
     },
     addToCart() {
       this.$store.commit("addToCart", this.product);
