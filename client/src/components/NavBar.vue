@@ -6,9 +6,9 @@
           </router-link>
       </b-navbar-brand>
 
-      <b-nav-form right >
-        <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
-        <b-button variant="outline-success" class="my-2 my-sm-0" type="submit">Search</b-button>
+      <b-nav-form @submit.prevent="onSearch" right>
+        <b-form-input class="mr-sm-2" v-model="search" placeholder="Search"></b-form-input>
+        <b-button variant="outline-success" class="my-2 my-sm-0">Search</b-button>
       </b-nav-form>
       <b-navbar-nav right  class="ml-auto">
         <router-link to="/login" v-if="!isLogin">
@@ -38,9 +38,18 @@ export default {
             return this.$store.state._isLogin
         }
     },
+    data(){
+        return {
+            search:''
+        }
+    },
     methods:{
        logout(){
            this.$store.dispatch('logout')
+       },
+       onSearch(){
+           console.log(this.search)
+           this.$router.push({name:'Product',query:{search:this.search}})
        }
     }
 }

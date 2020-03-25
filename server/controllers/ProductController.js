@@ -1,4 +1,5 @@
 const {Product}=require('../models');
+const {Op}=require('sequelize').Sequelize
 
 class ProductController{
     static async index(req,res){
@@ -8,6 +9,11 @@ class ProductController{
         try{
             let attr={order:['id'],limit:6,offset,where:{}}
             req.query.category?attr.where.category=req.query.category:null
+            if(req.query.search){
+                attr.where.name={
+                    [Op.iLike]: '%'+req.query.search+'%', 
+                }
+            }
 
             let products=await Product.findAll(attr);
             res.status(200).json(products)

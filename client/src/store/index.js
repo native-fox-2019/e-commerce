@@ -56,6 +56,32 @@ export default new Vuex.Store({
       })
       .finally(()=>commit('setIsLoading',false))
     },
+    loadProductsBySearch({commit},search){
+      commit('setIsLoading',true)
+      return server.get('product?search='+search,{
+        headers:HEADERS()
+      })
+      .then((response)=>{
+        return response.data
+      })
+      .catch((err)=>{
+        console.log('Ada error saat loadHomeProducts',err)
+      })
+      .finally(()=>commit('setIsLoading',false))
+    },
+    loadProductsByCategory({commit},category){
+      commit('setIsLoading',true)
+      return server.get('product?category='+category,{
+        headers:HEADERS()
+      })
+      .then((response)=>{
+        return response.data
+      })
+      .catch((err)=>{
+        console.log('Ada error saat loadHomeProducts',err)
+      })
+      .finally(()=>commit('setIsLoading',false))
+    },
     addToCart({state},product){
       state.cart.push(product)
       var cart_str=JSON.stringify(state.cart)
