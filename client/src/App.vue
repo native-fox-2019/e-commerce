@@ -14,5 +14,10 @@ export default {
     Header,
     Footer,
   },
+  created() {
+    if (localStorage.token) {
+      this.$store.commit('changeIsLogin', true);
+    }
+  },
 };
 </script>
