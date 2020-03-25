@@ -12,7 +12,7 @@
         <router-link id="cart" to="/cart">
           <img src="../assets/shopping-bag.svg" alt style="cursor:pointer;" />
 
-          <span class="badge badge-secondary">{{this.$store.state.dataAllCarts.length}}</span>
+          <span class="badge badge-secondary">{{notif}}</span>
         </router-link>
         <router-link id="login" to="/login">
           <img src="../assets/log-in.svg" alt v-if="!isLoginPage" />
@@ -61,10 +61,11 @@ export default {
       }
     }
     this.$store.dispatch("getAll");
+    // console.log(this.notif);
   },
-  // updated() {
-  //   this.$store.dispatch("allCart");
-  // },
+  updated() {
+    this.$store.dispatch("allCart");
+  },
   created() {
     this.$store.dispatch("allCart");
     this.$store.dispatch("getAll");

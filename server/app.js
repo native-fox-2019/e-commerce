@@ -16,5 +16,5 @@ app.use('/', routes)
 
 app.use(errorHandler)
 
-// app.listen(port, console.log(`running sever on port ${port}`))
+app.listen(port, console.log(`running sever on port ${port}`))
 module.exports = app
