@@ -6,6 +6,7 @@
     </div>
     <div class="footer">
       <span> Gabriel Geovrisco</span>
+      <span> mail: geovrisco@gmail.com </span>
     </div>
   </div>
 </template>

@@ -142,6 +142,8 @@ text-decoration: none;
   margin-top: 1%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .Overflow{
   overflow-y:auto;
