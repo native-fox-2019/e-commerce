@@ -58,9 +58,9 @@ export default {
         ...mapGetters(['isLoading'])
     },
     watch:{
-        searchText:(oldVal,newVal)=>{
+        searchText:(val)=>{
             if(vm){
-                vm.loadProduct(newVal,vm.isSearch)
+                vm.loadProduct(val,vm.isSearch)
             }
         }
     },
