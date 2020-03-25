@@ -11,6 +11,11 @@ class CartController {
             qty
         })
             .then(data => {
+               return model.Cart.findByPk(data.id, {
+                   include: [`Product`]
+               })
+            })
+            .then(data => {
                 res.status(201).json(data)
             })
             .catch(next)
@@ -33,19 +38,18 @@ class CartController {
     }
 
     static update(req, res, next) {
-        var { qty } = req.body
+        var { qty, ProductId } = req.body
 
-        model.Product.findByPk(Number(req.params.id))
+        model.Product.findByPk(ProductId)
             .then(data => {
                 if (qty > data.stock) {
-                    throw createError(403, `Quantity can't be higher that stock`)
+                    throw createError(400, `Quantity can't be higher that stock`)
                 } else {
                     return model.Cart.update({
                         qty
                     }, {
                         where: {
-                            UserId: req.user.id,
-                            ProductId: req.params.id
+                            id: req.params.id
                         }
                     })
                 }
@@ -61,7 +65,7 @@ class CartController {
     }
 
     static checkout(req, res, next) {
-        var { qty, ProductId } = req.body
+        var { qty, ProductId, UserId, cost } = req.body
 
         model.Cart.destroy({
             where: {
@@ -72,7 +76,7 @@ class CartController {
                 if (data) {
                     return model.Product.findByPk(ProductId)
                 } else {
-                    throw createError(404, `can't remove Cart item that does not exist`)
+                    throw createError(404, `ID ${req.params.id} Cart item that does not exist`)
                 }
             })
             .then(data => {
@@ -84,9 +88,35 @@ class CartController {
                     where: {
                         id: data.id
                     },
-                    return: true
+                    returning: true
                 })
             })
+            .then(data => {
+                return model.User.findByPk(Number(UserId))
+            })
+            .then(data => {
+                data.wallet -= cost
+                return model.User.update({
+                    wallet: data.wallet
+                }, {
+                    where: {
+                        id: data.id
+                    }
+                })
+            })
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(next)
+    }
+
+    static read(req, res, next) {
+        model.Cart.findAll({
+            where: {
+                UserId: req.user.id
+            },
+            include: [`Product`]
+        })
             .then(data => {
                 res.status(200).json(data)
             })

@@ -2,7 +2,8 @@ const router = require(`express`).Router()
 const { cart } = require(`../controllers`)
 const author = require(`../middleware/authorize cart`)
 
-router.post(`/add2cart`, cart.add)
+router.get(`/`, cart.read)
+router.post(`/`, cart.add)
 
 router.use(`/:id`, author)
 

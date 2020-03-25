@@ -45,6 +45,7 @@ const routes = [
       localStorage.removeItem('token');
       store.state.role = null;
       store.state.navbar = 'login';
+      store.state.total = 0;
       next();
     },
   },

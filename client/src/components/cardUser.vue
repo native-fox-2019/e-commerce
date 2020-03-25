@@ -16,10 +16,22 @@
         <b-form-group label="Cost:">{{ cost }}</b-form-group>
 
         <b-form-group label="Quantity:">
-          <b-form-input v-model="qty" type="range" min=1 :max="data.stock"
-          required placeholder="Enter Quantity" />
-          <b-form-input v-model="qty" type="number" min=1 :max="data.stock"
-          required placeholder="Enter Quantity" />
+          <b-form-input
+            v-model="qty"
+            type="range"
+            min="1"
+            :max="data.stock"
+            required
+            placeholder="Enter Quantity"
+          />
+          <b-form-input
+            v-model="qty"
+            type="number"
+            min="1"
+            :max="data.stock"
+            required
+            placeholder="Enter Quantity"
+          />
         </b-form-group>
 
         <b-button type="submit" variant="primary">Add to Shopping Cart</b-button>
@@ -29,7 +41,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
 export default {
   props: ['data'],
@@ -58,9 +70,34 @@ export default {
       event.preventDefault();
 
       if (this.qty > this.form.stock) {
-        this.$store.dispatch('toast', { vm: this, message: 'Quantity exceeds Stock!' });
+        this.$store.dispatch('toast', {
+          vm: this,
+          message: 'Quantity exceeds Stock!',
+        });
       } else {
-        this.$bvModal.hide(this.formName);
+        axios({
+          url: '/carts',
+          baseURL: this.$store.state.url,
+          method: 'post',
+          headers: {
+            token: localStorage.token,
+          },
+          data: {
+            ProductId: this.data.id,
+            qty: this.qty,
+          },
+        })
+          .then(({ data }) => {
+            this.$store.state.checkout.push(data);
+            this.qty = 1;
+            this.$bvModal.hide(this.formName);
+          })
+          .catch((err) => {
+            this.$store.dispatch('toast', {
+              vm: this,
+              message: err.response.data.status_message.join(', '),
+            });
+          });
       }
     },
   },

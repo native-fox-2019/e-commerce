@@ -23,6 +23,7 @@ export default {
   },
   created() {
     this.getList();
+    this.getCheckout();
     this.$store.state.role = localStorage.role;
   },
   methods: {
@@ -50,7 +51,25 @@ export default {
     },
 
     getCheckout() {
-
+      axios({
+        url: '/carts',
+        baseURL: this.$store.state.url,
+        method: 'get',
+        headers: {
+          token: localStorage.token,
+        },
+      })
+        .then(({ data }) => {
+          this.$store.state.checkout = data;
+        })
+        .catch((err) => {
+          err.response.data.status_message.forEach((i) => {
+            if (i === 'Invalid Token') {
+              this.$router.push({ name: 'logout' });
+            }
+          });
+          this.$store.dispatch('toast', { vm: this, message: err.response.data.status_message.join(', ') });
+        });
     },
   },
 };
