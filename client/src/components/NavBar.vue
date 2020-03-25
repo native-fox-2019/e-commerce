@@ -11,8 +11,12 @@
         <b-button variant="outline-success" class="my-2 my-sm-0" type="submit">Search</b-button>
       </b-nav-form>
       <b-navbar-nav right  class="ml-auto">
-        <b-nav-item href="#">Login</b-nav-item>
-        <b-nav-item href="#">Sign-up</b-nav-item>
+        <router-link to="/login">
+            <b-nav-item href="/login">Login</b-nav-item>
+        </router-link>
+        <router-link to="/sign-up">
+            <b-nav-item href="/sign-up">Sign-up</b-nav-item>
+        </router-link>
       </b-navbar-nav>
     </b-navbar>
 </template>
