@@ -3,7 +3,7 @@
         <b-row>
             <b-col sm="4">
                 <img src="/sepatu.jpg" alt="" class="product-image mb-4">
-                <button class="btn btn-success">Add to cart</button>
+                <button class="btn btn-success" @click="showCartModal">Add to cart</button>
             </b-col>
             <b-col sm="8">
                 <h2 class="font-weight-bold mb-5">Sepatu Haha</h2>
@@ -36,8 +36,53 @@
                 </b-row>
             </b-col>
         </b-row>
+         <b-modal id="bv-modal-cart" :no-close-on-backdrop="true" hide-footer>
+            <template v-slot:modal-title>
+                Add To card
+            </template>
+            <div class="d-block text-center">
+                <form ref="formCart" >
+                     <b-form-group invalid-feedback="Num of stock is required">
+                        <b-form-input placeholder="Enter number of stock" type="number" v-model="numStock" :state="numStockState" required></b-form-input>
+                    </b-form-group>
+                </form>
+               
+                <button class="btn btn-primary" @click="handleSubmitCart">Add To cart</button>
+            </div>
+        </b-modal>
     </b-container>
+    
 </template>
+<script>
+export default {
+    name:'ProductDetail',
+    data(){
+        return {
+            numStockState:null,
+            numStock:0
+        }
+    },
+    methods:{
+        showCartModal(){
+            this.$bvModal.show('bv-modal-cart')
+        },
+        handleSubmitCart(){
+            var formCart=this.$refs.formCart;
+            this.numStockState=null;
+            if(!formCart.checkValidity() || this.numStock===0 ){
+                this.numStockState=false;
+                return;
+            }
+
+            this.$nextTick(() => {
+                this.$bvModal.hide('bv-modal-cart')
+                this.$router.push('/cart')
+            })
+        }
+    }
+}
+</script>
+
 <style scoped>
     .product-image{
         width: 100%;
