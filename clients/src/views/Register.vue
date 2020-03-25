@@ -84,6 +84,7 @@ export default {
         };
         let { data } = await axios.post("/customer/register", input);
         localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("fullname", data.fullname);
         Toast.fire({
           icon: "success",
           title: "Login successfully."

@@ -1,47 +1,95 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark"  style="box-shadow: 3px 3px 3px grey;background-color:#39387a;">
-      <b-navbar-brand href="#">
-          <img src="../images/main.png" width="180px" style="" alt="">
+    <b-navbar
+      toggleable="lg"
+      type="dark"
+      style="box-shadow: 3px 3px 3px grey;background-color:#39387a;"
+    >
+      <b-navbar-brand href="/" @click.prevent="home">
+        <img src="../images/main.png" width="180px" style alt />
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-nav>
+        <b-nav-item href="/products" @click.prevent="products">Products</b-nav-item>
+      </b-navbar-nav>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
-        </b-navbar-nav>
-
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-          </b-nav-form>
+          <b-navbar-nav>
+            <b-nav-item href="/carts" @click.prevent="cart">
+              <b-icon icon="bag"></b-icon>
+            </b-nav-item>
+          </b-navbar-nav>
 
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <b-nav-item-dropdown right>
+          <b-nav-item-dropdown right :text="name" v-if="name">
             <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="/signout" @click.prevent="logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
+
+          <b-navbar-nav v-else>
+            <b-nav-item href="/login" @click.prevent="login">Login</b-nav-item>
+          </b-navbar-nav>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
 <script>
+import Swal from "sweetalert2";
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true
+});
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  data() {
+    return {
+      name: localStorage.fullname
+    };
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push({
+        path: "/login"
+      });
+    },
+    cart() {
+      if (!localStorage.access_token) {
+        Toast.fire({
+          icon: "warning",
+          title: "Please login first."
+        });
+      } else {
+        this.$router.push({
+          path: "/carts"
+        });
+      }
+    },
+    login() {
+      this.$router.push({
+        path: "/login"
+      });
+    },
+    home() {
+      this.$router.push({
+        path: "/"
+      });
+    },
+    products() {
+      this.$router.push({
+        path: "/products"
+      });
+    }
+  }
 };
 </script>
+
+
+   
+     

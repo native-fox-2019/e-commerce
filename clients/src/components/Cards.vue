@@ -6,12 +6,16 @@
       img-top
       :sub-title="item.name"
       tag="article"
-      style="max-width: 12rem;border:none;"
+      style="max-width: 12rem;border:none;height:15rem;"
       v-if="!isHovered"
     >
-      <b-card-text
-        style="color:#39387a;font-size: 16px;font-weight: bold;"
-      >{{formatRupiah(item.price)}}</b-card-text>
+      <b-card-text style="color:#39387a;font-size: 16px;font-weight: bold;">
+        {{formatRupiah(item.price)}}
+        <br />
+        <p style="color:#39387a;cursor:pointer;">
+          <b-icon icon="bag" class="mt-2"></b-icon> Beli Sekarang
+        </p>
+      </b-card-text>
     </b-card>
     <b-card
       :img-src="item.image_url"
@@ -19,11 +23,15 @@
       img-top
       :sub-title="item.name"
       tag="article"
-      style="max-width: 12rem;box-shadow: 2px 2px 2px grey;"
+      style="max-width: 12rem;box-shadow: 2px 2px 2px grey;height:15rem;"
       v-else
     >
-      <b-card-text style="color:#39387a;">
-        <h5>{{formatRupiah(item.price)}}</h5>
+      <b-card-text style="color:#39387a;font-size: 16px;font-weight: bold;">
+        {{formatRupiah(item.price)}}
+        <br />
+        <p style="color:#39387a;cursor:pointer;" @click.prevent="product(item)">
+          <b-icon icon="bag" class="mt-2"></b-icon> Beli Sekarang
+        </p>
       </b-card-text>
     </b-card>
   </div>
@@ -53,6 +61,12 @@ export default {
     },
     handleHover(hovered) {
       this.isHovered = hovered;
+    },
+    product(data) {
+      this.$store.commit("getOne", data);
+      this.$router.push({
+        path: `/product/${data.id}`
+      });
     }
   }
 };

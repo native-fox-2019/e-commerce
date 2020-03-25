@@ -7,7 +7,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     campaigns: [],
-    products: []
+    products: [],
+    oneProduct: "",
+    cart: []
   },
   mutations: {
     getCampaigns(state, payload) {
@@ -15,9 +17,27 @@ export default new Vuex.Store({
     },
     getProducts(state, payload) {
       state.products = payload;
+    },
+    getOne(state, payload) {
+      state.oneProduct = payload;
+    },
+    showCart(state, payload) {
+      state.cart = payload;
     }
   },
   actions: {
+    async fetchCart({ commit }) {
+      try {
+        let { data } = await axios.get("/cart", {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        });
+        commit("showCart", data);
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
     async fetchCampaigns({ commit }) {
       try {
         let { data } = await axios.get("/campaign");
@@ -33,6 +53,14 @@ export default new Vuex.Store({
       } catch (error) {
         errorHandler(error);
       }
+    },
+    async fetchOne({ commit }, id) {
+      try {
+        let { data } = await axios.get(`/products/${id}`);
+        commit("getOne", data);
+      } catch (error) {
+        errorHandler(error);
+      }
     }
   },
   getters: {
@@ -45,6 +73,13 @@ export default new Vuex.Store({
       return state.campaigns.filter(
         i => i.placement === "Home - Pop up" && i.status === "On Going"
       );
+    },
+    homeProduct(state) {
+      let products = [];
+      for (let i = 0; i <= 5; i++) {
+        products.push(state.products[i]);
+      }
+      return products;
     }
   },
   modules: {}
