@@ -78,45 +78,25 @@ class ProductController {
     }
   };
 
-  static async addToCart(req, res, next) {
-    try {
-      const ProductId = req.params.id;
-      const UserId = req.userData.id;
-
-      const obj = {
-        UserId,
-        ProductId,
-      };
-      const newCartProduct = await Cart.create(obj);
-      res.status(201).json(newCartProduct);
-    } catch (err) {
-      next(err);
-    }
-  }
-
   static async updateStock(req, res, next) {
     try {
-      const { id } = req.params;
-      const { stock } = req.body;
-      const product = await Product.findOne({ where: { id } });
-      if (!product) {
-        next(
-          {
-            status: 400,
-            message: 'Data not found',
-          },
-        );
-        return false;
-      }
-
-      const obj = {
-        name: product.name,
-        image_url: product.image_url,
-        price: product.price,
-        stock: product.stock - stock,
-      };
-      const edited = await Product.update(obj, { where: { id } });
-      res.status(200).json({ edited: obj, message: 'Successfully buy a product' });
+      // const { id } = req.params;
+      let { bulkProducts } = req.body
+      // const product = await Product.findOne({ where: { id } });
+      // if (!product) {
+      //   next(
+      //     {
+      //       status: 400,
+      //       message: 'Data not found',
+      //     },
+      //   );
+      //   return false;
+      // }
+      bulkProducts.forEach(el => {
+        el.updatedAt = new Date();
+      })
+      const edited = await Product.bulkCreate(bulkProducts, { updateOnDuplicate: ['stock', 'updatedAt'] });
+      res.status(200).json({ message: 'Success Buy' });
     } catch (err) {
       next(err);
     }

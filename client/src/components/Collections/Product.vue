@@ -11,7 +11,8 @@
               <div class="product-image-container">
                 <div class="aspect-ratio">
                   <img :src="product.image_url" alt="" class="product-image">
-                  <button @click="addToCart(product)" class="product-image-btn">Add To Cart</button>
+                  <button @click.prevent="onAddToCart(product.id)" class="product-image-btn">
+                    Add To Cart</button>
                 </div>
               </div>
               <div class="product-title">
@@ -36,9 +37,13 @@ export default {
   },
   computed: mapGetters(['products']),
   methods: {
-    ...mapActions(['fetchProducts']),
-    addToCart(product) {
-      console.log(product);
+    ...mapActions(['fetchProducts', 'addToCart']),
+    onAddToCart(id) {
+      if (!localStorage.getItem('token')) {
+        this.$router.push('/login');
+      } else {
+        this.addToCart(id);
+      }
     },
   },
 };

@@ -3,7 +3,7 @@
     <nav :class="{ change: notHome }">
       <ul class="navlist start">
         <li>
-          <button class="nav-button">
+          <button @click="menCollection" class="nav-button">
             <div class="nav-button-content">
               <p class="nav-content-description">MEN</p>
             </div>
@@ -17,13 +17,13 @@
           </button>
         </li>
       </ul>
-      <h4>LOGO</h4>
+      <h4 @click="home" style="font-size: 30px; cursor: pointer;" >KICKALIZER</h4>
       <ul class="navlist end">
         <li>
           <button v-if="getStatus" class="nav-button">
             <div class="nav-button-content nohover">
               <!-- <p class="nav-content-description">CART</p> -->
-              <i class="fas fa-shopping-cart fa-2x"></i>
+              <a @click="cartOpen" ><i class="fas fa-shopping-cart fa-2x"></i></a>
             </div>
           </button>
         </li>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'Navbar',
@@ -66,7 +66,8 @@ export default {
   },
   computed: mapGetters(['getStatus']),
   methods: {
-    ...mapMutations(['setStatus']),
+    ...mapMutations(['setStatus', 'openCart']),
+    ...mapActions(['fetchCart']),
     login() {
       this.$router.push('/login');
     },
@@ -75,6 +76,23 @@ export default {
       localStorage.removeItem('token');
       this.setStatus(false);
       this.$router.push('/');
+    },
+
+    home() {
+      if (this.$route.path !== '/') {
+        this.$router.push('/');
+      }
+    },
+
+    menCollection() {
+      if (this.$route.path !== '/collections/mens') {
+        this.$router.push('/collections/mens');
+      }
+    },
+
+    async cartOpen() {
+      await this.fetchCart();
+      this.openCart(true);
     },
   },
 };

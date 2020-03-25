@@ -22,7 +22,7 @@ const routes = [
     name: 'Admin',
   },
   {
-    path: '/collections',
+    path: '/collections/mens',
     name: 'Collections',
     component: Collections,
   },
