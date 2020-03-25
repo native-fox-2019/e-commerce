@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import router from '../router/index';
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://shielded-refuge-06289.herokuapp.com';
 
 Vue.use(Vuex)
 
