@@ -73,6 +73,26 @@ class cartController {
                 res.status(500).json({ message: "delete is fail" })
             })
     }
-
+    
+    static updateCart(req,res){
+        let idItem = {
+            where:{
+                id: req.params.id
+            }
+        }
+        let input = {
+            amount : req.body.amount
+        }
+        Cart.update(input,idItem)
+        .then(item =>{
+            return Cart.findOne(idItem)
+        })
+        .then(item =>{
+            res.status(200).json(item)
+        })
+        .catch(err =>{
+            res.status(500).json({message: "edit is fail"})
+        })
+    }
 }
 module.exports = cartController

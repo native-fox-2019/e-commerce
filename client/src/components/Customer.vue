@@ -27,7 +27,6 @@ export default {
     return {
       id: this.PropProduct.id,
       name: this.PropProduct.name,
-      amount: 0,
       usersId: this.PropProduct.usersId,
       image_url: this.PropProduct.image_url,
       price: this.PropProduct.price
@@ -45,14 +44,12 @@ export default {
         },
         data: {
           name: this.name,
-          amount: 1,
           id: this.id,
           usersId: this.usersId,
           image_url: this.image_url,
           price: this.price
         }
       }).then(response => {
-        this.amount=0
         this.$store.dispatch("holdCartItem", response.data);
       });
     },

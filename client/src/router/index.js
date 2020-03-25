@@ -8,11 +8,17 @@ import Register from "../views/Register"
 import Edit from "../views/Edit"
 import Cart from "../views/Cart"
 import Admin from "../views/Admin"
+import Thankyou from "../views/Thankyou"
 
 Vue.use(VueRouter);
 
 const beforeEnter = async (to, from, next) => {
-  if (localStorage.getItem("tokenAdmin")) {
+  if (localStorage.getItem("tokenCustomer")) {
+    next({
+      path: '/login'
+    })
+  }
+   else if (localStorage.getItem("tokenAdmin")) {
     next({
       path: '/product'
     })
@@ -20,8 +26,7 @@ const beforeEnter = async (to, from, next) => {
     next({
       path: '/'
     })
-  }
-   else {
+  } else {
     next()
   }
 }
@@ -76,7 +81,7 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: Cart,
-    meta: { requiresAuth: true }
+    // meta: { requiresAuth: true },
     // beforeEnter
   },
   {
@@ -84,6 +89,11 @@ const routes = [
     name: "Admin",
     component: Admin,
     meta: { requiresAuth: true }
+  },
+  {
+    path: "/thankyou",
+    name: "Thankyou",
+    component: Thankyou,
   }
 
 ];
@@ -96,11 +106,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     let tokenAdmin = localStorage.getItem('tokenAdmin')
-    let tokenCustomer = localStorage.getItem('tokenCustomer')
     if (tokenAdmin) {
       next()
-    } else if(tokenCustomer) {
-      next({name: "Cart"})
     } else {
       next({ name: "Login" })
     }

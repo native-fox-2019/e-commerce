@@ -10,7 +10,8 @@ export default new Vuex.Store({
     productsAdmin: [],
     productEdit: {},
     customerCart: [],
-    userArr:[]
+    userArr:[],
+    checkOutItem:[]
   },
   mutations: {
     fillProduct(state, payload) {
@@ -59,11 +60,29 @@ export default new Vuex.Store({
       state.userArr=state.userArr.filter(user => user.id != id)
     },
     updateRole(state,payload){
+      console.log(payload,"ini payload")
       state.userArr.forEach(user =>{
         if(user.id == payload.id){
           user == payload
         }
       })
+    },
+    updateAmount(state,payload){
+      state.customerCart.forEach(item =>{
+        if(item.id == payload.id){
+          item = payload
+        }
+      })
+    },
+    checkOut(state,payload){
+      state.checkOutItem.push(payload[0])   
+      console.log(state.checkOutItem,"ini state checkout item")
+    },
+    addItem(state,payload){
+      state.checkOutItem.push(payload)
+    },
+    deleteItem(state,payload){
+      state.checkOutItem = state.checkOutItem.filter(item => item.id != payload.id)
     }
   },
 
@@ -131,6 +150,18 @@ export default new Vuex.Store({
     },
     updateUserRole(context,payload){
       context.commit('updateRole',payload)
+    },
+    updateAmountCart(context,payload){
+      context.commit('updateAmount',payload)
+    },
+    itemCheckout(context,payload){
+      context.commit('checkOut',payload)
+    },
+    plusItem(context,payload){
+      context.commit("addItem",payload)
+    },
+    minusItem(context,payload){
+      context.commit("deleteItem",payload)
     }
 
   },

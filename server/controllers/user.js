@@ -8,7 +8,7 @@ class userController {
         let input = {
             email: req.body.email,
             password: req.body.password,
-            role: "Admin"
+            role: "Customer"
         }
         console.log("ini req.body",req.body)
 
