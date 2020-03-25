@@ -37,7 +37,7 @@ const routes = [
   },
   {
     path:'/sign-up',
-    name:'Login',
+    name:'Register',
     component:SignUp
   }
 ]
@@ -46,6 +46,18 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to,from,next) => {
+  // ...
+  if(to.name==='Login' || to.name==='Register'){
+   var token=localStorage.token
+   if(token){
+     next({name:'Home'})
+     return
+   }
+  }
+  next()
 })
 
 export default router

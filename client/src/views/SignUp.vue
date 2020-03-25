@@ -4,7 +4,7 @@
             <b-col sm="3"></b-col>
             <b-col sm="6">
                 <h2 class="font-weight-bold mb-3">Sign Up</h2>
-                <b-form @submit.prevent>
+                <b-form @submit.prevent="onSubmit">
                     <b-form-group  label="Email address:">
                         <b-form-input placeholder="Enter your email" type="email" v-model="form.email" required></b-form-input>
                     </b-form-group>
@@ -17,7 +17,7 @@
                     <b-form-group  label="Password:">
                         <b-form-input placeholder="Enter your password" type="password" v-model="form.password" required></b-form-input>
                     </b-form-group>
-                    <button class="btn btn-success">Submit</button>
+                    <button class="btn btn-success" :disabled="isLoading">Submit</button>
                 </b-form>
             </b-col>
         </b-row>
@@ -25,16 +25,29 @@
     </b-container>
 </template>
 <script>
+import {mapGetters,mapActions} from 'vuex'
+
 export default {
     data(){
         return {
             form:{
                 email:'',
                 password:'',
-                usename:'',
+                username:'',
                 name:''
             }
         }
+    },
+    computed:mapGetters(['isLoading']),
+    methods:{
+        onSubmit(){
+            var self=this;
+            this.signUp(this.form)
+            .then(()=>{
+                self.$router.push('/login')
+            })
+        },
+         ...mapActions(['signUp'])
     },
     name:'SignUp'
 }

@@ -15,7 +15,16 @@ export default {
   components:{
     NavBar,
     Footer
-  }
+  },
+  created(){
+    var token=localStorage.getItem('token');
+    if(token){
+      this.$store.commit('setIsLogin',true);
+    }
+    else{
+      this.$store.commit('setIsLogin',false);
+    }
+  },
 }
 </script>
 
