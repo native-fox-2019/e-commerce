@@ -49,7 +49,13 @@ export default {
       this.$store.dispatch('Products');
     },
     addToCarts(id) {
+      this.$store.state.userProduct.forEach((element) => {
+        if (element.id === id) {
+          this.$store.state.eachProduct = element;
+        }
+      });
       this.$store.dispatch('addToCart', id);
+      this.$store.dispatch('editStock', id);
     },
   },
 };

@@ -12,6 +12,7 @@ export default new Vuex.Store({
     userProduct: null,
     token: null,
     usertoken: null,
+    eachProduct: null,
   },
   mutations: {
     viewProducts(state, params) {
@@ -152,7 +153,25 @@ export default new Vuex.Store({
           }
         });
     },
+    editStock(context, id) {
+      axios({
+        method: 'PUT',
+        url: `http://localhost:3000/editstock/${id}`,
+        headers: { token: localStorage.getItem('token') },
+        data: {
+          stock: Number(this.state.eachProduct.stock - 1),
+        },
+      })
+        .then((data) => {
+          console.log(data);
+          this.state.eachProduct = null;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
+
   modules: {
   },
 });
