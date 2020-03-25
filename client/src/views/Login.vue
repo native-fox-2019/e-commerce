@@ -15,6 +15,7 @@
 </template>
 <script>
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default {
   name: 'Login',
@@ -45,6 +46,10 @@ export default {
         .then(({ data }) => {
           localStorage.setItem('token', data.token);
           localStorage.setItem('name', data.name);
+          swal({
+            text: data.message,
+            icon: 'success',
+          });
           this.$store.commit('changeIsLogin', true);
           this.$store.commit('setName', data.name);
           this.email = '';

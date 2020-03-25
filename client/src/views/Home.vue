@@ -15,6 +15,7 @@
 <script>
 // @ is an alias to /src
 import axios from 'axios';
+import swal from 'sweetalert';
 import ProductCard from '../components/ProductCard.vue';
 
 export default {
@@ -43,6 +44,10 @@ export default {
         })
         .catch(({ response }) => {
           console.log(response);
+          swal({
+            icon: 'error',
+            text: 'oops! Something went wrong',
+          });
         });
     },
   },

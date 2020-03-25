@@ -86,32 +86,50 @@ export default {
         })
         .catch((err) => {
           console.log(err.response);
+          swal({
+            icon: 'error',
+            text: 'oops! Something went wrong',
+          });
         });
     },
     addCart() {
       if (!this.$store.state.isLogin) {
         this.$router.push('/login');
       } else {
-        const options = {
-          url: `${this.$store.state.baseUrl}/cart`,
-          method: 'post',
-          data: {
-            amount: this.amount,
-            ProductId: this.$route.params.id,
-          },
-          headers: {
-            token: localStorage.token,
-          },
-        };
-        axios(options)
-          .then(({ data }) => {
-            console.log(data);
-            swal(data.message);
-            this.$router.push('/cart');
-          })
-          .catch(({ response }) => {
-            console.log(response);
-          });
+        swal({
+          text: 'Are you sure to add this item to cart?',
+          icon: 'info',
+          buttons: true,
+        }).then((result) => {
+          if (result) {
+            const options = {
+              url: `${this.$store.state.baseUrl}/cart`,
+              method: 'post',
+              data: {
+                amount: this.amount,
+                ProductId: this.$route.params.id,
+              },
+              headers: {
+                token: localStorage.token,
+              },
+            };
+            axios(options)
+              .then(({ data }) => {
+                swal({
+                  text: data.message,
+                  icon: 'success',
+                });
+                this.$router.push('/cart');
+              })
+              .catch(({ response }) => {
+                console.log(response);
+                swal({
+                  icon: 'error',
+                  text: 'oops! Something went wrong',
+                });
+              });
+          }
+        });
       }
     },
   },

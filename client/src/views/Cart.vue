@@ -56,6 +56,10 @@ export default {
         })
         .catch(({ response }) => {
           console.log(response);
+          swal({
+            icon: 'error',
+            text: 'oops! Something went wrong',
+          });
         });
     },
     deleteCart(id) {
@@ -77,8 +81,10 @@ export default {
           if (willDelete) {
             axios(options)
               .then(({ data }) => {
-                console.log(data.message);
-                swal(data.message);
+                swal({
+                  text: data.message,
+                  icon: 'success',
+                });
                 this.carts = this.carts.filter((item) => item.id !== id);
               })
               .catch(({ response }) => {

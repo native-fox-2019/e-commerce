@@ -24,6 +24,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+import swal from 'sweetalert';
 
 export default {
   data() {
@@ -71,6 +72,7 @@ export default {
     logOut() {
       localStorage.removeItem('token');
       this.$store.commit('changeIsLogin', false);
+      swal('Successfully signed out');
       this.$router.push('/');
     },
   },
