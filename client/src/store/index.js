@@ -8,18 +8,28 @@ export default new Vuex.Store({
   state: {
     products : [],
     productEdit : {},
-    customerCart: []
+    customerCart: [],
+    userArr:[]
   },
   mutations: {
     fillProducts(state , payload){
       state.products = payload
     },
+    updateAmount(state,payload){
+      state.customerCart.forEach(item =>{
+        if(item.id == payload.id){
+          item = payload
+        }
+      })
+    },
     addItemCart(state, payload) {
       state.customerCart.push(payload)
     },
+    filterUser(state,payload){
+      state.userArr=state.userArr.filter(user => user.id != payload)
+    },
     fillCart(state, payload) {
       state.customerCart = payload
-      console.log(state.customerCart)
     },
     commitNewdata (state, payload) {
       state.products.push(payload)
@@ -74,8 +84,14 @@ export default new Vuex.Store({
     updateData(context, payload) {
       context.commit('commitUpdateData', payload)
     },
+    updateAmountCart(context,payload){
+      context.commit('updateAmount',payload)
+    },
     holdCartItem(context, payload) {
       context.commit('addItemCart', payload)
+    },
+    deleteDataUser(context,payload){
+      context.commit('filterUser',payload)
     }
   },
   modules: {}

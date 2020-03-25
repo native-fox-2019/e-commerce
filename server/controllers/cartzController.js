@@ -16,7 +16,6 @@ class cartzController {
                 productsId: req.body.id
             }
         }
-        console.log(input)
 
         Kart.findOne(idItem)
             .then(item => {
@@ -73,6 +72,27 @@ class cartzController {
             .catch(err => {
                 res.status(500).json({ message: "delete is fail" })
             })
+    }
+
+    static updateCart(req,res){
+        let idItem = {
+            where:{
+                id: req.params.id
+            }
+        }
+        let input = {
+            amount : req.body.amount
+        }
+        Kart.update(input,idItem)
+        .then(item =>{
+            return Kart.findOne(idItem)
+        })
+        .then(item =>{
+            res.status(200).json(item)
+        })
+        .catch(err =>{
+            res.status(500).json({message: "edit is fail"})
+        })
     }
 
 }

@@ -2,19 +2,23 @@
   <div>
     <b-card no-body class="overflow-hidden mt-3" style="max-width: 540px;">
       <b-row no-gutters>
-      <b-form-checkbox v-model="id" value="this.data">Check that out</b-form-checkbox>
         <b-col md="6">
           <b-card-img :src="this.data.image_url" class="rounded-0"></b-card-img>
         </b-col>
         <b-col md="6">
           <b-card-body :title="this.data.name">
-            <b-card-text>Price : {{ this.data.price.toLocaleString() }}</b-card-text>
+            <b-card-text>Price : Rp {{ this.data.price.toLocaleString() }}</b-card-text>
             <div>
-              <label for="sb-inline">Inline spin button</label>
-              <b-form-spinbutton id="sb-inline" type="submit" v-model="amount" inline></b-form-spinbutton>
+              <b-form-spinbutton
+                id="sb-inline"
+                type="submit"
+                v-model="amount"
+                inline
+              >{{this.data.amount}}</b-form-spinbutton>
             </div>
-            <b-card-text>Total : Rp {{ (this.total).toLocaleString() }}</b-card-text>
-            <b-button pill variant="primary" @click.prevent="deleteCart">Delete</b-button>
+            <b-card-text>Total : Rp {{ this.total.toLocaleString() }}</b-card-text>
+            <b-button pill variant="danger" @click.prevent="deleteCart">Delete</b-button>
+            <b-button pill variant="warning" @click.prevent="submitAmount">Submit</b-button>
           </b-card-body>
         </b-col>
       </b-row>
@@ -30,18 +34,18 @@ export default {
   props: ["data"],
   data() {
     return {
-      items: [],
       id:this.data.id,
       amount:this.data.amount,
       total:this.data.price,
       price: this.data.price,
+      productsId: this.data.productsId
     };
   },
   methods: {
     AddCart() {
       axios({
         method: "post",
-        url: `http://localhost:3000/cart`,
+        url: `http://localhost:3000/carts`,
         data: {
           productsId: this.id,
           amount: this.amount,
@@ -72,24 +76,43 @@ export default {
       });
     },
 
+    submitAmount() {
+      axios({
+        method: "PUT",
+        url: `http://localhost:3000/carts/${this.id}`,
+        headers: {
+          token:
+            localStorage.getItem("token")
+
+        },
+        data: {
+          amount: this.amount,
+          id: this.id
+        }
+      }).then(response => {
+        this.$store.dispatch("updateAmountCart", response.data);
+      });
+    },
+
     deleteActionCart() {
       axios({
         method: "delete",
-        url: `http://localhost:3000/cart/${this.id}`,
+        url: `http://localhost:3000/carts/${this.id}`,
         headers: {
           token:
-            localStorage.getItem("tokenAdmin") ||
-            localStorage.getItem("tokenCustomer")
+            localStorage.getItem("token")
         }
       }).then(() => {
         this.$store.dispatch("deleteDataCart", this.id);
       });
     }
   },
+  created() {
+    this.total = this.amount * this.price;
+  },
   watch: {
     amount: function (val) {
       this.total = val * this.price
-      this.AddCart()
     }
   },
 };
