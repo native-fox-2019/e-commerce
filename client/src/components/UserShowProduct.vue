@@ -8,6 +8,7 @@
   <div style="margin-top: 40px" id="featuredProduct">
     <h1>Featured Product</h1>
   </div>
+  <Loading v-if="loading" style="margin-top: 50px;" />
   <div id="card">
     <div class="card mx-3 mb-2 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;" v-for="product in products" :key="product.id">
       <span class="sold-out-overlay" v-if="product.stock < 1">Sold Out</span>
@@ -25,11 +26,15 @@
 
 <script>
 import { mapState } from 'vuex';
+import Loading from './Loading.vue';
 export default {
   created() {
     this.getProducts();
   },
   computed: mapState(['products', 'loading']),
+  components: {
+    Loading,
+  },
   methods: {
     getProducts() {
       this.$store.dispatch('getProducts');

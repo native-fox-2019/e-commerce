@@ -4,7 +4,7 @@
     <img class="card-img-top img-fluid rounded" :src="product.image_url" :alt="product.name">
     <div class="card-body">
       <h4 class="card-title">{{ product.name }}</h4>
-      <h5 class="card-text">Rp. {{ product.price }}</h5>
+      <h5 class="card-text">Rp. {{ product.price.toLocaleString() }}</h5>
       <h5 class="card-text">Stock: {{ product.stock }}</h5>
       <a href="" @click.prevent="editDataForm(product.id)" class="btn btn-primary mx-1">Edit</a>
       <a href="" @click.prevent="deleteData(product.id)" class="btn btn-danger mx-1">Delete</a>
@@ -15,15 +15,11 @@
 
 <script>
 import { mapState } from 'vuex';
-import Loading from './Loading.vue';
 export default {
-  components: {
-    Loading
-  },
   created() {
     this.getProducts();
   },
-  computed: mapState(['loading', 'products']),
+  computed: mapState(['products']),
   methods: {
     getProducts() {
       this.$store.dispatch('getProducts');
