@@ -72,7 +72,9 @@ export default {
   }),
   methods: {
     login() {},
-    logout() {},
+    logout() {
+      localStorage.removeItem('usertoken');
+    },
     toCart() {},
   },
 };

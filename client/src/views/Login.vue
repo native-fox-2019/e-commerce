@@ -80,7 +80,8 @@
                 <p class="text-center">OR</p>
               </div>
               <v-card-actions>
-                <v-btn block color="white darken-4" type="button">Register With Email</v-btn>
+                <v-btn block color="white darken-4" type="button"
+                @click="toRegister">Register With Email</v-btn>
               </v-card-actions>
               <v-card-actions>
                 <v-btn block color="white darken-4" type="button">Login With Google</v-btn>
@@ -111,8 +112,11 @@ export default {
     back() {
       this.$router.push('/');
     },
+    toRegister() {
+      this.$router.push('/register');
+    },
     login() {
-      axios.post('http://localhost:3000/login', {
+      axios.post('https://hidden-cliffs-82328.herokuapp.com/login', {
         email: this.email,
         password: this.password,
       })

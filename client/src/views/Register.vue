@@ -120,7 +120,7 @@ export default {
       this.$router.push('/login');
     },
     register() {
-      axios.post('http://localhost:3000/register', {
+      axios.post('https://hidden-cliffs-82328.herokuapp.com/register', {
         first_name: this.first_name,
         last_name: this.last_name,
         email: this.email,
