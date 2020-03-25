@@ -31,7 +31,7 @@ export default {
           icon: 'fa fa-chart-area',
           child: [
             {
-              href: '/products/add',
+              href: 'admin/products/add',
               title: 'Add Products',
             },
           ],

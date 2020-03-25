@@ -17,7 +17,8 @@ class UserController {
         role
       }
       const newUser = await User.create(obj);
-      res.status(201).json(newUser);
+      let token = generateToken({ id: newUser.id, email: newUser.email, role: newUser.role });
+      res.status(201).json({ token });
     } catch (err) {
       next(err);
     }
@@ -48,7 +49,7 @@ class UserController {
         return false;
       }
 
-      const token = generateToken({ id: user.id, email: user.email });
+      const token = generateToken({ id: user.id, email: user.email, role: user.role });
       res.status(200).json({ token });
     } catch (err) {
       next(err);

@@ -2,11 +2,13 @@ import axios from 'axios';
 
 const server = 'http://localhost:3000';
 
-const product = {
+export default {
   state: {
     products: [],
   },
-  getters: {},
+  getters: {
+    products: (state) => state.products,
+  },
   mutations: {
     setProducts: (state, payload) => {
       state.products = payload;
@@ -51,8 +53,4 @@ const product = {
       commit('deleteProduct', id);
     },
   },
-};
-
-export default {
-  product,
 };

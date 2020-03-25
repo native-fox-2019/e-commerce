@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <nav>
+    <nav :class="{ change: notHome }">
       <ul class="navlist start">
         <li>
           <button class="nav-button">
@@ -20,7 +20,7 @@
       <h4>LOGO</h4>
       <ul class="navlist end">
         <li>
-          <button v-if="isLoggedIn" class="nav-button">
+          <button v-if="getStatus" class="nav-button">
             <div class="nav-button-content nohover">
               <!-- <p class="nav-content-description">CART</p> -->
               <i class="fas fa-shopping-cart fa-2x"></i>
@@ -28,13 +28,13 @@
           </button>
         </li>
         <li>
-          <button @click="logout" v-if="isLoggedIn" style="margin-right: 18px" class="nav-button">
+          <button @click="logout" v-if="getStatus" style="margin-right: 18px" class="nav-button">
             <div class="nav-button-content">
               <p class="nav-content-description">LOGOUT</p>
             </div>
           </button>
 
-          <button @click="login" v-if="!isLoggedIn" style="margin-right: 18px" class="nav-button">
+          <button @click="login" v-if="!getStatus" style="margin-right: 18px" class="nav-button">
             <div class="nav-button-content">
               <p class="nav-content-description">LOGIN</p>
             </div>
@@ -46,27 +46,34 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   name: 'Navbar',
   created() {
     if (localStorage.getItem('token')) {
-      this.isLoggedIn = true;
-    } else {
-      this.isLoggedIn = false;
+      this.setStatus(true);
+    }
+
+    if (this.$route.path === '/') {
+      this.notHome = false;
     }
   },
   data() {
     return {
-      isLoggedIn: false,
+      notHome: true,
     };
   },
+  computed: mapGetters(['getStatus']),
   methods: {
+    ...mapMutations(['setStatus']),
     login() {
       this.$router.push('/login');
     },
 
     logout() {
       localStorage.removeItem('token');
+      this.setStatus(false);
       this.$router.push('/');
     },
   },
@@ -158,5 +165,14 @@ export default {
     line-height: 1.75;
     letter-spacing: 1.7px;
     color: white;
+  }
+
+  .change {
+    background-color: white;
+  }
+
+  .change
+  p {
+    color: #2c3e50;
   }
 </style>

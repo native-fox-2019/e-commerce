@@ -23,9 +23,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-
-const server = 'http://localhost:3000';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Login',
@@ -40,13 +38,13 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['login', 'register']),
     async onLogin() {
       const obj = {
         email: this.login_email,
         password: this.login_password,
       };
-      const { data } = await axios.post(`${server}/login`, obj);
-      localStorage.setItem('token', data.token);
+      await this.login(obj);
       this.$router.push('/');
     },
 
@@ -56,8 +54,8 @@ export default {
         email: this.email,
         password: this.password,
       };
-      const { data } = await axios.post(`${server}/register`, obj);
-      localStorage.setItem('token', data.token);
+      await this.register(obj);
+      this.$router.push('/');
     },
   },
 };

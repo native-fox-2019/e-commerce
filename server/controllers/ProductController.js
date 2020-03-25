@@ -61,7 +61,7 @@ class ProductController {
         );
         return false;
       }
-
+      console.log(name);
       const obj ={
         name,
         image_url,
@@ -70,7 +70,9 @@ class ProductController {
         category,
       };
       const edited = await Product.update(obj, { where: { id } });
-      res.status(200).json({ edited: obj, message: 'Successfully edit a product'});
+      if (edited) {
+        res.status(200).json({ edited: obj, message: 'Successfully edit a product'});
+      }
     } catch (err) {
       next(err);
     }
@@ -119,7 +121,9 @@ class ProductController {
       }
 
       const deleted = await Product.destroy({ where: { id } });
-      res.status(200).json({ message: 'Successfully delete a product' });
+      if (deleted) {
+        res.status(200).json({ message: 'Successfully delete a product' });
+      }
     } catch (err) {
       next(err);
     }
