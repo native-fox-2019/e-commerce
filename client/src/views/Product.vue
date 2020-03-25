@@ -95,6 +95,10 @@ export default {
     addCart() {
       if (!this.$store.state.isLogin) {
         this.$router.push('/login');
+        swal({
+          icon: 'warning',
+          text: 'You have to sign in first',
+        });
       } else {
         swal({
           text: 'Are you sure to add this item to cart?',
