@@ -26,7 +26,7 @@
       </div>
   </div>
   <div class="mt-4">
-    <button class="btn btn-primary" @click.prevent="home">Back To Home</button>
+    <button class="shadow" @click.prevent="home">Back To Home</button>
   </div>
 </div>
 </template>

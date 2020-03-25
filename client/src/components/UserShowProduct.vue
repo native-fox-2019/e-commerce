@@ -2,11 +2,7 @@
 <div>
   <div class="carousel slide" data-ride="carousel" style="margin-top: 60px">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-          <img src="https://i.shgcdn.com/d6ad9d6e-c95b-4b7d-8ffc-01ae14f4ba92/-/format/auto/-/preview/3000x3000/-/quality/lighter/"
-          class="d-block w-100"
-          alt="Baju">
-      </div>
+      <div class="carousel-item active" id="banner"></div>
     </div>
   </div>
   <div style="margin-top: 40px" id="featuredProduct">
@@ -14,6 +10,7 @@
   </div>
   <div id="card">
     <div class="card mx-3 mb-2 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;" v-for="product in products" :key="product.id">
+      <span class="sold-out-overlay" v-if="product.stock < 1">Sold Out</span>
       <img class="card-img-top img-fluid rounded" :src="product.image_url" :alt="product.name">
       <div class="card-body">
         <h4 class="card-title">{{ product.name }}</h4>
@@ -59,4 +56,27 @@ export default {
   margin-top: 40px;
 }
 
+.sold-out-overlay {
+  background: #654ea3;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 1000;
+  padding: 5px 10px;
+  position: absolute;
+  height: 40px;
+  width: 100px;
+  right: 20px;
+  top: 20px;
+}
+
+#banner {
+  background-image: url('https://i.shgcdn.com/48271d5a-3d8e-4da5-a6e2-7832e4985ed9/-/format/auto/-/preview/3000x3000/-/quality/lighter/');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 450px;
+  background-position: center center;
+  width: 100%;
+  height: 580px;
+  background-position-y: 48%;
+}
 </style>

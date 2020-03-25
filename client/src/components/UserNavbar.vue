@@ -6,11 +6,14 @@
       style="position: fixed; z-index:2000;left: 20px; top: 10px; position: fixed"
       @click.prevent="showCart">
     </a>
-    <div class="mt-2" v-if="this.$route.path === '/'">
-      <a href="#featuredProduct" style="text-decoration: none;">
+    <div class="mt-2" v-if="this.$route.path !== '/'">
+      <a href="" @click.prevent="home" style="text-decoration: none;">
         <img src="//cdn.shopify.com/s/files/1/0218/8417/4408/files/Top-Nav-FEATURED_x40.png?v=1581442204" alt="" role="presentation">
         <span class="Heading">Featured</span>
       </a>
+    </div>
+    <div v-if="this.$route.path === '/'" class="mt-2">
+      <img src="https://cdn.shopify.com/s/files/1/0218/8417/4408/files/Portal-Page-Header-JINX-Brand_140x.png?v=1568996457" alt="Jinx Logo">
     </div>
     <button class="btn btn-danger"
     style="right: 20px; top: 10px; position: fixed;"
@@ -38,6 +41,9 @@ export default {
     },
     showCart() {
       this.$router.push('/cart');
+    },
+    home() {
+      this.$router.push('/');
     }
   },
   computed: {

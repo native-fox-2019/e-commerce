@@ -89,6 +89,27 @@ class CartController {
       next(err);
     }
   }
+  static async checkOut (req, res, next) {
+    try {
+      const id = Number(req.UserData.id);
+      const user = await User.findOne({ where: { id }, include: [{ model: Product }] });
+      let query = [];
+      user.Products.forEach(x => {
+        const newStock = x.stock - x.Cart.stock;
+        if (newStock < 0) {
+          throw createError(400, `Sorry, ${x.name} has already Sold Out`);
+        }
+        query.push(Cart.destroy({ where: { id: x.Cart.id } }));
+        query.push(Product.update({ stock: newStock }, { where: { id: x.id } }));
+      });
+      await Promise.all(query)
+      res.status(200).json({
+        msg: 'Success'
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
 };
 
 module.exports = CartController;

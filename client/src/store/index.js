@@ -47,6 +47,41 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    checkout({ state, dispatch }) {
+      state.loading = true;
+      axios({
+        method: 'GET',
+        url: baseUrl + '/carts/checkout',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Congratulations',
+            html: 'Your purchase is on the way! <br> Thank\'s for purchasing at JinxPedia',
+          });
+          dispatch('getCart');
+        }).catch(err => {
+          dispatch('showError', err);
+        });
+    },
+    checkoutConfirmation({ dispatch }) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, I wanna buy all of this!'
+      }).then((result) => {
+        if (result.value) {
+          dispatch('checkout');
+        }
+      })
+    },
     editCart({ state, dispatch }, data) {
       state.loading = true;
       axios({

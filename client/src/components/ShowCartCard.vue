@@ -30,7 +30,7 @@
       <button type="button" class="mx-2" @click.prevent="cancel">
         Continue Shopping
       </button>
-      <button type="button" class="mx-2" v-if="!loading && userCart.length !== 0">
+      <button type="button" class="mx-2" @click="checkout" v-if="!loading && userCart.length !== 0">
         Checkout
       </button>
 </div>
@@ -61,6 +61,9 @@ export default {
     editCartForm(cartId, productId) {
       const obj = { cartId, productId };
       this.$store.dispatch('editCartForm', obj)
+    },
+    checkout() {
+      this.$store.dispatch('checkoutConfirmation');
     }
   },
   computed: mapState(['userCart', 'loading', 'total']),

@@ -1,10 +1,6 @@
 <template>
 <form @submit.prevent="loginUser">
   <h1>Sign In</h1>
-  <div class="social-container">
-      <a href="" class="social"><i class="fab fa-google-plus-g"></i></a>
-  </div>
-  <span>or use your account</span>
   <input type="email" placeholder="Email" v-model="email" class="mb-1" />
   <input type="password" placeholder="Password" v-model="password" class="mb-2" />
   <button type="submit">Sign In</button>

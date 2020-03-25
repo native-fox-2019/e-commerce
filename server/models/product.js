@@ -34,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
             args: true,
             msg: 'Stock cannot be empty'
           },
-          min: {
-            args: 1,
-            msg: 'Stock must be greater than 0'
-          },
           isInt: {
             args: true,
             msg: 'Stock must be a number'

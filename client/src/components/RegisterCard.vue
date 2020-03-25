@@ -1,10 +1,6 @@
 <template>
 <form @submit.prevent="registerUser">
   <h1>Create Account</h1>
-  <div class="social-container">
-      <a href="" class="social"><i class="fab fa-google-plus-g"></i></a>
-  </div>
-  <span>or use your email for registration</span>
   <input type="text" placeholder="Name" v-model="name" class="mb-1"/>
   <input type="email" placeholder="Email" v-model="email" class="mb-1"/>
   <input type="password" placeholder="Password" v-model="password" class="mb-2" />
