@@ -9,6 +9,7 @@ import ViewProduct from '../views/ViewProduct.vue';
 import Home from '../views/Home.vue';
 import UserLogin from '../views/UserLogin.vue';
 import UserRegister from '../views/UserRegister.vue';
+import Checkout from '../views/Checkout.vue';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,12 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: Admin,
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: Checkout,
+    meta: { requiresAuth: true },
   },
   {
     path: '/admin/register',
@@ -47,19 +54,19 @@ const routes = [
     path: '/admin/panel',
     name: 'Panel',
     component: Panel,
-    meta: { requiresAuth: true },
+    meta: { requiresAuthAdmin: true },
   },
   {
     path: '/admin/add',
     name: 'Add',
     component: Add,
-    meta: { requiresAuth: true },
+    meta: { requiresAuthAdmin: true },
   },
   {
     path: '/admin/view',
     name: 'ViewProduct',
     component: ViewProduct,
-    meta: { requiresAuth: true },
+    meta: { requiresAuthAdmin: true },
   },
 ];
 
@@ -75,7 +82,7 @@ router.beforeEach((to, from, next) => {
     // if not, redirect to login page.
     if (!localStorage.getItem('token')) {
       next({
-        name: 'Login',
+        name: 'UserLogin',
       });
     } else {
       next();
@@ -85,4 +92,19 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuthAdmin)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!localStorage.getItem('token')) {
+      next({
+        name: 'Login',
+      });
+    } else {
+      next();
+    }
+  } else {
+    next(); // make sure to always call next()!
+  }
+});
 export default router;

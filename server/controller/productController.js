@@ -146,8 +146,8 @@ class productController{
         Product.findAll()
         .then(product=>{
             Transaction.findAll({include:Product,where:{UserId:req.userData.id}})
-            .then(result=>{
-                res.status(200).json(result)
+            .then(data=>{
+                res.status(200).json(data)
             })
         })
         .catch(err=>{

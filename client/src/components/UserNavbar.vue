@@ -16,7 +16,7 @@
             <router-link to="/register">Register</router-link>
         </div>
         <div class="Login ml-3" v-if="this.$store.state.usertoken">
-            <router-link to="/register">Checkout</router-link>
+            <router-link to="/checkout">Checkout</router-link>
         </div>
         <div class="Add ml-3" v-if="this.$store.state.usertoken">
             <div style="cursor:pointer" class="logout" v-on:click.prevent="logout">Logout</div>

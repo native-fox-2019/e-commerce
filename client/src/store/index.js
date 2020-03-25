@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     productList: null,
     userProduct: null,
+    cartList: null,
     token: null,
     usertoken: null,
     eachProduct: null,
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     userProducts(state, params) {
       state.userProduct = params;
+    },
+    viewCart(state, params) {
+      state.cartList = params;
     },
   },
   actions: {
@@ -164,6 +168,19 @@ export default new Vuex.Store({
             swal('Add To Cart cancelled');
             this.$router.push({ name: 'Home' });
           }
+        });
+    },
+    getCart(context) {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3000/getcart',
+        headers: { token: localStorage.getItem('token') },
+      })
+        .then((data) => {
+          context.commit('viewCart', data.data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },
