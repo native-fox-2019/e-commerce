@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state() {
     return {
+      base_url: 'http://localhost:3000',
       products: [],
     };
   },

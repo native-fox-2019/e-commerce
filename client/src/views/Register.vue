@@ -2,18 +2,9 @@
   <div id="app">
   <v-app id="inspire">
     <v-content>
-      <v-container
-        fluid
-        fill-height
-      >
-        <v-layout
-          align-center
-          justify-center
-        >
-          <v-flex
-            xs12
-            md8
-          >
+      <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+          <v-flex xs12 md8>
             <v-alert
               v-model="alert"
               dismissible
@@ -27,7 +18,10 @@
                 dark
                 flat
               >
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-btn>
+                  <v-icon>mdi-back</v-icon>
+                </v-btn>
+                <v-toolbar-title>Register</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>

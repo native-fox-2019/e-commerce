@@ -69,12 +69,6 @@ export default {
     items: [
       { icon: 'mdi-help-circle', text: 'Help' },
     ],
-    listAccount: [
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me 2' },
-    ],
   }),
   methods: {
     login() {},
