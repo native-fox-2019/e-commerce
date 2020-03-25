@@ -6,9 +6,9 @@
       <div class="Home mr-3" v-if="!this.$store.state.token">
         <router-link to="/admin">Home</router-link>
       </div>
-      <router-link to="/panel">Admin Panel</router-link>
+      <router-link to="/admin/panel">Admin Panel</router-link>
       <div class="Add ml-3" v-if="this.$store.state.token">
-        <router-link to="/add">Add Product</router-link>
+        <router-link to="/admin/add">Add Product</router-link>
       </div>
     </div>
 </template>

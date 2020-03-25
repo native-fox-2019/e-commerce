@@ -9,6 +9,7 @@ import ViewProduct from '../views/ViewProduct.vue';
 import Home from '../views/Home.vue';
 import UserLogin from '../views/UserLogin.vue';
 import UserRegister from '../views/UserRegister.vue';
+import Cart from '../views/Cart.vue';
 import Checkout from '../views/Checkout.vue';
 
 Vue.use(VueRouter);
@@ -23,6 +24,12 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: Admin,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
+    meta: { requiresAuth: true },
   },
   {
     path: '/checkout',

@@ -10,7 +10,7 @@ export default new Vuex.Store({
   state: {
     productList: null,
     userProduct: null,
-    cartList: null,
+    cartList: [],
     token: null,
     usertoken: null,
     eachProduct: null,

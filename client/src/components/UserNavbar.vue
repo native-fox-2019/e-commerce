@@ -15,8 +15,11 @@
         <div class="Login ml-3" v-if="!this.$store.state.usertoken">
             <router-link to="/register">Register</router-link>
         </div>
-        <div class="Login ml-3" v-if="this.$store.state.usertoken">
-            <router-link to="/checkout">Checkout</router-link>
+        <div class="cart ml-3" v-if="this.$store.state.usertoken">
+        {{ this.$store.state.cartList.length }}
+        </div>
+        <div class="Login ml-1" v-if="this.$store.state.usertoken">
+            <router-link to="/cart">Cart</router-link>
         </div>
         <div class="Add ml-3" v-if="this.$store.state.usertoken">
             <div style="cursor:pointer" class="logout" v-on:click.prevent="logout">Logout</div>
@@ -56,6 +59,8 @@ export default {
 </script>
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Caveat&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Baloo+2&display=swap);
+
 h4{
     font-family: 'Caveat';
     font-size: 30px;
@@ -67,5 +72,9 @@ h4{
 }
 .logout{
     color: white;
+}
+.cart{
+  color: white;
+  font-family: 'Baloo 2';
 }
 </style>
