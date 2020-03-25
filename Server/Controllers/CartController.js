@@ -46,7 +46,7 @@ class CartController {
         })
         .then(createdCart => {
             if(createdCart){
-                res.status(201).json({createdCart})
+                res.status(201).json({createdCart, message: 'Succesfully add item to cart'})
             }
         })
         .catch(err => {
@@ -86,7 +86,7 @@ class CartController {
         })
         .then(deleted => {
             if(deleted){
-                res.status(200).json({message: 'Cart successfully deleted'});
+                res.status(200).json({message: 'Item successfully deleted from cart'});
             }else{
                 next({status: 400, msg: 'Unsuccessfully delete cart'})
             }
