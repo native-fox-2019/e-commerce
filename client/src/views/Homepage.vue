@@ -23,19 +23,19 @@
         </div>
       </div>
       <button class="btn btn-outline-success btn-block mt-5" @click.prevent="goTo('Products')">Click here to browse our products</button>
-      <h2 class="mt-4" style="font-family:Helvetica;">Our Partners</h2>
-        <partner></partner>
+      <h2 class="mt-4" style="font-family:Helvetica;">Promos</h2>
+        <banner></banner>
     </div>
   </div>
 </template>
 
 <script>
-import partner from '../components/partner.vue'
+import banner from '../components/banner.vue'
 export default {
     created() {
     },
     components: {
-        partner
+        banner
     },
     methods: {
       goTo(route) {

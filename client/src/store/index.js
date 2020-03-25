@@ -26,24 +26,6 @@ export default new Vuex.Store({
         }
       });
       state.cartList.push(payload);
-    },
-    login(state, payload){
-      Swal.fire({
-        icon:'success',
-        title:'Login successfull'
-      })
-      state.isLogin = true
-      localStorage.setItem('access_token', payload.access_token)
-      localStorage.setItem('role', payload.role)
-    },
-    logout(state, condition) {
-      Swal.fire({
-        icon:'success',
-        title:'See you again soon!'
-      })
-      state.isLogin = condition
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("role");
     }
   },
   actions: {
@@ -76,13 +58,17 @@ export default new Vuex.Store({
           if (isNaN(payload.amount) || payload.amount == 0) {
             throw Error ('cannot be 0')
           }
+          Swal.fire({
+            title:'Added to cart',
+            timer:1000
+          })
           context.commit("addToCart", payload);
         })
         .catch((response) => {
           console.log(response);
           Swal.fire({
             icon:'warning',
-            title: response == 'Error: cannot be 0' ? 'amount cannot be 0' : 'You have to login first'
+            title: response == 'Error: cannot be 0' ? 'Amount cant be 0' : 'You have to login first'
           })
         });
     },
@@ -104,28 +90,6 @@ export default new Vuex.Store({
         .catch(response => {
           console.log(response.response);
         });
-    },
-    login(context, user){
-      const { email, password } = user
-      axios({
-        method:'POST',
-        url: `${DEV_URL}/users/login`,
-        data: {
-          email,
-          password
-        }
-      })
-      .then(data => {
-        console.log(data.data)
-        context.commit('login', data.data)
-        
-      })
-      .catch(response => {
-        Swal.fire({
-          icon:'warning',
-          title: response.response.data.msg
-        })
-      })
     }
   },
   modules: {}
