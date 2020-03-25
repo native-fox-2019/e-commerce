@@ -12,7 +12,7 @@ POST http://localhost:3000/user/login
 Content-Type: application/json
 
 {
-    "email": "user1@mail.com",
+    "email": "user2@mail.com",
     "password": "qwerty"
 }
 
@@ -50,14 +50,14 @@ access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IlVzZXIgM
 [
     {
         "product_id": "1",
-        "seller_id": "2",
+        "seller_id": "1",
         "address": "bogor",
         "phone": "08922891231",
         "qty": "2"
     },
     {
-        "product_id": "3",
-        "seller_id": "2",
+        "product_id": "5",
+        "seller_id": "1",
         "address": "bogor",
         "phone": "08922891231",
         "qty": "2"
@@ -65,7 +65,7 @@ access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IlVzZXIgM
 ]
 
 ###
-GET http://localhost:3000/order/ugoxf3gt7m
+GET http://localhost:3000/order/7wu66guko8
 Content-Type: application/json
 access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IlVzZXIgMiIsImVtYWlsIjoidXNlcjJAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NTA2NDIzM30.FykXHj3x9MwacX4gwDUL1G95v6XyVYyhVXdutlXTZyk
 
@@ -80,7 +80,7 @@ Content-Type: application/json
 access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
 
 ###
-PATCH http://localhost:3000/order/seller/confirmOrder/12
+PATCH http://localhost:3000/order/seller/confirmOrder/14
 Content-Type: application/json
 access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlVzZXIgMSIsImVtYWlsIjoidXNlcjFAbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU4NDM2ODU4Nn0.nI6bhZksXORjxnfKrzW9r0Gfc6FBoc-XKpjNAh2vfc4
 

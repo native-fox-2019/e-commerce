@@ -6,10 +6,26 @@ const {
 class ProductController {
     static listAllProduct(request, response, next) {
         Product.findAll({
-                attributes: ['id', 'name', 'image_url', 'price', 'stock', 'category']
+                attributes: ['id', 'name', 'image_url', 'price', 'stock', 'category', 'user_id'],
+                include: [User],
+                order: [
+                    ['id', 'ASC']
+                ]
             })
             .then(result => {
-                response.status(200).json(result)
+                let data_response = []
+                result.forEach(element => {
+                    data_response.push({
+                        id: element.id,
+                        name: element.name,
+                        image_url: element.image_url,
+                        price: element.price,
+                        stock: element.stock,
+                        user_id: element.user_id,
+                        seller_name: element.User.name
+                    })
+                });
+                response.status(200).json(data_response)
             })
             .catch(err => {
                 next(err)

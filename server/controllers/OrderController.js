@@ -12,7 +12,10 @@ class OrderController {
         Order.findAll({
                 where: {
                     user_id: request.userData.id
-                }
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
             })
             .then(result => {
                 let result_ = groupByAndCount(result)
@@ -38,7 +41,7 @@ class OrderController {
                 },
                 include: {
                     model: Product
-                }
+                },
             })
             .then(result => {
                 if (result.length != 0) {
@@ -62,7 +65,10 @@ class OrderController {
                 },
                 include: {
                     model: Product
-                }
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
             })
             .then(result => {
                 response.status(200).json(result)
