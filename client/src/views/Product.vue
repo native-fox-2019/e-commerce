@@ -60,7 +60,7 @@ export default {
     watch:{
         searchText:(val)=>{
             if(vm){
-                vm.loadProduct(val,vm.isSearch)
+                vm.loadProduct(val,true)
             }
         }
     },
