@@ -44,7 +44,9 @@ export default {
       axios(options)
         .then(({ data }) => {
           localStorage.setItem('token', data.token);
+          localStorage.setItem('name', data.name);
           this.$store.commit('changeIsLogin', true);
+          this.$store.commit('setName', data.name);
           this.email = '';
           this.password = '';
           this.loginError = '';

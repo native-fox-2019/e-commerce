@@ -8,6 +8,7 @@ export default new Vuex.Store({
     page: '',
     baseUrl: 'http://localhost:3003',
     isLogin: false,
+    name: '',
   },
   mutations: {
     setPage(state, data) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     changeIsLogin(state, data) {
       state.isLogin = data;
+    },
+    setName(state, data) {
+      state.name = data;
     },
   },
   actions: {

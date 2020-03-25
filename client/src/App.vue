@@ -17,6 +17,7 @@ export default {
   created() {
     if (localStorage.token) {
       this.$store.commit('changeIsLogin', true);
+      this.$store.commit('setName', localStorage.name);
     }
   },
 };

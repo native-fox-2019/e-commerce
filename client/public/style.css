@@ -122,3 +122,20 @@ a{
 .product-stock{
     font-size: 18px
 }
+.carts{
+    width: 90%; background-color: rgba(211, 211, 211, 0.089); margin: 20px auto; flex-wrap: wrap;
+    padding: 20px 0px;
+}
+.cart{
+    width: 70%; display: flex; justify-content: space-between; padding: 20px 20px; margin: 20px auto;
+    background-color: white; border:1px solid rgb(194, 191, 191);
+}
+.cart-content{
+    display: flex;
+}
+.cart-details h3{
+    margin-top: 0px; margin-bottom: 10px;
+}
+.cart-image{
+    margin-right: 30px;
+}
