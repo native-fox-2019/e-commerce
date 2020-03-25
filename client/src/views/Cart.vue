@@ -17,15 +17,32 @@
           <td>{{ cart.name }}</td>
           <td>{{ cart.amount }}</td>
           <td>{{ cart.showPrice }}</td>
+          <td>
+            <button
+              class="btn btn-outline-danger"
+              @click.prevent="deleteCart(cart.id)"
+            >
+              Remove from cart
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
     <div class="container-lg bg-dark text-white p-5" style="margin-top:200px;">
-      <h3>Please checkout to proceed with the order</h3>
-      <h4 class="mt-3">Total order : {{ grandTotal }}</h4>
-      <button class="btn btn-outline-warning mb-3 mt-2" @click.prevent="checkout">checkout</button>
-      <p style="font-family:monospace; font-size:20px;">Or</p>
-      <button class="btn btn-outline-light" @click.prevent="goTo('Products')">Continue Shopping</button>
+      <h3>{{ msg }}</h3>
+      <div v-if="totalInt != 0">
+        <h4 class="mt-3">Total order : {{ grandTotal }}</h4>
+        <button
+          class="btn btn-outline-warning mb-3 mt-2"
+          @click.prevent="checkout"
+        >
+          checkout
+        </button>
+        <p style="font-family:monospace; font-size:20px;">Or</p>
+      </div>
+      <button class="btn btn-outline-light" @click.prevent="goTo('Products')">
+        Continue Shopping
+      </button>
     </div>
   </div>
 </template>
@@ -35,7 +52,9 @@ import converter from "../helpers/currency.js";
 export default {
   data() {
     return {
-      grandTotal: ""
+      grandTotal: "",
+      totalInt: 0,
+      msg: ""
     };
   },
   created() {
@@ -43,19 +62,38 @@ export default {
   },
   methods: {
     getTotal() {
-      let totals = 0;
       this.$store.state.cartList.forEach(i => {
-        totals += i.total;
+        this.totalInt += i.total;
       });
-      this.grandTotal = converter(totals);
+      if (this.totalInt == 0) {
+        this.msg = "Your cart is empty";
+      } else {
+        this.msg = "Please checkout to proceed with the order";
+      }
+      this.grandTotal = converter(this.totalInt);
     },
     checkout() {
-        this.$store.dispatch('deleteAllCart')
-        this.$router.push({ name: "Products" });
-        this.$store.state.cartList = []
+      console.log("masuk checkout di cart");
+      this.$store.dispatch("deleteAllCart");
+      this.$router.push({ name: "Products" });
+      this.$store.state.cartList = [];
     },
     goTo(route) {
-      this.$router.push({ name: route })
+      this.$router.push({ name: route });
+    },
+    deleteCart(id) {
+      this.$store.dispatch("deleteCart", id);
+      this.$store.state.cartList.forEach(i => {
+        if (i.id == id) {
+          this.totalInt -= i.price * i.amount;
+        }
+      });
+      if (this.totalInt == 0) {
+        this.msg = "Your cart is empty";
+      } else {
+        this.msg = "Please checkout to proceed with the order";
+      }
+      this.grandTotal = converter(this.totalInt);
     }
   }
 };

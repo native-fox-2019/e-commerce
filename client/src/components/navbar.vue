@@ -113,8 +113,8 @@
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
-// const HEROKU_URL = 'https://peaceful-thicket-02203.herokuapp.com'
-const DEV_URL = "http://localhost:3000";
+const HEROKU_URL = 'https://peaceful-thicket-02203.herokuapp.com'
+// const DEV_URL = "http://localhost:3000";
 export default {
   created() {
     this.checkLogin();
@@ -143,11 +143,12 @@ export default {
       this.email = "";
       this.password = "";
       this.isLoggedin = false;
+      this.$router.push({ name: 'Home' })
     },
     login() {
       axios({
         method: "POST",
-        url: `${DEV_URL}/users/login`,
+        url: `${HEROKU_URL}/users/login`,
         data: {
           email: this.email,
           password: this.password
@@ -187,7 +188,7 @@ export default {
     register() {
       axios({
         method: "POST",
-        url: `${DEV_URL}/users/register`,
+        url: `${HEROKU_URL}/users/register`,
         data: {
           name: this.name_reg,
           email: this.email_reg,

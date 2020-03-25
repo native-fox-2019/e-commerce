@@ -10,8 +10,8 @@
 
 <script>
 import axios from 'axios'
-// const HEROKU_URL = 'https://peaceful-thicket-02203.herokuapp.com'
-const DEV_URL = "http://localhost:3000";
+const HEROKU_URL = 'https://peaceful-thicket-02203.herokuapp.com'
+// const DEV_URL = "http://localhost:3000";
 export default {
     data() {
         return {
@@ -26,7 +26,7 @@ export default {
         try {
           const banner = await axios({
           method:'GET',
-          url: `${DEV_URL}/products/banner`
+          url: `${HEROKU_URL}/products/banner`
         })
           this.banners = banner.data.banners
         } catch (response) {

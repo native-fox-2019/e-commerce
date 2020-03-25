@@ -1,17 +1,19 @@
 <template>
-  <div style="padding:150px;">
-    <div class="row">
+  <div style="padding:100px;">
+    <div class="row" style="width:100%">
       <div class="col-3" v-for="product in this.$store.state.productList" :key="product.id">
-        <div class="card mb-4">
-          <img class="card-img-top" :src="product.image_url" :alt="product.name" style="width:100%; height:300px;"/>
+        <div class="card mb-4" style="width:100%;">
+          <img class="card-img-top" :src="product.image_url" :alt="product.name" style="width:100%; height:200px;"/>
           <div class="card-body">
-            <p class="card-text" style="font-size:15px;">
-                {{ product.name }}
+            <p class="card-text" style="font-size:13px;">
+               <strong>
+                  {{ product.name }}
+                 </strong>
             </p>
-            <p class="card-text" style="font-size:15px;">
+            <p class="card-text" style="font-size:13px;">
                 {{ product.showPrice }}
             </p>
-            <label for="">Amount: </label>
+            <label style="font-size:13px;">Amount: </label>
             <input type="number" min="0" :max="product.stock" placeholder=0 v-model="amount[Number(product.id)]" style="width:30px;"><br>
             <button class="btn btn-outline-danger btn-sm" @click.prevent="addToCart(product.id, product.price, amount)">add to cart</button>
           </div>
@@ -46,7 +48,8 @@ export default {
           this.$store.dispatch('addToCart',{
               product_id: this.ids,
               amount: this.amounts,
-              total: this.totals
+              total: this.totals,
+              price: price
           })
           this.empty()
       },
