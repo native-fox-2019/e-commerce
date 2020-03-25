@@ -20,7 +20,8 @@
       </div>
       <div class="containerForm"> <span class="textForm"> Price </span> </div>
       <div class="containerForm">
-          <input  class="input inputText" v-model="productDatum.price" />
+          <!-- <input  class="input inputText" v-model="productDatum.price" /> -->
+          <input v-model.lazy="productDatum.price" class="input inputText" v-money="money" />
       </div>
           <div class="containerForm" >
               <input class="btn" type="submit" value="Edit Comic">
@@ -33,6 +34,7 @@
       </div>
       <div class="detailContainer">
         <span class="inputText"> {{productDatum.name}}</span>
+        <span class="inputText"> {{productDatum.price}}</span>
         <span class="inputText"> stock: {{productDatum.stock}} </span>
         <i @click="showModal" style="color:blue; font-size :40px" class="fa fa-shopping-cart"></i>
       </div>
@@ -44,6 +46,7 @@
 
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { VMoney } from 'v-money';
 import Modal from '../components/Editmodal.vue';
 
 export default {
@@ -61,8 +64,16 @@ export default {
         stock: '',
       },
       level: localStorage.getItem('level'),
+      money: {
+        decimal: '.',
+        thousands: ',',
+        prefix: 'Rp',
+        masked: true,
+        precision: 0,
+      },
     };
   },
+  directives: { money: VMoney },
   methods: {
     getone(id) {
       axios({
@@ -81,6 +92,9 @@ export default {
     update(object) {
       console.log(object.price, 'price');
       console.log(object.stock, 'stock');
+      let numbers = object.price.match(/[+-]?\d+(?:\.\d+)?/g);
+      numbers = numbers.join('');
+      numbers = Number(numbers);
       axios({
         method: 'PUT',
         url: `${this.$store.state.axiosUrl}/product/${this.id}`,
@@ -88,7 +102,7 @@ export default {
         data: {
           name: object.name,
           image_url: object.image_url,
-          price: object.price,
+          price: numbers,
           stock: object.stock,
         },
       })

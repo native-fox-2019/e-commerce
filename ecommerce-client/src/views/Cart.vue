@@ -1,7 +1,7 @@
 <template>
   <div class="divCenter-column">
     <h1 style="font-family: rale-reg">{{this.name}}'s Cart</h1>
-    <div style="overflow-y:auto; height:300px" class="">
+    <div style="" class="Overflow">
       <table style="font-family:">
         <tr>
           <td> Product Name </td>
@@ -25,6 +25,7 @@
 </template>
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -38,15 +39,32 @@ export default {
   methods: {
     axDel(params) {
       console.log(params);
-      axios({
-        method: 'delete',
-        headers: { token: localStorage.getItem('token') },
-        url: `${this.$store.state.axiosUrl}/cart/${params}`,
-      }).then((data) => {
-        console.log(data.data);
-        this.$store.dispatch('getCarts');
-      }).catch((err) => {
-        console.log(err.response);
+      Swal.fire({
+        title: 'Confirm Checkout?',
+        text: "You won't be able to revert this!",
+        icon: 'information',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+      }).then((result) => {
+        if (result.value) {
+          axios({
+            method: 'delete',
+            headers: { token: localStorage.getItem('token') },
+            url: `${this.$store.state.axiosUrl}/cart/${params}`,
+          }).then((data) => {
+            console.log(data.data);
+            this.$store.dispatch('getCarts');
+          }).catch((err) => {
+            console.log(err.response);
+          });
+          Swal.fire(
+            'Checkout Success!',
+            'Happy Reading',
+            'success',
+          );
+        }
       });
     },
   },

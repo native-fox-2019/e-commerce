@@ -1,9 +1,12 @@
 <template>
   <div id="app">
     <navbar></navbar>
-    <div class="divCenter">
-    </div>
+    <div >
     <router-view/>
+    </div>
+    <div class="footer">
+      <span> Gabriel Geovrisco</span>
+    </div>
   </div>
 </template>
 <script>

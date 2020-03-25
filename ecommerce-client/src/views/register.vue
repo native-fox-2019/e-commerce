@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="loginCc">
         <div class="divCenter"><span class="title"> Customer's Register </span></div>
         <div class="divCenter" style="margin-top:1%">
             <div class="border" style="padding:20px">
@@ -24,7 +24,7 @@
                 </div>
 
                     <div class="containerForm">
-                        <input type="submit" value="Login">
+                        <input type="submit" class="btn" value="Login">
                     </div>
             </form>
             </div>

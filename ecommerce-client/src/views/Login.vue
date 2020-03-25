@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="loginCc">
         <div class="divCenter"><span class="title"> User Login </span></div>
         <div class="divCenter" style="margin-top:1%">
             <div class="border" style="padding:20px">
@@ -15,7 +15,7 @@
                     v-model="loginForm.password">
                 </div>
                     <div class="containerForm">
-                        <input type="submit" value="Login">
+                        <input class="btn" type="submit" value="Login">
                     </div>
             </form>
             </div>
