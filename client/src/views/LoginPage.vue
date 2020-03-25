@@ -51,7 +51,7 @@ export default {
     submitlogin() {
       axios({
         method: "post",
-        url: `https://rocky-crag-75185.herokuapp.com/users/login`,
+        url: `http://localhost:3000/users/login`,
         data: {
           email: this.loginemail,
           password: this.loginpassword,
@@ -59,7 +59,13 @@ export default {
       })
         .then(result => {
           localStorage.setItem(`token`, result.data.token);
-          this.$router.push('/adminPage');
+          localStorage.setItem(`role`, result.data.role);
+
+          if(result.data.role == `true`){
+            this.$router.push('adminPage');
+          }else if(result.data.role == `false`){
+            this.$router.push('userPage');
+          }
         })
         .catch(err => {
           console.log(err);

@@ -51,7 +51,7 @@ export default {
     submitregister() {
       axios({
         method: "post",
-        url: `https://rocky-crag-75185.herokuapp.com/users/register`,
+        url: `http://localhost:3000/users/register`,
         data: {
           email: this.registeremail,
           password: this.registerpassword,
@@ -59,6 +59,7 @@ export default {
       })
         .then(result => {
           localStorage.setItem(`token`, result.data.token);
+          localStorage.setItem(`role`, result.data.role);
           this.$router.push('/adminPage');
         })
         .catch(err => {

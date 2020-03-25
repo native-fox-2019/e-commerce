@@ -7,13 +7,20 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     products : [],
-    productEdit : {}
+    productEdit : {},
+    customerCart: []
   },
   mutations: {
     fillProducts(state , payload){
       state.products = payload
     },
-
+    addItemCart(state, payload) {
+      state.customerCart.push(payload)
+    },
+    fillCart(state, payload) {
+      state.customerCart = payload
+      console.log(state.customerCart)
+    },
     commitNewdata (state, payload) {
       state.products.push(payload)
     },
@@ -37,13 +44,22 @@ export default new Vuex.Store({
         method:"GET",
         url: "http://localhost:3000/products",
         headers: {token : localStorage.getItem("token")}
-
       })
       .then(response =>{
         context.commit("fillProducts",response.data)
       })
       .catch(err =>{
         console.log(err)
+      })
+    },
+    getAllProductsCart(context){
+      axios({
+        method: "get",
+        url:"http://localhost:3000/carts",
+        headers: {token : localStorage.getItem("token")}
+      })
+      .then(response => {
+        context.commit("fillCart", response.data)
       })
     },
     addNewData(context, payload) {
@@ -57,6 +73,9 @@ export default new Vuex.Store({
     },
     updateData(context, payload) {
       context.commit('commitUpdateData', payload)
+    },
+    holdCartItem(context, payload) {
+      context.commit('addItemCart', payload)
     }
   },
   modules: {}

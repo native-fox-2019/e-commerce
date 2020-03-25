@@ -52,7 +52,7 @@ methods: {
     editThisData() {
       axios({
         method: "get",
-        url: `https://rocky-crag-75185.herokuapp.com/${this.id}`,
+        url: `http://localhost:3000/${this.id}`,
         headers: { token: localStorage.getItem("token") }
       }).then(response => {
         this.$store.dispatch("holdEditData", response.data);
@@ -63,7 +63,7 @@ methods: {
     deleteAction() {
       axios({
         method: "delete",
-        url: `https://rocky-crag-75185.herokuapp.com/${this.id}`,
+        url: `http://localhost:3000/${this.id}`,
         headers: { token: localStorage.getItem("token") }
       }).then(response => {
         this.$store.dispatch("deleteData", this.id);

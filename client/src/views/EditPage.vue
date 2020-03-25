@@ -49,7 +49,7 @@ export default {
         let id = this.$store.state.productEdit.data[0].id
         axios({
           method:"PUT",
-          url:`https://rocky-crag-75185.herokuapp.com/${id}`,
+          url:`http://localhost:3000/${id}`,
           data:{
             name:this.name,
             image_url:this.image_url,

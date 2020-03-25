@@ -8,7 +8,8 @@ class ProductController {
             name: req.body.name,
             image_url: req.body.image_url,
             price: req.body.price,
-            stock: req.body.stock
+            stock: req.body.stock,
+            UserId: req.UserData.id
         }
         Product.create(obj)
             .then(data => {
@@ -29,12 +30,18 @@ class ProductController {
             })
     }
     static getProduct = (req, res) => {
+        console.log(req.UserData, `=--=-=-=-=--=-=-=-`)
         Product.findAll()
             .then((data) => {
+
                 res.status(200).json(data)
             })
             .catch((err) => {
-                res.status(500).json(err)
+                
+                res.status(400).json({
+                    msg: `data not found`,
+                    error: err
+                })
             })
     }
 

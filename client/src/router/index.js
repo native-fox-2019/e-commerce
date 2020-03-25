@@ -5,6 +5,8 @@ import LoginPage from "../views/LoginPage.vue";
 import AddPage from "../views/AddPage.vue";
 import RegisterPage from "../views/RegisterPage.vue";
 import EditPage from "../views/EditPage.vue";
+import UserPage from "../views/UserPage.vue";
+import CartMain from "../views/CartMain.vue"
 
 Vue.use(VueRouter);
 
@@ -24,6 +26,18 @@ const routes = [
     path: "/adminPage",
     name: "AdminPage",
     component: AdminPage,
+    meta:{requiresAuth:true}
+  },
+  {
+    path: "/userPage",
+    name: "UserPage",
+    component: UserPage,
+    meta:{requiresAuth:true}
+  },
+  {
+    path: "/cartMain",
+    name: "CartMain",
+    component: CartMain,
     meta:{requiresAuth:true}
   },
   {

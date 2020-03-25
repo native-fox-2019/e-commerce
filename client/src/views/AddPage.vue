@@ -44,7 +44,7 @@ export default {
     submitAdd() {
       axios({
         method: 'post',
-        url: `https://rocky-crag-75185.herokuapp.com/products/`,
+        url: `http://localhost:3000/products/`,
         headers: { token: localStorage.getItem('token') },
         data: {
           name: this.name,
