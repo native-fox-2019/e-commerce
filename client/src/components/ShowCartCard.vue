@@ -30,7 +30,7 @@
       <button type="button" class="mx-2" @click.prevent="cancel">
         Continue Shopping
       </button>
-      <button type="button" class="mx-2" v-if="!loading">
+      <button type="button" class="mx-2" v-if="!loading && userCart.length !== 0">
         Checkout
       </button>
 </div>

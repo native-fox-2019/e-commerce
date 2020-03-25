@@ -64,7 +64,7 @@ class CartController {
   static async updateCart (req, res, next) {
     try {
       const id = Number(req.params.id);
-      const { stock, operator } = req.body;
+      const { stock } = req.body;
       if (!Number.isInteger(id)) {
         throw createError(400, 'Params must be an integer');
       }
@@ -76,20 +76,12 @@ class CartController {
       if (!product) {
         throw createError(400, 'Your product is out of stock');
       }
-      if (((Number(stock) + cart.stock) > product.stock) && operator === '+') {
+      if (Number(stock) > product.stock) {
         throw createError(400, 'You cannot buy more than the stock available');
-      } else if ((cart.stock - Number(stock) < 0) && operator === '-') {
-        throw createError(400, 'You cannot buy a minus stock');
+      } else if (Number(stock) < 1) {
+        throw createError(400, 'Just delete the Cart, mate');
       }
-      let newStock;
-      if (operator === '+') {
-        newStock = Number(stock) + Number(cart.stock);
-      } else if (operator === '-') {
-        newStock = Number(cart.stock) - Number(stock);
-      } else {
-        throw createError(400, 'Operator is between + and -');
-      }
-      await Cart.update({ stock: newStock }, { where: { id } });
+      await Cart.update({ stock }, { where: { id } });
       res.status(200).json({
         msg: 'Success'
       })

@@ -17,7 +17,8 @@ export default new Vuex.Store({
     userCart: {},
     total: 0,
     editCart: null,
-    editStock: null
+    editStock: null,
+    editCartId: null
   },
   mutations: {
     GET_PRODUCTS(state, data) {
@@ -42,9 +43,29 @@ export default new Vuex.Store({
     EDIT_CART_FORM(state, data) {
       state.editCart = data.editCartData;
       state.editStock = data.newStock;
+      state.editCartId = data.cartId;
     }
   },
   actions: {
+    editCart({ state, dispatch }, data) {
+      state.loading = true;
+      axios({
+        method: 'PUT',
+        url: baseUrl + '/carts/' + data.cartId,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          stock: data.newStock
+        }
+      })
+        .then(() => {
+          router.push('/cart');
+          dispatch('swalMixin', 'Your cart has been updated!');
+        }).catch(err => {
+          dispatch('showError', err);
+        });
+    },
     editCartForm({ state, dispatch, commit }, data) {
       let editCartData = state.products.filter(x => {
         return x.id === data.productId;
@@ -58,7 +79,7 @@ export default new Vuex.Store({
         if (!cartStock) {
           dispatch('showError', { message: 'Error not Found' });
         } else {
-          commit('EDIT_CART_FORM', { editCartData, newStock: cartStock.Cart.stock });
+          commit('EDIT_CART_FORM', { editCartData, newStock: cartStock.Cart.stock, cartId: cartStock.Cart.id });
           router.push('/editcart');
         }
       }
@@ -108,7 +129,7 @@ export default new Vuex.Store({
           state.loading = false;
           let total = 0;
           data.Products.forEach(x => {
-            total += x.price;
+            total += (x.price * x.Cart.stock);
           });
           commit('GET_CART', { data: data.Products, total });
         }).catch(err => {

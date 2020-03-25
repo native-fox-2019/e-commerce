@@ -12,10 +12,10 @@
       <h3>{{ stock }}</h3>
     </div>
     <h1>Enter how many do you want to buy</h1>
-    <form style="width: 300px; margin: auto" @submit.prevent="">
+    <form style="width: 300px; margin: auto" @submit.prevent="editCartUser">
       <input type="number" :max="stock" min="0" v-model="newEditStock">
       <div class="mt-2">
-        <button class="btn btn-primary mx-1">Submit</button>
+        <button class="btn btn-primary mx-1" type="submit">Submit</button>
         <button class="btn btn-danger mx-1" @click.prevent="cancel">Cancel</button>
       </div>
     </form>
@@ -30,7 +30,7 @@ export default {
   components: {
     Loading
   },
-  computed: mapState(['loading', 'editCart', 'editStock']),
+  computed: mapState(['loading', 'editCart', 'editStock', 'editCartId']),
   data() {
     return {
       newEditStock: null,
@@ -54,6 +54,13 @@ export default {
   methods: {
     cancel() {
       this.$router.push('/cart');
+    },
+    editCartUser() {
+      const obj = {
+        cartId: this.editCartId,
+        newStock: this.newEditStock
+      }
+      this.$store.dispatch('editCart', obj);
     }
   }
 }

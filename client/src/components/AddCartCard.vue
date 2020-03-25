@@ -15,7 +15,7 @@
     <form style="width: 300px; margin: auto" @submit.prevent="addToCart">
       <input type="number" :max="stock" min="0" v-model="newStock">
       <div class="mt-2">
-        <button class="btn btn-primary mx-1">Submit</button>
+        <button class="btn btn-primary mx-1" type="submit">Submit</button>
         <button class="btn btn-danger mx-1" @click.prevent="cancel">Cancel</button>
       </div>
     </form>
