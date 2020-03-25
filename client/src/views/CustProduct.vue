@@ -9,7 +9,7 @@
         <div class="mycart">
             <div v-for="cart in mycart" :key="cart.id" class="cartproduk">
                 <form>
-                    <div style="font-weight:bold; font-size:10px">Status order:{{cart.CustomerProduct.status_order}}</div>
+                    <div class="statusorder">Status order:{{cart.CustomerProduct.status_order}}</div>
                     <div class="produkname">{{cart.name}}</div>
                     <div>Qty order:{{cart.CustomerProduct.quantity}}</div>
                     <button @click="addqty(cart.id)" type="button">+</button>
@@ -245,6 +245,12 @@ export default {
   padding: 10px;
   border: 5px solid blue;
   background-color: lightblue;
+}
+
+.statusorder {
+    font-size: 12px;
+    font-weight: bold;
+    color: red
 }
 
 .produkname {

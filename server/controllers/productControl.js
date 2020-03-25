@@ -1,5 +1,5 @@
 const {Product} = require('../models')
-
+const {Customer} = require('../models')
 
 class ProductControl{
     static show(req, res, next){
@@ -10,7 +10,8 @@ class ProductControl{
 
     static myshow(req, res, next){
         Product.findAll({
-            where: {userId: req.userdata.id}
+            where: {userId: req.userdata.id},
+            include: [{model: Customer}]
         })
         .then(data=> res.status(200).json(data))
         .catch(err=>next(err))

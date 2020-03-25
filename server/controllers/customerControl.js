@@ -65,6 +65,7 @@ class CustomerControl {
             }
         })
         .then(result=>{
+            console.log(result)
             if(result){
                 res.status(400).json('product is already in your cart')
             } else {
@@ -74,32 +75,13 @@ class CustomerControl {
                     quantity: 1,
                     status_order: false
                 }
-                console.log(newData)
+                console.log(newData+"....newdata")
                 return CustomerProduct.create(newData)
             }
         })
-        
-        // .then(data1=>{
-        //     console.log(data1)
-        //     return Product.findOne({
-        //         where: {
-        //             id: req.params.id
-        //         }
-        //     })
-        // })
-        // .then(data2=>{
-        //     console.log(data2)
-        //     let newStock = data2.stock - Number(req.body.quantity)
-        //     return Product.update({
-        //         stock: newStock
-        //     }, {
-        //         where: {
-        //             id: req.params.id
-        //         }
-        //     })
-        // })
         .then(data3=>{
-            console.log("sukses")
+            console.log("sukses---")
+            console.log(data3)
             res.status(200).json("product has been added in chart")
         })
         .catch(err=>{
@@ -112,7 +94,10 @@ class CustomerControl {
         console.log('delcart')
         console.log(req.params.id)
         CustomerProduct.destroy({
-            where: {ProductId: req.params.id}
+            where: {
+                ProductId: req.params.id,
+                CustomerId: req.userdata.id
+            }
         })
         .then(data=>{
             console.log(data)
@@ -134,8 +119,8 @@ class CustomerControl {
             }
         })
         .then(data=>{
-            console.log(data)
-            res.status(200).json(data)
+            console.log(data+"-----")
+            res.status(200).json("order is confirmed")
         })
         .catch(err=>{
             next()

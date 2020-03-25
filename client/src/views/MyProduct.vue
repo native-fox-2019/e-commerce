@@ -9,16 +9,23 @@
         <router-link :to="{name:'Add'}"><button type="button" class="btn btn-primary">Add</button></router-link>
    
    <div class="products"> 
-   <div v-for="item in myproducts" :key="item.id" class="produk">
-        <div class="produkname">{{item.name}}</div>
-        <img :src="item.image_url">
-        <div>Rp{{item.price}},00</div>
-        <div>Stock: {{item.stock}}</div>
-        <div>
-            <router-link :to="{name:'Edit', params:{id: item.id} }"><button>Edit</button></router-link>
-            <button @click="delproduct(item.id)" type="button">Delete</button>
+        <div v-for="item in myproducts" :key="item.id" class="produk">
+            <div class="produkname">{{item.name}}</div>
+            <img :src="item.image_url">
+            <div>Rp{{item.price}},00</div>
+            <div>Stock: {{item.stock}}</div>
+            <div>
+                <router-link :to="{name:'Edit', params:{id: item.id} }"><button>Edit</button></router-link>
+                <button @click="delproduct(item.id)" type="button">Delete</button>
+            </div>
+            <div class="ordertitle">Order Detail:</div>
+            <div v-for="order in item.Customers" :key="order.id" class="order">
+                <div>By: {{order.email}}</div>
+                <div>Quantity: {{order.CustomerProduct.quantity}}</div>
+                <div>Status order: {{order.CustomerProduct.status_order}}</div>
+            </div>
         </div>
-        </div>
+        
    </div>
    <hr>
    <router-view/>
@@ -106,6 +113,19 @@ h1 {
   padding: 10px;
   border: 5px solid blue;
   background-color: lightblue;
+}
+
+.ordertitle {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px
+}
+
+.order {
+    font-size: 12px;
+    border-style: ridge; 
+    max-height: 120px;
+    max-width: 120px
 }
 
 .produkname {
