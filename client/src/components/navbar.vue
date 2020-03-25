@@ -18,23 +18,23 @@
       </ul>
     </div>
     <div class="form-inline my-2 my-lg-0">
-      <a
-        href=""
-        class="nav-link text-light"
+      <b-button
+        class="bg-success"
         @click.prevent="goTo('Cart')"
         v-if="isLoggedin"
-        >My Cart</a
+        ><b-icon icon="bag-fill" animation="cylon-vertical"></b-icon>   My Cart</b-button
       >
     </div>
-    <div class="form-inline my-2 my-lg-0">
-      <button
-        class="btn btn-danger my-2 my-sm-0"
+    <div class="form-inline my-2 my-lg-0 ml-2">
+      <b-button
         type="button"
         @click.prevent="logout"
         v-if="isLoggedin"
+        class="btn btn-danger"
       >
+        <b-icon icon="power"> </b-icon>
         Logout
-      </button>
+      </b-button>
       <form
         class="form-inline my-2 my-lg-0"
         v-if="!isLoggedin"
@@ -52,13 +52,13 @@
           placeholder="Password"
           v-model="password"
         />
-        <button
-          class="btn btn-primary my-2 my-sm-0"
+        <b-button
+          class="btn btn-primary my-2 my-sm-0 bg-success"
           type="submit"
           v-if="!isLoggedin"
         >
-          Login
-        </button>
+          <b-icon icon="person-fill" animation="cylon"></b-icon>  Login
+        </b-button>
         |
         <b-button
           v-b-modal.modal-register
@@ -100,7 +100,9 @@
                 v-model="password_reg"
               />
             </div>
-            <button type="submit" class="btn btn-primary">Create account for free</button>
+            <button type="submit" class="btn btn-primary">
+              Create account for free
+            </button>
           </form>
         </b-modal>
       </form>
@@ -122,9 +124,9 @@ export default {
       isLoggedin: "",
       email: "",
       password: "",
-      name_reg:'',
-      email_reg:'',
-      password_reg:''
+      name_reg: "",
+      email_reg: "",
+      password_reg: ""
     };
   },
   methods: {
@@ -182,37 +184,37 @@ export default {
         this.isLoggedin = false;
       }
     },
-    register(){
+    register() {
       axios({
-        method:'POST',
-        url:`${DEV_URL}/users/register`,
+        method: "POST",
+        url: `${DEV_URL}/users/register`,
         data: {
           name: this.name_reg,
           email: this.email_reg,
           password: this.password_reg
         }
       })
-      .then(data => {
-        localStorage.setItem("access_token", data.data.access_token);
-        localStorage.setItem("role", data.data.role);
-        Swal.fire({
+        .then(data => {
+          localStorage.setItem("access_token", data.data.access_token);
+          localStorage.setItem("role", data.data.role);
+          Swal.fire({
             icon: "success",
             title: `Welcome ${this.name_reg}`,
             text: "Happy shopping!"
           });
           this.isLoggedin = true;
-          this.name_reg = ''
-          this.email_reg = ''
-          this.password_reg = ''
-          this.$router.push({ name: 'Home' })
-      })
-      .catch(response => {
-        console.log(response.response)
-        Swal.fire({
-          icon:'warning',
-          title: response.response.data
+          this.name_reg = "";
+          this.email_reg = "";
+          this.password_reg = "";
+          this.$router.push({ name: "Home" });
         })
-      })
+        .catch(response => {
+          console.log(response.response);
+          Swal.fire({
+            icon: "warning",
+            title: response.response.data
+          });
+        });
     }
   }
 };

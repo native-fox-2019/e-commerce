@@ -1,9 +1,9 @@
 <template>
-  <div class="container" style="margin-top:100px;">
+  <div style="padding:150px;">
     <div class="row">
       <div class="col-3" v-for="product in this.$store.state.productList" :key="product.id">
         <div class="card mb-4">
-          <img class="card-img-top" :src="product.image_url" alt="Card image cap" style="width:100%; height:210px;"/>
+          <img class="card-img-top" :src="product.image_url" :alt="product.name" style="width:100%; height:300px;"/>
           <div class="card-body">
             <p class="card-text" style="font-size:15px;">
                 {{ product.name }}

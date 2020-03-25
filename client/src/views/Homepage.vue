@@ -1,30 +1,31 @@
 <template>
   <div>
-    <div class="container" style="margin-top:100px;">
+    <div style="padding:100px;">
       <h1 style="font-family:monospace; font-size:50px;">
         Welcome to Warungpedia.com
       </h1>
       <div class="row mt-5 text-left">
-        <div class="col-12">
-          <div class="container">
-            <h2>We are here serving you with the most updated products</h2>
+        <div class="col-6 text-center p-5">
+          <div>
+            <img src="https://pngimage.net/wp-content/uploads/2018/06/why-logo-png-5.png" alt="" style="width:400px; height:200px;">
           </div>
         </div>
-        <div class="col-12">
-          <div class="container">
-            <h4>Benefit in using warungpedia.com</h4>
-            <ul>
-              <li>100% Original</li>
-              <li>Free Shipping*</li>
-              <li>100% Moneyback Guaranteed</li>
-            </ul>
-            <small style="color:red;">*terms and condition applies</small>
+        <div class="col-6 mt-5" style="margin-left:-200px;">
+          <div class="row">
+             <div class="col-4">
+              <img src="https://www.onlygfx.com/wp-content/uploads/2017/11/100-percent-original-stamp-3.png" alt="" style="width:300px; height:200px;">
+             </div>
+             <div class="col-4">
+              <img src="https://i.ya-webdesign.com/images/free-delivery-png-2.png" alt="" style="width:300px; height:200px;">
+             </div>
+             <div class="col-4 pl-5">
+              <img src="https://pluspng.com/img-png/moneyback-png-100-money-back-guarantee-logo-273.png" alt="" style="width:300px; height:200px;">
+             </div>
           </div>
         </div>
       </div>
       <button class="btn btn-outline-success btn-block mt-5" @click.prevent="goTo('Products')">Click here to browse our products</button>
-      <h2 class="mt-4" style="font-family:Helvetica;">Promos</h2>
-        <banner></banner>
+      <banner class="mt-5"></banner>
     </div>
   </div>
 </template>

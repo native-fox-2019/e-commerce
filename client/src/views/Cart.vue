@@ -22,9 +22,10 @@
     </table>
     <div class="container-lg bg-dark text-white p-5" style="margin-top:200px;">
       <h3>Please checkout to proceed with the order</h3>
-      <h4 class="mt-3">Total order</h4>
-      <h5>{{ grandTotal }}</h5>
-      <button class="btn btn-outline-warning mt-3" @click.prevent="checkout">checkout</button>
+      <h4 class="mt-3">Total order : {{ grandTotal }}</h4>
+      <button class="btn btn-outline-warning mb-3 mt-2" @click.prevent="checkout">checkout</button>
+      <p style="font-family:monospace; font-size:20px;">Or</p>
+      <button class="btn btn-outline-light" @click.prevent="goTo('Products')">Continue Shopping</button>
     </div>
   </div>
 </template>
@@ -52,6 +53,9 @@ export default {
         this.$store.dispatch('deleteAllCart')
         this.$router.push({ name: "Products" });
         this.$store.state.cartList = []
+    },
+    goTo(route) {
+      this.$router.push({ name: route })
     }
   }
 };
