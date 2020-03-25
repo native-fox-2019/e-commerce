@@ -1,4 +1,4 @@
-const { Product } = require('../models/index.js')
+const { Product,Transaction } = require('../models/index.js')
 
 class productController{
 
@@ -101,6 +101,45 @@ class productController{
             next({status: 500, msg: 'Internal server error!'})
         })
         
+    }
+
+    static addToCart(req,res,next){
+        let obj={
+            UserId : req.userData.id,
+            ProductId : req.body.ProductId
+        }
+        Transaction.create(obj)
+        .then(result=>{
+            res.status(200).json(result)
+        })
+        .catch(err=>{
+            next({status: 500, msg: 'Internal server error!'})
+        })
+    }
+
+    static editStock(req,res,next){
+        let id = req.params.id
+        let obj = {
+            stock : req.body.stock
+        }
+        Product.update(obj,{where:{id:id}})
+        .then(result=>{
+            res.status(200).json(obj)
+        })
+        .catch(err=>{
+            if(err){
+                let totalError = {}
+                for(let i = 0; i < err.errors.length; i++){
+                    totalError[err.errors[i].path] = {
+                        msg : err.errors[i].message
+                    }
+                } 
+                next({status: 400, msg: totalError})
+            } else{
+                next({status: 500, msg: 'Internal server error!'})
+            }
+            
+        })
     }
 
 }

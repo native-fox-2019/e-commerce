@@ -1,7 +1,6 @@
 <template>
 <div>
-    <div class="view d-flex row justify-content-center"
-      v-if="view">
+    <div class="view d-flex row justify-content-center">
           <div
           class="card col-2 ml-3 mb-3"
           style="width: 18rem;"
@@ -16,12 +15,17 @@
                   <li class="list-group-item">Price : Rp.{{ data.price.toLocaleString('ID') }}</li>
               </ul>
               <div class="card-body d-flex justify-content-center row">
-                  <input type="button" class="btn btn-warning ml-3"
-                  v-on:click.prevent="deleteProduct(data.id)" value="Add To Cart">
+                  <div class="ltp" v-if="ltp">
+                    <input type="button" class="btn btn-warning"
+                    v-on:click.prevent="deleteProduct(data.id)" value="Login to Purchase">
+                  </div>
+                  <div class="atc" v-if="atc">
+                    <input type="button" class="btn btn-warning"
+                    v-on:click.prevent="addToCarts(data.id)" value="add to cart">
+                  </div>
               </div>
           </div>
       </div>
-      <EditProduct :elementEdit="elementEdit" v-if="editBox"></EditProduct>
   </div>
 </template>
 <script>
@@ -33,8 +37,8 @@ export default {
   data() {
     return {
       elementEdit: '',
-      editBox: false,
-      view: true,
+      ltp: !this.$store.state.usertoken,
+      atc: this.$store.state.usertoken,
     };
   },
   created() {
@@ -44,14 +48,8 @@ export default {
     userProducts() {
       this.$store.dispatch('Products');
     },
-    edit(id) {
-      this.$store.state.productList.forEach((element) => {
-        if (element.id === id) {
-          this.elementEdit = element;
-        }
-      });
-      this.editBox = true;
-      this.view = false;
+    addToCarts(id) {
+      this.$store.dispatch('addToCart', id);
     },
   },
 };

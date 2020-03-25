@@ -20,6 +20,9 @@
                     <input type="submit" class="btn btn-warning" value="Submit"
                     v-on:click.prevent="login">
                 </form>
+                <br>
+                <router-link to="/register"><p> Don't have account? click Here to Register </p>
+                </router-link>
             </div>
             </div>
         </div>
@@ -82,7 +85,7 @@ export default {
   text-align: center;
   font-family: 'Lato';
   font-weight: 300;
-  margin : 120px auto;
+  margin : 80px auto;
   background: rgb(5, 5, 5);
   padding: 15px;
 }
@@ -96,5 +99,8 @@ img{
     height: 400px;
     width: 500px;
 }
-
+p{
+  color : white;
+  font-family : 'Lato';
+}
 </style>

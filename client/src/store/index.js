@@ -119,7 +119,39 @@ export default new Vuex.Store({
           console.log('deleted');
         });
     },
-
+    addToCart(context, id) {
+      swal({
+        title: 'Are you sure want to add product?',
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willAdd) => {
+          if (willAdd) {
+            axios({
+              method: 'POST',
+              url: 'http://localhost:3000/addtocart',
+              headers: { token: localStorage.getItem('token') },
+              data: {
+                ProductId: Number(id),
+              },
+            })
+              .then((data) => {
+                console.log(data);
+              })
+              .catch((err) => {
+                console.log(err.err);
+              });
+            swal({
+              icon: 'success',
+              title: 'Product successfully added.',
+            });
+            this.$router.push({ name: 'Home' });
+          } else {
+            swal('Add To Cart cancelled');
+            this.$router.push({ name: 'Home' });
+          }
+        });
+    },
   },
   modules: {
   },
