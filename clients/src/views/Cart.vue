@@ -32,9 +32,9 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn icon>
+          <!-- <v-btn icon>
             <v-icon style="color:white;" @click.prevent="cancel">mdi-delete</v-icon>
-          </v-btn>
+          </v-btn>-->
         </v-app-bar>
 
         <v-container>
@@ -133,34 +133,34 @@ export default {
     this.$store.dispatch("fetchCart");
   },
   methods: {
-    async cancel() {
-      try {
-        let result = await Swal.fire({
-          title: "Hapus semua barang?",
-          text: "Barang yang kamu pilih akan dihapus dari keranjangmu.",
-          showCancelButton: true,
-          reverseButtons: true,
-          confirmButtonColor: "#39387a",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Hapus Barang",
-          cancelButtonText: "Kembali"
-        });
-        if (result.value) {
-          let { data } = await axios.delete("/cart", {
-            headers: {
-              access_token: localStorage.access_token
-            }
-          });
-          this.$store.dispatch("fetchCart");
-          Toast.fire({
-            icon: "success",
-            title: "Barang berhasil dihapus dari keranjang."
-          });
-        }
-      } catch (error) {
-        errorHandler(error);
-      }
-    },
+    // async cancel() {
+    //   try {
+    //     let result = await Swal.fire({
+    //       title: "Hapus semua barang?",
+    //       text: "Barang yang kamu pilih akan dihapus dari keranjangmu.",
+    //       showCancelButton: true,
+    //       reverseButtons: true,
+    //       confirmButtonColor: "#39387a",
+    //       cancelButtonColor: "#d33",
+    //       confirmButtonText: "Hapus Barang",
+    //       cancelButtonText: "Kembali"
+    //     });
+    //     if (result.value) {
+    //       let { data } = await axios.delete("/cart", {
+    //         headers: {
+    //           access_token: localStorage.access_token
+    //         }
+    //       });
+    //       this.$store.dispatch("fetchCart");
+    //       Toast.fire({
+    //         icon: "success",
+    //         title: "Barang berhasil dihapus dari keranjang."
+    //       });
+    //     }
+    //   } catch (error) {
+    //     errorHandler(error);
+    //   }
+    // },
     async remove(item) {
       try {
         let result = await Swal.fire({
@@ -174,6 +174,9 @@ export default {
           cancelButtonText: "Kembali"
         });
         if (result.value) {
+          let input = {
+            qty: item.qty
+          };
           let { data } = await axios.delete(`/cart/${item.Product.id}`, {
             headers: {
               access_token: localStorage.access_token
