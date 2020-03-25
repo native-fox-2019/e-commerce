@@ -12,7 +12,8 @@ export default new Vuex.Store({
     loading: false,
     products: [],
     editData: null,
-    slide: true
+    slide: true,
+    cart: null
   },
   mutations: {
     GET_PRODUCTS(state, data) {
@@ -26,9 +27,41 @@ export default new Vuex.Store({
     },
     EDIT_DATA_FORM(state, data) {
       state.editData = data;
+    },
+    ADD_TO_CART_FORM(state, data) {
+      state.cart = data;
     }
   },
   actions: {
+    addToCart({ state, dispatch, commit }, data) {
+      state.loading = true;
+      axios({
+        method: 'POST',
+        url: baseUrl + '/carts',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data
+      })
+        .then(() => {
+          state.loading = false;
+          router.push('/');
+          dispatch('swalMixin', 'Product Added to your cart');
+        }).catch(err => {
+          dispatch('showError', err);
+        });
+    },
+    addToCartForm({ state, dispatch, commit }, id){
+      let cartData = state.products.filter(x => {
+        return x.id === id;
+      })[0];
+      if (!cartData) {
+        dispatch('showError', { message: 'Error not Found' });
+      } else {
+        commit('ADD_TO_CART_FORM', cartData);
+        router.push('/addcart');
+      }
+    },
     editProduct({ state, dispatch }, data) {
       state.loading = true;
       axios({
@@ -181,10 +214,8 @@ export default new Vuex.Store({
         }
       } else if (err.request) {
         msg = err.request;
-        console.log(err.request);
       } else {
         msg = err.message;
-        console.log('err', err.message);
       }
       state.loading = false;
       Swal.fire({

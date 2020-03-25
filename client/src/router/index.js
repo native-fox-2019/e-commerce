@@ -5,6 +5,7 @@ import Login from '../views/Login.vue';
 import Admin from '../views/Admin.vue';
 import AddProduct from '../views/AddProduct.vue';
 import EditProduct from '../views/EditProduct.vue';
+import AddCart from '../views/AddCart.vue';
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,12 @@ const routes = [
     path: '/edit',
     name: 'EditProduct',
     component: EditProduct,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/addcart',
+    name: 'AddCart',
+    component: AddCart,
     meta: { requiresAuth: true }
   },
 ]

@@ -25,9 +25,20 @@ class CartController {
       if (stock < 1) {
         throw createError(400, 'Please enter the stock number');
       }
-      const obj = { stock, ProductId, UserId };
-      const newCart = await Cart.create(obj);
-      res.status(201).json(newCart);
+      const cart = await Cart.findOne({ where: { ProductId, UserId }, attributes: ['id', 'stock'] });
+      let obj = { stock, ProductId, UserId };
+      let result;
+      if (!cart) {
+        result = await Cart.create(obj);
+      } else {
+        const newStock = cart.dataValues.stock += Number(stock);
+        if (newStock > productData.stock) {
+          throw createError(400, 'You cannot buy more than the stock available, check your cart');
+        }
+        obj.stock = newStock;
+        result = await Cart.update(obj, { where: { id: cart.dataValues.id } });  
+      }
+      res.status(201).json(result);
     } catch (err) {
       next(err);
     }
