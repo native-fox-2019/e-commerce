@@ -12,7 +12,7 @@
           <p>Stock :{{listProduct.stock}}</p>
         </div>
         <div id="iconDetailnAddCart">
-          <div class="iconCard" @click="addCart">
+          <div class="iconCard" @click="addCart(listProduct.id)">
             <!-- <img src="@/assets/shopping-cart.svg" alt /> -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -70,8 +70,9 @@ export default {
         path: `/detail/${id}`
       });
     },
-    addCart() {
-      alert("nambah ke cart");
+    addCart(id) {
+      this.$store.dispatch("addTocart", id);
+      // this.$router.push({ path: "/cart" });
     },
     idr(value) {
       return rupiah(value);

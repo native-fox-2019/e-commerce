@@ -1,53 +1,200 @@
 <template>
-  <div id="cartBox">
-    <div id="tableDetail">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Product</th>
-            <th scope="col">Qty</th>
-            <th scope="col">Price</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>X</td>
-          </tr>
-        </tbody>
-      </table>
+  <div>
+    <div id="cartBox">
+      <!-- {{carts}} -->
+      <div id="tableDetail">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Price</th>
+              <th scope="col">Total</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody v-for="cart in carts" :key="cart.id">
+            <tr>
+              <td>
+                <img
+                  :src="cart.Product.image_url"
+                  alt
+                  style="width:100px;height:100px;object-fit:cover"
+                />
+              </td>
+              <td>{{cart.qty}}</td>
+              <td>{{idr(cart.Product.price)}}</td>
+              <td>{{idr(jumlahHarga(cart.qty,cart.Product.price))}}</td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    @click="kuranginQty(cart.id, -1,cart.qty)"
+                  >-</button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    @click="kuranginQty(cart.id, 1,cart.qty)"
+                  >+</button>
+                  <button type="button" class="btn btn-secondary" @click="deleteCart(cart.id)">x</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="totalSummary">
+        <div class="summaryCol">
+          <h6>ADD VOUCHER</h6>
+          <form id="inputVoucher">
+            <input type="text" />
+            <button id="btnAdd">ADD</button>
+          </form>
+        </div>
+        <div id="summaryGrand">
+          <h6>SUMMARY</h6>
+          <div class="totalSum">
+            <p>Total :</p>
+            <p>{{idr(totalPembayaran)}}</p>
+          </div>
+          <div class="totalSum">
+            <p>Grand Total :</p>
+            <p>{{idr(totalPembayaran)}}</p>
+          </div>
+          <div id="btnCheckOut" @click="checkout">CHECKOUT</div>
+        </div>
+      </div>
     </div>
-    <div id="totalSummary">
-      <div class="summaryCol">
-        <h6>ADD VOUCHER</h6>
-        <form id="inputVoucher">
-          <input type="text" />
-          <button id="btnAdd">ADD</button>
-        </form>
-      </div>
-      <div id="summaryGrand">
-        <h6>SUMMARY</h6>
-        <div class="totalSum">
-          <p>Total :</p>
-          <p>Rp. 1.000</p>
-        </div>
-        <div class="totalSum">
-          <p>Grand Total :</p>
-          <p>Rp. 1.000</p>
-        </div>
-        <div id="btnCheckOut">CHECKOUT</div>
-      </div>
+    <div id="bank">
+      <img src="@/assets/payment_footer.png" alt style="width:100%;object-fit:cover" />
     </div>
   </div>
 </template>
 
 
 <script>
+import rupiah from "../helper/idr";
+import axios from "axios";
+import Swal from "sweetalert2";
+const server = "http://localhost:3000";
+
 export default {
-  name: "Cart"
+  name: "Cart",
+  data() {
+    return {
+      carts: [],
+      totalPembayaran: 0
+    };
+  },
+  mounted() {
+    this.getAllCart();
+  },
+  watch: {
+    carts() {
+      this.totalPembayaran = 0;
+      this.carts.forEach(cart => {
+        this.totalPembayaran += cart.qty * cart.Product.price;
+      });
+    }
+  },
+  methods: {
+    idr(value) {
+      return rupiah(value);
+    },
+    getAllCart() {
+      axios({
+        method: "get",
+        url: `${server}/cart`,
+        headers: { token: localStorage.token }
+      })
+        .then(result => {
+          this.carts = result.data;
+          // console.log(result, "<<<<<<<<<<<< watch");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    jumlahHarga(paramQty, paramsPrice) {
+      let total = Number(paramQty) * Number(paramsPrice);
+
+      return total;
+    },
+    kuranginQty(id, value, currentNum) {
+      let numNow = Number(value) + Number(currentNum);
+      if (numNow < 1) {
+        this.getAllCart();
+      } else {
+        axios({
+          method: "patch",
+          url: `${server}/cart/${id}`,
+          headers: { token: localStorage.token },
+          data: {
+            value
+          }
+        })
+          .then(result => {
+            this.getAllCart();
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
+    deleteCart(id) {
+      Swal.fire({
+        title: "Apakah anda yakin?",
+        // text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#000",
+        cancelButtonColor: "#000",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          Swal.fire("sudah di hapus");
+          axios({
+            method: "delete",
+            url: `${server}/cart/${id}`,
+            headers: { token: localStorage.token }
+          })
+            .then(result => {
+              this.getAllCart();
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      });
+    },
+    checkout() {
+      Swal.fire({
+        title: "Periksa kembali!",
+        text: "Pastikan barang yang anda beli suda sesuai",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#000",
+        cancelButtonColor: "#000",
+        confirmButtonText: "beli sekarang"
+      }).then(result => {
+        if (result.value) {
+          Swal.fire("Terimakasih!");
+          axios({
+            method: "patch",
+            url: `${server}/cart/checkout`,
+            headers: { token: localStorage.token }
+          })
+            .then(result => {
+              this.getAllCart();
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      });
+    }
+  }
 };
 </script>
 
@@ -145,5 +292,10 @@ input {
   border-top: 1px solid #707070;
   background-color: #fff;
   color: #707070;
+}
+#bank {
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 </style>

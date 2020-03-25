@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { generatingJWT, veryfingJWT } from '../components/helper/jwt'
 const server = `http://localhost:3000`
 // const server = `https://shrouded-badlands-50874.herokuapp.com`
 Vue.use(Vuex)
@@ -13,7 +14,9 @@ export default new Vuex.Store({
     isEditProduct: false,
     dataProducts: [],
     dataEditProducts: {},
-    oneDataProduct: {}
+    oneDataProduct: {},
+    dataCarts: [],
+    dataAllCarts: []
   },
   getters: {
     filterBaju(state) {
@@ -47,8 +50,12 @@ export default new Vuex.Store({
     },
     ONE_PRODUCT(state, payload) {
       state.oneDataProduct = payload
-      // console.log(payload, '<<<<<<< data get one dari store mutation')
-
+    },
+    CART_NOTIF(state, payload) {
+      state.dataCarts = payload
+    },
+    ALL_CART(state, payload) {
+      state.dataAllCarts = payload
     }
 
   },
@@ -186,7 +193,86 @@ export default new Vuex.Store({
             text: `${err.response.data}`
           });
         })
+    },
+    addTocart(context, id) {
+      // console.log(id, '<<<<<<< action')
+      const token = localStorage.token
+      const user = token ? veryfingJWT(token) : null
+      // console.log(user, '<<<<< token')
+      if (localStorage.token) {
+        axios({
+          method: 'POST',
+          url: `${server}/cart`,
+          data: {
+            ProductId: id,
+            UserId: user.id,
+            qty: 1
+          },
+          headers: {
+            token: localStorage.token
+          }
+        })
+          .then(({ data }) => {
+            context.commit('CART_NOTIF', data)
+            // router.push({ name: "Cart" })
+            // console.log(data, '<<<<<<<<CART ACTION')
+
+          })
+          .catch(err => {
+            console.log(err.response)
+          })
+      } else {
+        console.log("belum login atau register");
+
+
+        Swal.fire({
+          title: "Anda Belum Login?",
+          text: "Silahkan Login",
+          icon: "info",
+          showCancelButton: true,
+          confirmButtonColor: "#000",
+          cancelButtonColor: "#2f3640",
+          confirmButtonText: "Yup saya Login!"
+        }).then(result => {
+          if (result.value) {
+            // Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            router.push({ name: "Login" });
+          }
+        });
+      }
+    },
+
+    allCart({ commit }) {
+      axios({
+        method: 'GET',
+        url: `${server}/cart`,
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          commit('ALL_CART', data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    actionDeleteCart(contex, id) {
+      axios({
+        method: "DELETE",
+        url: `${server}/delete/${id}`,
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(({ data }) => {
+          contex.dispatch('allCart')
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
     }
+
   },
   modules: {
   }

@@ -1,11 +1,12 @@
 const controllerCart = require('../controllers/cart')
 const route = require('express').Router()
+const authen = require('../middleware/authen')
 
 
-route.get('/', controllerCart.getAll)
-route.post('/', controllerCart.addCart)
-route.patch('/checkout', controllerCart.checkout)
-route.patch('/:id', controllerCart.editCart)
-route.delete('/:id', controllerCart.deleteCart)
+route.get('/', authen, controllerCart.getAll)
+route.post('/', authen, controllerCart.addCart)
+route.patch('/checkout', authen, controllerCart.checkout)
+route.patch('/:id', authen, controllerCart.editCart)
+route.delete('/:id', authen, controllerCart.deleteCart)
 
 module.exports = route

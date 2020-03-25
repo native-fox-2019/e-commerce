@@ -18,13 +18,16 @@ class ControllerCart {
   }
 
   static addCart(req, res, next) {
-    let { ProductId } = req.body
+    const { ProductId } = req.body
+    const UserId = req.user.id
+
+
     Cart
-      .findOne({ where: { ProductId, UserId: req.user.id } })
+      .findOne({ where: { ProductId, UserId } })
       .then(result => {
         let isi = result
         if (!isi) {
-          return Cart.create({ ProductId, UserId: req.user.id, qty: 1 })
+          return Cart.create({ ProductId, UserId, qty: 1 })
         } else {
           let temp = isi.qty
           temp++
@@ -41,7 +44,6 @@ class ControllerCart {
 
   static editCart(req, res, next) {
     let id = req.params.id
-
     Cart
       .findOne({ where: { id: id } })
       .then(resFindOne => {

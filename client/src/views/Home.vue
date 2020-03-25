@@ -9,9 +9,11 @@
         <router-link class="menuCategory" to="/sepatu">Sepatu</router-link>
       </div>
       <div id="iconNav">
-        <div id="cart">
-          <img src="../assets/shopping-bag.svg" alt />
-        </div>
+        <router-link id="cart" to="/cart">
+          <img src="../assets/shopping-bag.svg" alt style="cursor:pointer;" />
+
+          <span class="badge badge-secondary">{{this.$store.state.dataAllCarts.length}}</span>
+        </router-link>
         <router-link id="login" to="/login">
           <img src="../assets/log-in.svg" alt v-if="!isLoginPage" />
           <img src="../assets/log-out.svg" alt v-if="isLoginPage" @click="logoutUser" />
@@ -42,6 +44,13 @@ export default {
       category: ""
     };
   },
+  computed: {
+    notif() {
+      let arr = this.$store.state.dataAllCarts;
+      return arr.length;
+    }
+  },
+
   mounted() {
     if (localStorage.token) {
       const payload = veryfingJWT(localStorage.token);
@@ -53,10 +62,13 @@ export default {
     }
     this.$store.dispatch("getAll");
   },
+  // updated() {
+  //   this.$store.dispatch("allCart");
+  // },
   created() {
+    this.$store.dispatch("allCart");
     this.$store.dispatch("getAll");
   },
-  computed: {},
   methods: {
     logoutUser() {
       localStorage.clear();
@@ -119,11 +131,20 @@ nav {
 #cart {
   margin-right: 2em;
   cursor: pointer;
+  display: flex;
 }
 #login {
   cursor: pointer;
 }
 #logo {
   cursor: pointer;
+}
+.badge {
+  font-size: 9px;
+  padding: 0.25em;
+  border-radius: 0;
+  line-height: none;
+  height: 15px;
+  width: 15px;
 }
 </style>
