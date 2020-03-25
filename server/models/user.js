@@ -35,6 +35,9 @@ module.exports = (sequelize, DataTypes) => {
             msg: `Role can't be empty`
           }
         }
+      },
+      wallet: {
+        type: DataTypes.INTEGER
       }
     },
     {

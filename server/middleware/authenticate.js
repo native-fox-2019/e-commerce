@@ -19,9 +19,10 @@ module.exports = (req, res, next) => {
     })
         .then(data => {
             if (data || (data && req.user.role === `admin`)) {
+                req.user.wallet = data.wallet
                 next()
             } else {
-                throw createError(401, `invalid Token`)
+                throw createError(401)
             }
         })
         .catch(next)

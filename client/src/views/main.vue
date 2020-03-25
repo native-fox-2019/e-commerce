@@ -36,11 +36,21 @@ export default {
         },
       })
         .then(({ data }) => {
+          this.$store.state.wallet = data.pop();
           this.$store.state.list = data;
         })
         .catch((err) => {
-          this.$store.dispatch('toast', { vm: this, message: err });
+          err.response.data.status_message.forEach((i) => {
+            if (i === 'Invalid Token') {
+              this.$router.push({ name: 'logout' });
+            }
+          });
+          this.$store.dispatch('toast', { vm: this, message: err.response.data.status_message.join(', ') });
         });
+    },
+
+    getCheckout() {
+
     },
   },
 };

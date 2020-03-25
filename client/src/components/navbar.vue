@@ -1,9 +1,15 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between">
     <router-link :to="{ name: 'main' }" class="navbar-brand">E-Commerce</router-link>
-    <ul class="navbar-nav mr-auto" v-if="$store.state.role === 'admin'">
-      <li class="nav-item" @click="$bvModal.show('addForm')">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" @click="$bvModal.show('addForm')" v-if="$store.state.role === 'admin'">
         <a href="#" class="nav-link">Add Product</a>
+      </li>
+      <li class="nav-item" v-if="$store.state.role === 'user'">
+        <a href="#" class="nav-link"
+        @click="$bvModal.show('addWallet')">
+        Wallet: {{$store.state.wallet}}
+        </a>
       </li>
     </ul>
 
@@ -67,6 +73,21 @@
         <b-button type="submit" variant="primary">Add</b-button>
       </b-form>
     </b-modal>
+    <b-modal id="addWallet" hide-footer title="Add money to your wallet">
+      <b-form @submit="add2Wallet">
+        <b-form-group label="Total Wallet:">
+          {{totalWallet}}
+        </b-form-group>
+
+        <b-form-group label="Amount to Add:">
+          <b-form-input v-model="addAmount" type="number" min=1
+          required placeholder="Amount to add">
+          </b-form-input>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary">Add</b-button>
+      </b-form>
+    </b-modal>
   </nav>
 </template>
 
@@ -84,6 +105,7 @@ export default {
         price: 1,
         stock: 1,
       },
+      addAmount: 1,
     };
   },
   components: {
@@ -115,6 +137,38 @@ export default {
             message: err.response.data.status_message.join(', '),
           });
         });
+    },
+
+    add2Wallet(event) {
+      event.preventDefault();
+
+      axios({
+        url: '/users/add2wallet',
+        baseURL: this.$store.state.url,
+        method: 'post',
+        headers: {
+          token: localStorage.token,
+        },
+        data: {
+          wallet: this.addAmount,
+        },
+      })
+        .then(() => {
+          this.$store.state.wallet = this.totalWallet;
+          this.$bvModal.hide('addWallet');
+          this.addAmount = 1;
+        })
+        .catch((err) => {
+          this.$store.dispatch('toast', {
+            vm: this,
+            message: err.response.data.status_message.join(', '),
+          });
+        });
+    },
+  },
+  computed: {
+    totalWallet() {
+      return this.$store.state.wallet + Number(this.addAmount);
     },
   },
 };

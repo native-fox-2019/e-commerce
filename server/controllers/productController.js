@@ -24,6 +24,7 @@ class productController {
   static read(req, res, next) {
     model.Product.findAll()
       .then(data => {
+        data.push(req.user.wallet)
         res.status(200).json(data);
       })
       .catch(next);

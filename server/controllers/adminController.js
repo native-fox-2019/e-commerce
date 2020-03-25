@@ -10,7 +10,8 @@ class adminController {
     model.User.create({
       email,
       password,
-      role: `admin`
+      role: `admin`,
+      wallet: 0
     })
       .then(data => {
         var token = jwt.sign({
@@ -38,7 +39,8 @@ class adminController {
     model.User.create({
       email,
       password,
-      role: `user`
+      role: `user`,
+      wallet: 0
     })
       .then(data => {
         var token = jwt.sign({
@@ -88,6 +90,24 @@ class adminController {
         }
       })
       .catch(next);
+  }
+
+  static addWallet(req, res, next) {
+    var { wallet } = req.body
+    wallet = Number(wallet) + Number(req.user.wallet)
+
+    model.User.update({
+      wallet
+    }, {
+      where: {
+        id: req.user.id
+      },
+      returning: true
+    })
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(next)
   }
 }
 

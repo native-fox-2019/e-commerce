@@ -11,6 +11,8 @@ export default new Vuex.Store({
     addForm: false,
     list: [],
     checkout: [],
+    wallet: 0,
+    total: 0,
   },
   mutations: {
   },
