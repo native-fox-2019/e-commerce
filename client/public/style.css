@@ -60,7 +60,7 @@ a{
 }
 .products{
     width: 100%; height: auto; display: flex; justify-content: center; margin-top: 20px; flex-wrap: wrap;
-    background-color: rgba(211, 211, 211, 0.137); margin: 0 auto;
+    background-color: rgba(211, 211, 211, 0.089); margin: 0 auto;
 }
 .card{
     width: 250px; height: 350px; border: 1px solid rgb(194, 191, 191); margin: 20px 10px; padding: 15px 15px; text-align: left;
@@ -99,6 +99,19 @@ a{
 }
 .product-image, .product-details{
     padding: 20px 20px;
+}
+.add-to-cart{
+    margin-top: 20px; border-top: 1px solid rgba(0, 0, 0, 0.397); padding: 20px 0px
+}
+.add-to-cart input{
+    width: 200px; height: 25px; margin-top: 10px; font-size: 15px; text-align: center;
+}
+.add-to-cart button{
+    width: 206px; height: 35px; margin-top: 10px; padding: 5px 5px; font-size: 15px; background-color: goldenrod; color: whitesmoke;
+    font-weight: 500;
+}
+.add-to-cart button:hover{
+    cursor: pointer;
 }
 .product-name h2{
     margin-top: 0; font-size: 23px; margin-bottom: 30px;

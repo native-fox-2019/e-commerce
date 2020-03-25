@@ -8,15 +8,23 @@
             <img :src="image_url" width="300px" height="auto">
             </div>
             <div class="product-details">
-            <div class="product-name">
-                <h2>{{name}}</h2>
-            </div>
-            <div class="product-price">
-                <span>Rp{{price}}</span>
-            </div>
-            <div class="product-stock">
-                <span>Stock: {{stock}}</span>
-            </div>
+                <div class="product-name">
+                    <h2>{{name}}</h2>
+                </div>
+                <div class="product-price">
+                    <span>Rp{{price}}</span>
+                </div>
+                <div class="product-stock">
+                    <span v-if="!isOutOfStock">Stock: {{stock}}</span>
+                    <span v-if="isOutOfStock">Out of Stock</span>
+                </div>
+                <div class="add-to-cart">
+                    <span>Input the amount:</span><br>
+                    <form @submit.prevent="addCart">
+                        <input type="number" min="1" :max="stock" v-model="amount"><br>
+                        <button type="submit">Add To Cart</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -44,7 +52,16 @@ export default {
       stock: 0,
       image_url: '',
       isLoading: true,
+      isOutOfStock: false,
+      amount: 1,
     };
+  },
+  watch: {
+    amount() {
+      if (this.amount > this.stock) {
+        this.amount = this.stock;
+      }
+    },
   },
   methods: {
     getProduct() {
@@ -58,12 +75,25 @@ export default {
           this.name = response.data.product.name;
           this.price = response.data.product.price;
           this.stock = response.data.product.stock;
+          if (this.stock === 0) {
+            this.isOutOfStock = true;
+          }
           this.image_url = response.data.product.image_url;
           this.isLoading = false;
         })
         .catch((err) => {
           console.log(err.response);
         });
+    },
+    addCart() {
+      if (!this.$store.state.isLogin) {
+        this.$router.push('/login');
+      }
+      //   else {
+      //     const options = {
+      //       url: `${this.$store.state.baseUrl}/products/${this.$route.params.id}`,
+      //     }
+      //   }
     },
   },
 };

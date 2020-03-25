@@ -48,7 +48,7 @@ export default {
           this.email = '';
           this.password = '';
           this.loginError = '';
-          this.$router.push('/');
+          this.$router.back();
         })
         .catch((err) => {
           this.loginError = '';
