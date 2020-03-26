@@ -78,7 +78,11 @@
     },
     methods: {
       detail(id) {
-        this.$router.push({ path: "/detail/"+id})
+        if (!localStorage.getItem('token')) {
+          this.$router.push({ path: "/login"})
+        } else {
+          this.$router.push({ path: "/detail/"+id})
+        }
       }
     },
 

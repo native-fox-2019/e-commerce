@@ -16,8 +16,8 @@
           <loginBtn v-if="!token"></loginBtn>
           <registerBtn v-if="!token"></registerBtn>
           <logoutBtn v-if="token" v-on:logOut="logOut"></logoutBtn>
-          <cartBtn v-if="token && changePage" v-on:toHome="toHome"></cartBtn>
-          <homeBtn v-if="token && !changePage" v-on:toCart="toCart"></homeBtn>
+          <cartBtn v-if="token" v-on:toHome="toHome"></cartBtn>
+          <homeBtn v-if="token" v-on:toCart="toCart"></homeBtn>
         </div>
     </v-toolbar>
 </template>
