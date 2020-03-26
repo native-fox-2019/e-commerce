@@ -1,4 +1,4 @@
-# e-commerce-cms
+# e-commerce
 
 admin email: admin@mail.com
 admin password :tests
