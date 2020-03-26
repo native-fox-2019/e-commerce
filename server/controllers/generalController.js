@@ -25,19 +25,21 @@ class GeneralController {
             if(data){
                 if(checkPass(password, data)){
                     const {id,role} = data
-                    let access_token = sign({id,role})
+            console.log('access_token','=============')
+            let access_token = sign({id,role})
+                    console.log(access_token,'=============')
                     res.status(200).json({access_token})
                 } else {
-                    throw {
+                    next ({
                         status:404,
                         msg:'incorrect USERNAME/PASSWORD'
-                    }
+                    })
                 }
             } else {
-                throw {
+                next ({
                     status:404,
                     msg:'incorrect USERNAME/PASSWORD'
-                }
+                })
             }
         })
         .catch(err=>{
