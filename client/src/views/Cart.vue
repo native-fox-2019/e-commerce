@@ -8,6 +8,7 @@
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th>Delete</th>
                 </thead>
                 <tbody>
                     <tr v-for="item in cart" :key="item.id">
@@ -15,6 +16,7 @@
                         <td>{{ item.price }}</td>
                         <td>{{ item.qty }}</td>
                         <td>{{ Number(item.price) * Number(item.qty) }} IDR</td>
+                        <td class="cancel-cart" v-on:click="cancelCart(item.id)">+</td>
                     </tr>
                 </tbody>
             </table>
@@ -92,6 +94,15 @@ export default {
                     }
                 });
             }
+        },
+        cancelCart: function(id) {
+            let temp = [];
+            for (let i = 0; i < this.cart.length; i++) {
+                if (this.cart[i].id != id) {
+                    temp.push(this.cart[i]);
+                }
+            }
+            this.$store.state.cart = temp;
         }
     },
     computed: {

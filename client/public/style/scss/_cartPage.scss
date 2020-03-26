@@ -20,6 +20,17 @@
         td {
             text-align: center;
         }
+
+        .cancel-cart {
+            transform: rotate(45deg);
+            font-size: larger;
+            cursor: pointer;
+            transition: .5s ease-in-out;
+        }
+
+        .cancel-cart:hover {
+            color: red;
+        }
     }
 }
 

@@ -273,6 +273,15 @@ header h4 {
 .cart-table table td {
   text-align: center;
 }
+.cart-table table .cancel-cart {
+  transform: rotate(45deg);
+  font-size: larger;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+.cart-table table .cancel-cart:hover {
+  color: red;
+}
 
 .user-info {
   text-align: center;
