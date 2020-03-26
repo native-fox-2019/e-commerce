@@ -7,21 +7,28 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state() {
     return {
-      base_url: 'http://localhost:3000',
       products: [],
+      priceList: [],
+      authenticated: false,
     };
   },
   mutations: {
-    getProducts() {
+    getProducts(state) {
       axios.get('https://guarded-thicket-66622.herokuapp.com/product')
         .then((data) => {
           data.data.forEach((product) => {
-            this.state.products.push(product);
+            state.products.push(product);
+            state.priceList.push(product.price);
           });
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    checkLogin() {
+      if (localStorage.getItem('usertoken')) {
+        this.state.authenticated = true;
+      }
     },
   },
   actions: {

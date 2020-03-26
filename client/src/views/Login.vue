@@ -134,7 +134,8 @@ export default {
         });
     },
   },
-  watch: {
+  created() {
+    this.$store.commit('checkLogin');
   },
 };
 </script>

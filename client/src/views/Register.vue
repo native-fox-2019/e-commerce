@@ -139,5 +139,8 @@ export default {
         });
     },
   },
+  created() {
+    this.$store.commit('checkLogin');
+  },
 };
 </script>

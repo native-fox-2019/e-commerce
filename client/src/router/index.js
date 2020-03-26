@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
+import Cart from '../views/Cart.vue';
 
 Vue.use(VueRouter);
 
@@ -18,14 +19,37 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
   {
-    path: '/Login',
+    path: '/login',
     name: 'Login',
     component: Login,
+    beforeEnter(to, from, next) {
+      if (!localStorage.getItem('usertoken')) {
+        next();
+      } else {
+        next({
+          name: 'Home',
+        });
+      }
+    },
   },
   {
-    path: '/Register',
+    path: '/register',
     name: 'Register',
     component: Register,
+    beforeEnter(to, from, next) {
+      if (!localStorage.getItem('usertoken')) {
+        next();
+      } else {
+        next({
+          name: 'Home',
+        });
+      }
+    },
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
   },
 ];
 

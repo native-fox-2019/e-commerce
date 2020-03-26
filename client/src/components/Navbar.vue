@@ -75,7 +75,9 @@ export default {
     logout() {
       localStorage.removeItem('usertoken');
     },
-    toCart() {},
+    toCart() {
+      this.$router.push('/cart');
+    },
   },
 };
 </script>

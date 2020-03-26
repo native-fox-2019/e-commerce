@@ -34,6 +34,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getProducts');
+    this.$store.commit('checkLogin');
   },
 };
 </script>
