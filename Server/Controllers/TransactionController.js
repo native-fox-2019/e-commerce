@@ -1,13 +1,4 @@
 const { Transaction, User, Cart, Product } = require('../models');
-const { Sequelize, DataTypes } = require('sequelize');
-var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
-if (config.use_env_variable) {
-    var sequelize = new Sequelize(process.env[config.use_env_variable], config);
-  } else {
-    var sequelize = new Sequelize(config.database, config.username, config.password, config);
-  }
-const queryInterface = sequelize.getQueryInterface();
 
 class TransactionController{
     static addTransaction(req, res, next){
@@ -61,8 +52,7 @@ class TransactionController{
                         updatedAt: new Date(),
                     })
                 })
-                console.log(queryInterface);
-                return queryInterface.bulkInsert('Transactions', transactions)
+                return Transaction.bulkCreate(transactions);
             }
         })
         .then(result => {
