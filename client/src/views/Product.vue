@@ -19,6 +19,7 @@
                     <b-row v-if="products.length && !emptyResult && !isLoading" class="justify-content-md-center mb-5">
                         <a href="#" :disabled="true" @click.prevent="loadMore">View more product</a> 
                     </b-row>
+                     <Loading v-else-if="isLoading"/>
                 </div>
 
             </b-col>
