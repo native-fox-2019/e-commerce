@@ -11,13 +11,13 @@
                 </b-list-group>
             </b-col>
             <b-col sm="9">
-                <Loading v-if="isLoading"/>
+                <Loading v-if="products.length===0"/>
                 <div v-else>
                     <b-row>
                         <ProductCard v-for="product in products" :key="product.id" :product="product" />
                     </b-row>
-                    <b-row v-if="products.length && !emptyResult" class="justify-content-md-center mb-5">
-                        <a href="#" @click.prevent="loadMore">View more product</a> 
+                    <b-row v-if="products.length && !emptyResult && !isLoading" class="justify-content-md-center mb-5">
+                        <a href="#" :disabled="true" @click.prevent="loadMore">View more product</a> 
                     </b-row>
                 </div>
 
@@ -28,7 +28,6 @@
 <script>
 import Loading from '../components/Loading'
 import ProductCard from '../components/ProductCard'
-import {mapGetters} from 'vuex'
 
 var vm=null;
 
@@ -36,11 +35,11 @@ export default {
     name:'Product',
     data(){
         return {
-            products:[],
+            PRODUCT:[],
             category:'',
             currPage:1,
             isSearch:false,
-            emptyResult:false
+            emptyResult:false,
         }
     },
     created(){
@@ -55,7 +54,12 @@ export default {
         searchText(){
             return this.$store.state.searchText
         },
-        ...mapGetters(['isLoading'])
+        isLoading(){
+            return this.$store.getters.isLoading
+        },
+        products(){
+            return this.PRODUCT
+        }
     },
     watch:{
         searchText:(val)=>{
@@ -69,12 +73,15 @@ export default {
             var self=this;
             return (data)=>{
                 if(!appended)
-                    self.products=data
+                    self.PRODUCT=data
                 else{
-                    self.products.concat(data)
+                    for(var i=0;i<data.length;i++){
+                        self.PRODUCT.push(data[i])
+                    }
                     if(data.length===0)
                         self.emptyResult=true
                 }
+                 console.log(self.PRODUCT)
             }
         },
         loadMore(){
@@ -83,19 +90,31 @@ export default {
         },
         toPage(category){
             this.$router.push('/product?category='+category)
+            this.emptyResult=false
+            this.currPage=1
             this.loadProduct(category)
         },
         loadProduct(input,isSearch,appended){
+            if(!appended){
+                this.PRODUCT=[];
+            }
+            var input_;
             if(!appended)
-                this.products=[];
+                input_=input
+            else{
+                input_={}
+                input_.search=input
+                input_.page=this.currPage
+            }
+
             if(isSearch){
-                this.$store.dispatch('loadProductsBySearch',input)
+                this.$store.dispatch('loadProductsBySearch',input_)
                 .then(this.onLoaded(appended))
                 return;
             }
 
             if(input){
-                this.$store.dispatch('loadProductsByCategory',input)
+                this.$store.dispatch('loadProductsByCategory',input_)
                 .then((this.onLoaded(appended)))
             }
             else{

@@ -5,7 +5,7 @@
         <template v-slot:img>
             <img
               class="shoes-carousel-img"
-              :src="$store.state.BANNER_SERVER+banner.name"
+              :src="banner.name"
               alt="image slot"
             >
           </template>
@@ -65,10 +65,18 @@ export default {
       .then((data)=>{
         self.products=data
       })
-      this.$store.dispatch('loadBanners')
-      .then((data)=>{
-        self.banners=data
-      })
+      this.banners=[
+        {
+          name:'https://static.nike.com/a/images/f_auto/dpr_2.0/w_1407,c_limit/78af191c-52dd-4fc3-a8fd-7bbba8040642/mens-shoes-clothing-accessories.jpg'
+        },
+        {
+          name:'https://static.nike.com/a/images/f_auto/dpr_2.0/w_1407,c_limit/6002e752-16e9-4f95-b22f-d718a073ca18/nike-just-do-it.jpg'
+        }
+      ]
+      // this.$store.dispatch('loadBanners')
+      // .then((data)=>{
+      //   self.banners=data
+      // })
     }
   }
 }

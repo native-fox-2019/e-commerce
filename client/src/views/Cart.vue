@@ -5,7 +5,7 @@
         <div v-else>
              <b-row class="mt-5 cart-content"  v-for="(c,index) in cart" :key="index">
             <b-col sm="3">
-                <img :src="$store.state.IMG_SERVER+c.image_url" alt="" class="product-image mb-4">
+                <img :src="imageURL(c)" alt="" class="product-image mb-4">
             </b-col>
             <b-col sm="9">
                 <b-row>
@@ -40,6 +40,7 @@
     </b-container>
 </template>
 <script>
+import {imageURL} from '../helpers/img'
 
 export default {
     name:'Cart',
@@ -69,7 +70,8 @@ export default {
                     this.$router.push({name:'Login'})
                 })
             }
-        }
+        },
+        imageURL
     }
     
 }

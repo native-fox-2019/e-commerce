@@ -3,7 +3,7 @@
         <Loading v-if="isLoading"/>
         <b-row v-if="product!==null">
             <b-col sm="4">
-                <img :src="$store.state.IMG_SERVER+product.image_url" alt="" class="product-image mb-4">
+                <img :src="imageURL(product)" alt="" class="product-image mb-4">
                 <button class="btn btn-success" @click="showCartModal">Add to cart</button>
             </b-col>
             <b-col sm="8">
@@ -58,7 +58,7 @@
 </template>
 <script>
 import Loading from '../components/Loading'
-
+import {imageURL} from '../helpers/img'
 
 export default {
     name:'ProductDetail',
@@ -92,6 +92,7 @@ export default {
         showCartModal(){
             this.$bvModal.show('bv-modal-cart')
         },
+        imageURL:imageURL,
         handleSubmitCart(){
             var formCart=this.$refs.formCart;
             this.numStockState=null;

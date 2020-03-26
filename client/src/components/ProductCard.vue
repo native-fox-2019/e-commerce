@@ -1,7 +1,7 @@
 <template>
     <b-card 
     :title="product.name" 
-    :img-src="$store.state.IMG_SERVER+product.image_url" img-alt="Image" class="mb-4 col-sm-3 ml-5">
+    :img-src="imageURL(product)" img-alt="Image" class="mb-4 col-sm-3 ml-5">
 
         <b-card-text>
             {{product.description}}
@@ -13,7 +13,12 @@
     </b-card>
 </template>
 <script>
+import {imageURL} from '../helpers/img'
+
 export default {
-    props:['product']
+    props:['product'],
+    methods:{
+        imageURL:imageURL
+    }
 }
 </script>

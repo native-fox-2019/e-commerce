@@ -81,8 +81,15 @@ export default new Vuex.Store({
       .finally(()=>commit('setIsLoading',false))
     },
     loadProductsBySearch({commit},search){
+      var url='product?search='
+      if(typeof(search)==='string'){
+        url+=search
+      }
+      else{
+        url+=search.search+'&page='+search.page
+      }
       commit('setIsLoading',true)
-      return server.get('product?search='+search,{
+      return server.get(url,{
         headers:HEADERS()
       })
       .then((response)=>{
@@ -94,8 +101,15 @@ export default new Vuex.Store({
       .finally(()=>commit('setIsLoading',false))
     },
     loadProductsByCategory({commit},category){
+      var url='product?category='
+      if(typeof(category)==='string'){
+        url+=category
+      }
+      else{
+        url+=category.search+'&page='+category.page
+      }
       commit('setIsLoading',true)
-      return server.get('product?category='+category,{
+      return server.get(url,{
         headers:HEADERS()
       })
       .then((response)=>{
