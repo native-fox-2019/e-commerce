@@ -50,7 +50,7 @@
                     Add To Cart</button>
                   <button v-if="!getStatus && product.stock !== 0"
                     @click.prevent="goToLogin" class="product-image-btn">
-                    Login First</button>
+                    Login To Purchase</button>
                 </div>
               </div>
               <div class="product-title">
