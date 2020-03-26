@@ -14,6 +14,10 @@ E-Commerce
 
 ---
 
+## Link Documentation
+
+[Click Here](https://documenter.getpostman.com/view/10570997/SzS7RmRJ)
+
 ## Description
 
 Aplikasi ini merupakan sebuah applikasi marketplace/e-commerce. Pada applikasi ini kita dapat menjual barang-barang yang ingin kita jual ataupun membeli barang-barang yang tersedia. Untuk menjual barang kita bisa masuk ke link CMS Side, sedangkan untuk membeli barang kita menggunakan sisi client yang market side.
