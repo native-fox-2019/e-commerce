@@ -10,16 +10,28 @@ import History from "../components/History.vue";
 
 Vue.use(VueRouter)
 
+const beforeEnter = async (to, from, next) => {
+  if (localStorage.getItem("token")) {
+    next({
+      path: "/"
+    });
+  } else {
+    next();
+  }
+};
+
 const routes = [
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: Login,
+    beforeEnter
   },
   {
     path: "/register",
     name: "Register",
-    component: Register
+    component: Register,
+    beforeEnter
   },
   {
     path: "/",
@@ -39,21 +51,42 @@ const routes = [
       {
         path: "cart",
         name: "Cart",
-        component: Cart
+        component: Cart,
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: "history",
         name: "History",
-        component: History
+        component: History,
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   }
 ];
+
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("token")) {
+      next();
+    } else {
+      next({
+        path: "/"
+      });
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

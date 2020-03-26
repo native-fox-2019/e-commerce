@@ -18,8 +18,8 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-form>
-          <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+        <b-nav-form @submit.prevent="searchOnSubbmit()">
+          <b-form-input size="sm" class="mr-sm-2" placeholder="Search" v-model="search"></b-form-input>
           <!-- <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button> -->
         </b-nav-form>
 
@@ -62,6 +62,8 @@
 export default {
   data() {
     return {
+      search: "",
+      products: []
     }
   },
   methods: {
@@ -71,7 +73,31 @@ export default {
     logout(){
       localStorage.clear()
       this.$store.commit("logout")
-    }
+    },
+    searchOnSubbmit(){
+      console.log('masuk')
+      let array = this.products
+      let input = this.search.toLowerCase()
+      let data = array.filter( function(search) {
+        return search.name.toLowerCase().includes(input)
+      })
+      this.$store.commit("products", data)
+      // console.log(data)
+    },
+    getAllProduct() {
+      this.$axios({
+        method: "get",
+        url: "/products"
+      })
+        .then(({ data }) => {
+          this.products = data
+          // let search = data.filter(search => word.name.include(this.search))
+          console.log(data)
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        });
+    },
   },
   computed: {
     isLogin: function(){
@@ -86,10 +112,15 @@ export default {
   },
   created(){
     this.$store.commit("login")
-    this.$store.dispatch("getCart")
+    if (localStorage.getItem("token")) {
+      this.$store.dispatch("getCart")
+    }
+    this.getAllProduct()
   },
-  mounted(){
-    console.log(this.$store.state.cartTotal)
+  watch: {
+    search(){
+      this.searchOnSubbmit()
+    }
   }
 }
 </script>

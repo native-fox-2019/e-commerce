@@ -48,7 +48,11 @@
                 ></b-form-input>
               </b-form-group>
               <div class="d-flex justify-content-center">
-              <b-button type="submit" variant="info">Submit</b-button>
+                <b-button variant="primary" disabled v-if="spinner">
+                  <b-spinner small type="grow"></b-spinner>
+                  Loading...
+                </b-button>
+                <b-button type="submit" variant="info" v-else>Submit</b-button>
               </div>
             </b-form>
           </b-card-body>
@@ -68,6 +72,7 @@ export default {
   name: "Register",
   data(){
     return{
+      spinner: false,
       name: '',
       email: '',
       password: ''
@@ -75,6 +80,7 @@ export default {
   },
   methods: {
     register(){
+    this.spinner = true
      this.$axios({
         method : 'post',
         url : 'user/register',
@@ -85,13 +91,27 @@ export default {
         }
       })
       .then(({data})=>{
+        this.spinner = false
         localStorage.setItem('name', data.name)
         localStorage.setItem('token', data.token)
         this.$router.push({
           path : '/'
         })
+        const Toast = this.$swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Register successfully'
+        })
       })
       .catch(({response})=>{
+        this.spinner = false
         console.log(response.data)
         this.$swal.fire({
           icon: 'error',

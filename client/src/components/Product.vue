@@ -23,7 +23,11 @@
         </em>
       </b-card-text>
       <div v-if="product.stock > 0">
-        <b-button href="#" variant="success" @click.prevent="addToCart(product)">Add to Cart</b-button>
+        <b-button variant="primary" disabled v-if="spinner">
+          <b-spinner small type="grow"></b-spinner>
+          Loading...
+        </b-button>
+        <b-button href="#" variant="success" @click.prevent="addToCart(product)" v-else>Add to Cart</b-button>
       </div>
       <div v-else>
         <b-button href="#" variant="warning">Out of stock</b-button>
@@ -37,6 +41,7 @@ export default {
   name: "Product",
   data(){
     return{
+      spinner: false,
       pic: 0,
     }
   },
@@ -44,6 +49,7 @@ export default {
   methods: {
     addToCart(product){
       if (this.$store.state.isLogin) {
+      this.spinner = true
       this.$axios({
         url: '/carts',
         method: 'post',
@@ -55,6 +61,7 @@ export default {
         }
       })
       .then(({data})=>{
+        this.spinner = false
         this.$store.dispatch("getCart")
         this.$swal.fire({
           icon: 'success',
@@ -63,10 +70,11 @@ export default {
         console.log(data)
       })
       .catch(({response})=>{
-          this.$swal.fire({
-            icon: 'error',
-            text: 'You Must Login First',
-          })
+        this.spinner = false
+        this.$swal.fire({
+          icon: 'error',
+          text: 'You Must Login First',
+        })
         console.log(response.data)
       })
       } else {

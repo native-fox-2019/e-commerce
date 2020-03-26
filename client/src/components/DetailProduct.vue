@@ -33,7 +33,13 @@
         <b-card>
           <div>
             <div class="d-flex justify-content-center">
-              <b-button type="button" variant="success" @click.prevent="addToCart(productDetail)" v-if="productDetail.stock>0">Add to Cart</b-button>
+              <div v-if="productDetail.stock>0">
+                <b-button variant="primary" disabled v-if="spinner">
+                  <b-spinner small type="grow"></b-spinner>
+                  Loading...
+                </b-button>
+                <b-button type="button" variant="success" @click.prevent="addToCart(productDetail)" v-else>Add to Cart</b-button>
+              </div>
               <b-button type="button" variant="warning" v-else>Out of stock</b-button>
             </div>
           </div>
@@ -48,24 +54,29 @@ export default {
   name: "DetailProduct",
   data(){
     return {
+      spinner: false,
       productDetail: {},
     }
   },
   methods: {
     getProduct(id){
+      this.spinner = true
       this.$axios({
         url: "/products/"+id,
         method: "get"
       })
       .then(({data})=>{
+        this.spinner = false
         this.productDetail = data
       })
       .catch(({response})=>{
+        this.spinner = false
         console.log(response)
       })
     },
     addToCart(productDetail){
       if (this.$store.state.isLogin) {
+      this.spinner = true
       this.$axios({
         url: '/carts',
         method: 'post',
@@ -78,6 +89,7 @@ export default {
       })
       .then(({data})=>{
         this.$store.dispatch("getCart")
+        this.spinner = false
         this.$swal.fire({
           icon: 'success',
           html: `Product successfully add to cart`,
@@ -85,6 +97,7 @@ export default {
         console.log(data)
       })
       .catch(({response})=>{
+        this.spinner = false
           this.$swal.fire({
             icon: 'error',
             text: 'You Must Login First',

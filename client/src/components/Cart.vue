@@ -26,15 +26,21 @@
       </div>
       <div class="col-2 d-flex justify-content-between align-items-center">
         <div class="p-1 m-1">
+          <b-button variant="outline-danger" class="mb-2" size="sm" v-if="spinner">
+            <b-spinner small type="grow"></b-spinner>
+          </b-button>
           <b-button variant="outline-danger" class="mb-2" size="sm"
-            @click.prevent="deleteCart(cart)">
+            @click.prevent="deleteCart(cart)" v-else>
             <b-icon-trash class="h3 m-0 p-0"></b-icon-trash>
           </b-button>
         </div>
         <div class="d-flex justify-content-between align-items-center">
           <div>
+            <b-button variant="outline-info" class="mb-2" size="sm" v-if="spinner">
+              <b-spinner small type="grow"></b-spinner>
+            </b-button>
             <b-button variant="outline-info" class="mb-2" size="sm"
-            @click.prevent="decrementQty(cart)">
+            @click.prevent="decrementQty(cart)" v-else>
               <b-icon-dash class="h3 m-0 p-0"></b-icon-dash>
             </b-button>
           </div>
@@ -42,8 +48,11 @@
             <b-card class="p-0 m-0">{{cart.quantity}}</b-card>
           </div>
           <div>
+            <b-button variant="outline-info" class="mb-2" size="sm" v-if="spinner">
+              <b-spinner small type="grow"></b-spinner>
+            </b-button>
             <b-button variant="outline-info" class="mb-2" size="sm"
-            @click.prevent="incrementQty(cart)">
+            @click.prevent="incrementQty(cart)" v-else>
               <b-icon-plus class="h3 m-0 p-0"></b-icon-plus>
             </b-button>
           </div>
@@ -62,7 +71,11 @@
             <b-card class="h3">{{formatPrice(total)}}</b-card>
           </div>
           <div>
-            <b-button variant="success" @click.prevent="checkout(allCart)">Checkout</b-button>
+            <b-button variant="primary" disabled v-if="spinner">
+              <b-spinner small type="grow"></b-spinner>
+              Loading...
+            </b-button>
+            <b-button variant="success" @click.prevent="checkout(allCart)" v-else>Checkout</b-button>
           </div>
         </div>
       </b-card>
@@ -97,6 +110,7 @@ export default {
   },
   data() {
     return {
+      spinner: false,
       total: null,
     };
   },
@@ -106,6 +120,7 @@ export default {
     },
     incrementQty(cart) {
       const data = { quantity: cart.quantity + 1 };
+      this.spinner =true
       this.$axios
         .patch(`/carts/${cart.id}`, data, {
           headers: {
@@ -113,9 +128,11 @@ export default {
           },
         })
         .then(() => {
+          this.spinner = false
           this.$store.dispatch('getCart');
         })
         .catch(({response}) => {
+          this.spinner = false
           this.$swal.fire({
             icon: 'error',
             text: response.data.message,
@@ -125,6 +142,7 @@ export default {
     },
     decrementQty(cart) {
       const data = { quantity: cart.quantity - 1 };
+      this.spinner = true
       this.$axios
         .patch(`/carts/${cart.id}`, data, {
           headers: {
@@ -132,9 +150,11 @@ export default {
           },
         })
         .then(() => {
+          this.spinner = false
           this.$store.dispatch('getCart');
         })
         .catch(({response}) => {
+          this.spinner = false
           this.$swal.fire({
             icon: 'error',
             text: response.data.message[0],
@@ -154,6 +174,7 @@ export default {
       })
         .then((result) => {
           if (result.value) {
+            this.spinner = true
             this.$axios
               .delete(`/carts/${cart.id}`, {
                 headers: {
@@ -162,6 +183,7 @@ export default {
               })
               .then(() => {
                 this.$store.dispatch('getCart');
+                this.spinner = false
                 this.$swal.fire(
                   'Deleted!',
                   'Product has been deleted from youre cart.',
@@ -169,6 +191,7 @@ export default {
                 );
               })
               .catch((err) => {
+                this.spinner = false
                 this.$swal.fire(
                   'Deleted!',
                   `${err}.`,
@@ -179,6 +202,7 @@ export default {
         });
     },
     checkout(allCart) {
+      this.spinner = true
       this.$axios
         .post('/carts/checkout', {totalPrice: this.total, cart: allCart}, {
           headers: {
@@ -187,6 +211,7 @@ export default {
         })
         .then(() => {
           this.$store.dispatch('getCart');
+          this.spinner = false
           this.$swal.fire(
             'Checkout Success',
             'Youre transaction Successfull.',
@@ -195,6 +220,7 @@ export default {
           this.showCart = false;
         })
         .catch((err) => {
+          this.spinner = false
           this.$swal.fire(
             'Transaction Failed!',
             `${err}.`,
