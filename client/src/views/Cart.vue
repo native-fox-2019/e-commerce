@@ -99,11 +99,18 @@ export default {
         });
     },
     showAddressForm(id, amount, totalPrice, UserId, ProductId) {
-      this.addressForm = true;
-      if (id && amount && totalPrice && UserId && ProductId) {
-        this.item = {
-          id, amount, total_price: totalPrice, UserId, ProductId,
-        };
+      if (this.carts.length === 0) {
+        swal({
+          icon: 'error',
+          text: 'You dont have any item to checkout in your cart',
+        });
+      } else {
+        this.addressForm = true;
+        if (id && amount && totalPrice && UserId && ProductId) {
+          this.item = {
+            id, amount, total_price: totalPrice, UserId, ProductId,
+          };
+        }
       }
     },
     checkout() {
