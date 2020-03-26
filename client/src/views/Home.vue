@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     logoutUser() {
-      localStorage.clear();
+      localStorage.token.clear();
       this.isLoginPage = false;
       this.toHome;
       // this.$router

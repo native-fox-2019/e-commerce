@@ -12,7 +12,7 @@
         <p>Stock : {{dataProduct.stock}}</p>
         <p>Fullfilled by : WearIsysm</p>
       </div>
-      <div id="btnAddCart" @click="toCart">ADD TO CART</div>
+      <div id="btnAddCart" @click="toCart(dataProduct.id)">ADD TO CART</div>
       <div id="garis"></div>
       <div id="hargaNstock">
         <h5>Product detail :</h5>
@@ -48,10 +48,12 @@ export default {
     this.$store.dispatch("getOneProduct", id);
   },
   methods: {
-    toCart() {
-      this.$router.push({
-        path: "/cart"
-      });
+    toCart(id) {
+      // console.log(id, "<<<??");
+      this.$store.dispatch("addTocart", id);
+      // this.$router.push({
+      //   path: "/cart"
+      // });
     },
     idr(value) {
       return rupiah(value);

@@ -18,7 +18,8 @@ class ControllerUser {
         console.log(user, '<<<<<<<<<< register  then')
         let payload = { id: user.id, email: user.email, role: user.role }
         let token = generatingJWT(payload)
-        res.status(201).json({ token })
+
+        res.status(201).json(token)
 
       })
       .catch(err => {
