@@ -1,7 +1,8 @@
 # e-commerce
 
-This is the documentation for using FOOTSALT API. The base url for this API is `https://whispering-cliffs-47024.herokuapp.com`
+This is the documentation for using FOOTSALT API. The base url for this API is `https://safe-citadel-27291.herokuapp.com`
 
+You can kindly visit the website here https://footsalt-customer.firebaseapp.com/
 
 ### 1. Register (If you Already have an account, you can skip this part, Only register new Costumer)
 
