@@ -21,7 +21,7 @@
                         <h3>Price</h3>
                     </b-col>
                     <b-col sm="9">
-                        <p>{{product.price}}</p>
+                        <p>Rp.{{product.price | numFormat }}</p>
                     </b-col>
                 </b-row>
                 <b-row class="mt-3">
