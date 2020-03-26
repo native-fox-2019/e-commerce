@@ -3,8 +3,8 @@
 ### Deployment Link
 
 ```bash
-CMS : https://luxury-watch-store.firebaseapp.com/
-USER : https://luxury-watch-store.firebaseapp.com/admin
+USER : https://luxury-watch-store.firebaseapp.com/
+CMS : https://luxury-watch-store.firebaseapp.com/admin
 ```
 
 # Server dependencies
