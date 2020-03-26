@@ -1,4 +1,5 @@
 const { Cart, User, Product } = require('../models');
+const updateCart = require('../Helpers/updateCart');
 
 class CartController {
     static getAll(req, res, next){
@@ -19,6 +20,7 @@ class CartController {
         let total_price = null;
         Product.findByPk(ProductId)
         .then(product => {
+            console.log('masuk ke sini')
             if(product){
                 total_price = amount * Number(product.price);
                 let stock = Number(product.stock) - amount;
@@ -39,6 +41,13 @@ class CartController {
         })
         .then(updated => {
             if(updated) {
+                return Cart.findOne({where: {ProductId, UserId}, include: Product})
+            }
+        })
+        .then(found => {
+            if(found) {
+                updateCart(req, res, next, found)
+            } else {
                 return Cart.create({
                     amount, total_price, UserId, ProductId
                 }, {include: Product})
