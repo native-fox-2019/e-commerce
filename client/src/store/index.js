@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 Vue.use(Vuex)
-let url = 'http://localhost:3000'
-// let url = 'https://powerful-meadow-02119.herokuapp.com'
+// let url = 'http://localhost:3000'
+let url = 'https://powerful-meadow-02119.herokuapp.com'
 export default new Vuex.Store({
   state: {
     products : [],
@@ -48,7 +48,24 @@ export default new Vuex.Store({
       })
       .then(response=>{
         let totalCart = 0
-        context.commit('setCart', response.data.Products)
+        let arr = response.data.Products
+        function sorting(arr){
+          let swap = true
+          do {
+              swap = false
+              for (let i = 0; i < arr.length - 1; i++) {
+                  if (arr[i].name > arr[i + 1].name) {
+                      let tmp = arr[i + 1]
+                      arr[i + 1] = arr[i]
+                      arr[i] = tmp
+                      swap = true
+                  }
+              }
+          } while (swap)
+        return arr
+        }
+        // context.commit('setCart', response.data.Products)
+        context.commit('setCart', sorting(arr))
         response.data.Products.forEach(x=>{
           totalCart += x.Cart.total
         })
