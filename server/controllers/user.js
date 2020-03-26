@@ -15,12 +15,14 @@ class ControllerUser {
         password
       })
       .then(user => {
+        console.log(user, '<<<<<<<<<< register  then')
         let payload = { id: user.id, email: user.email, role: user.role }
         let token = generatingJWT(payload)
         res.status(201).json({ token })
 
       })
       .catch(err => {
+        console.log(err, '<<<<<<<<<< register  cat')
         next(err)
       })
   }
@@ -30,6 +32,7 @@ class ControllerUser {
     User
       .findOne({ where: { email } })
       .then(user => {
+        console.log(user, '<<<<<<<<<< login  then')
         if (!user) {
           throw createError(400, 'Your email or password is incorrect')
         } else {

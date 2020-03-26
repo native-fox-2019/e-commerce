@@ -10,9 +10,11 @@ class ControllerCart {
         include: [{ model: Product }, { model: User }]
       })
       .then(result => {
+        console.log(result, '<<<<<<<<<< findall cart then')
         res.status(200).json(result)
       })
       .catch(err => {
+        console.log(result, '<<<<<<<<<< findall cart catch')
         console.log(err)
       })
   }
@@ -21,10 +23,10 @@ class ControllerCart {
     const { ProductId } = req.body
     const UserId = req.user.id
 
-
     Cart
       .findOne({ where: { ProductId, UserId } })
       .then(result => {
+        console.log(result, '<<<<<<<<<< findone add cart then')
         let isi = result
         if (!isi) {
           return Cart.create({ ProductId, UserId, qty: 1 })
@@ -39,6 +41,7 @@ class ControllerCart {
       })
       .catch(err => {
         console.log(err)
+        console.log(err, '<<<<<<<<<< findone add cart catch')
       })
   }
 

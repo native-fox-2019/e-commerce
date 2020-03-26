@@ -8,7 +8,7 @@
     <div class="detailProduct">
       <h4>{{dataProduct.name}}</h4>
       <div id="hargaNstock">
-        <p>price : {{dataProduct.price}}</p>
+        <p>price : {{idr(dataProduct.price)}}</p>
         <p>Stock : {{dataProduct.stock}}</p>
         <p>Fullfilled by : WearIsysm</p>
       </div>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import rupiah from "../helper/idr";
 export default {
   name: "DetailProduct",
   // product: this.dataProduct,
@@ -51,6 +52,9 @@ export default {
       this.$router.push({
         path: "/cart"
       });
+    },
+    idr(value) {
+      return rupiah(value);
     }
   }
 };
