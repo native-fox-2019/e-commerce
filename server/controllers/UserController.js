@@ -40,6 +40,9 @@ class UserController {
       if (!user) {
         throw createError(404, 'Error Not Found');
       }
+      if (user.role === 'Admin') {
+        throw createError(403, 'You are forbidden to do that');
+      }
       await User.update({ password: newPassword }, { where: { id: user.id }, individualHooks: true });
       res.status(200).json({
         msg: 'Success'

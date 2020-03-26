@@ -55,6 +55,13 @@ export default new Vuex.Store({
         url: baseUrl + '/users/resetpassword',
         data
       })
+        .then(() => {
+          state.loading = false;
+          dispatch('swalMixin', 'Your password has been reset');
+          router.push('/login');
+        }).catch(err => {
+          dispatch('showError', err);
+        });
     },
     checkout({ state, dispatch }) {
       state.loading = true;

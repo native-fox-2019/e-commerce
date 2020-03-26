@@ -47,7 +47,7 @@ export default {
           email: this.email,
           newPassword: this.newPassword
         }
-        this.$$store.dispatch('resetPassword', obj);
+        this.$store.dispatch('resetPassword', obj);
       }
     }
   }
