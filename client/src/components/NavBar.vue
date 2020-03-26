@@ -1,5 +1,5 @@
 <template>
-    <b-navbar variant="faded" fixed type="light">
+    <b-navbar variant="light" fixed="top" type="light" >
       <b-navbar-brand tag="h1" class="mb-0">
           <router-link to="/">
             <img src="/logo.jfif" alt="" class="logo-img">

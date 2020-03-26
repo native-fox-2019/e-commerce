@@ -62,5 +62,6 @@ export default {
 
 #view{
   min-height: 500px;
+  margin-top:140px;
 }
 </style>
