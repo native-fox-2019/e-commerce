@@ -99,6 +99,11 @@ export default {
           icon: 'warning',
           text: 'You have to sign in first',
         });
+      } else if (this.amount === 0 || this.amount === '') {
+        swal({
+          icon: 'warning',
+          text: 'Please input the amount',
+        });
       } else {
         swal({
           text: 'Are you sure to add this item to cart?',
