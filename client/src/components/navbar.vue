@@ -114,7 +114,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 const HEROKU_URL = 'https://peaceful-thicket-02203.herokuapp.com'
-// const DEV_URL = "http://localhost:3000";
+// const HEROKU_URL = "http://localhost:3000";
 export default {
   created() {
     this.checkLogin();

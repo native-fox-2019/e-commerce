@@ -20,7 +20,7 @@
           <td>
             <button
               class="btn btn-outline-danger"
-              @click.prevent="deleteCart(cart.id)"
+              @click.prevent="deleteCart({id:cart.id, prod_id:cart.product_id, amount:cart.amount})"
             >
               Remove from cart
             </button>
@@ -28,7 +28,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="container-lg bg-dark text-white p-5" style="margin-top:200px;">
+    <div class="container-lg bg-dark text-white p-5" style="margin-top:100px;">
       <h3>{{ msg }}</h3>
       <div v-if="totalInt != 0">
         <h4 class="mt-3">Total order : {{ grandTotal }}</h4>
@@ -81,10 +81,10 @@ export default {
     goTo(route) {
       this.$router.push({ name: route });
     },
-    deleteCart(id) {
-      this.$store.dispatch("deleteCart", id);
+    deleteCart(payload) {
+      this.$store.dispatch("deleteCart", payload);
       this.$store.state.cartList.forEach(i => {
-        if (i.id == id) {
+        if (i.id == payload.id) {
           this.totalInt -= i.price * i.amount;
         }
       });

@@ -14,7 +14,7 @@
                 {{ product.showPrice }}
             </p>
             <label style="font-size:13px;">Amount: </label>
-            <input type="number" min="0" :max="product.stock" placeholder=0 v-model="amount[Number(product.id)]" style="width:30px;"><br>
+            <input type="number" min="0" :max="product.stock" placeholder=0 v-model="amount[Number(product.id)]" style="width:50px;"><br>
             <button class="btn btn-outline-danger btn-sm" @click.prevent="addToCart(product.id, product.price, amount)">add to cart</button>
           </div>
         </div>

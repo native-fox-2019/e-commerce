@@ -74,6 +74,18 @@ export default new Vuex.Store({
             timer:500
           })
           payload['id'] = data.data.id
+          return axios({
+            method:'PUT',
+            url:`${HEROKU_URL}/products/edit/stock/${payload.product_id}`,
+            headers:{ access_token:localStorage.access_token },
+            data:{
+              amount: payload.amount,
+              args: 0
+            }
+          })
+        })
+        .then(data => {
+          console.log(data)
           context.commit("addToCart", payload);
         })
         .catch((response) => {
@@ -103,17 +115,33 @@ export default new Vuex.Store({
           console.log(response.response);
         });
     },
-    deleteCart(context, id) {
+    deleteCart(context, payload) {
       axios({
         method: 'DELETE',
-        url: `${HEROKU_URL}/carts/${id}`,
+        url: `${HEROKU_URL}/carts/${payload.id}`,
         headers: {access_token:localStorage.access_token}
       })
       .then(data => {
         console.log(data.data)
-        context.commit('deleteCart', id)
+        return axios({
+          method:'PUT',
+          url:`${HEROKU_URL}/products/edit/stock/${payload.prod_id}`,
+          headers:{ access_token:localStorage.access_token },
+          data:{
+            amount: payload.amount,
+            args: -1
+          }
+        })
+      })
+      .then(data => {
+        console.log(data)
+        context.commit('deleteCart', payload.id)
       })
       .catch(response => {
+        Swal.fire({
+          icon: 'warning',
+          title: 'FAILED'
+        })
         console.log(response.response)
       })
     }
