@@ -16,10 +16,10 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "djegosbysrnblc",
+    "password": "2f78487270fbe18d8c8ddba1f4322e084452c22c546f1a6bc38e7d02aebd1da6",
+    "database": "d6kf0rh56d0f8",
+    "host": "ec2-52-207-93-32.compute-1.amazonaws.com",
+    "dialect": "postgres"
   }
 }
