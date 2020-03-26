@@ -11,6 +11,7 @@ import UserLogin from '../views/UserLogin.vue';
 import UserRegister from '../views/UserRegister.vue';
 import Cart from '../views/Cart.vue';
 import Checkout from '../views/Checkout.vue';
+import Confirm from '../views/Confirm.vue';
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,12 @@ const routes = [
     path: '/checkout',
     name: 'Checkout',
     component: Checkout,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/confirm',
+    name: 'Confirm',
+    component: Confirm,
     meta: { requiresAuth: true },
   },
   {

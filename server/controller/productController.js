@@ -1,4 +1,4 @@
-const { Product,Transaction } = require('../models/index.js')
+const { Product,Transaction,Address } = require('../models/index.js')
 
 class productController{
 
@@ -160,6 +160,35 @@ class productController{
         Transaction.destroy({where:{id:id}})
         .then(result=>{
             res.status(200).json({status: result, msg: 'file has been deleted'})
+        })
+        .catch(err=>{
+            next({status: 500, msg: 'Internal server error!'})
+        })
+    }
+
+    static addAddress(req,res,next){
+        let obj = {
+            name : req.body.name,
+            country : req.body.country,
+            address : req.body.address,
+            zipcode : req.body.zipcode,
+            phone : req.body.phone,
+            UserId : req.userData.id
+        }
+        Address.create(obj)
+        .then(result=>{
+            res.status(200).json(result)
+        })
+        .catch(err=>{
+            next({status: 500, msg: 'Internal server error!'})
+        })
+    }
+
+    static getAddress(req,res,next){
+        Address.findOne({where:{UserId:req.userData.id}})
+        Address.create(obj)
+        .then(result=>{
+            res.status(200).json(result)
         })
         .catch(err=>{
             next({status: 500, msg: 'Internal server error!'})

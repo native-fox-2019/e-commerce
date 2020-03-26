@@ -37,15 +37,18 @@
     <input type="button" class="btn btn-warning" value="Proceed to Checkout">
     </router-link>
     </div>
+    <Footer/>
 </div>
 </template>
 <script>
 import UserNavbar from '../components/UserNavbar.vue';
+import Footer from '../components/footer.vue';
 
 export default {
   name: 'Cart',
   components: {
     UserNavbar,
+    Footer,
   },
   data() {
     return {

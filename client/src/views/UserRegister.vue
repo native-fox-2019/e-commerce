@@ -26,11 +26,13 @@ v-on:click.prevent="register">
             </div>
         </div>
     </div>
+    <Footer/>
 </div>
 </template>
 <script>
 import axios from 'axios';
 import UserNavbar from '../components/UserNavbar.vue';
+import Footer from '../components/footer.vue';
 
 export default {
   name: 'UserRegister',
@@ -44,6 +46,7 @@ export default {
   },
   components: {
     UserNavbar,
+    Footer,
   },
   created() {
 

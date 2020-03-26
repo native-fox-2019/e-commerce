@@ -16,8 +16,10 @@
               </ul>
               <div class="card-body d-flex justify-content-center row">
                   <div class="ltp" v-if="ltp">
+                    <router-link to="/login">
                     <input type="button" class="btn btn-warning"
-                    v-on:click.prevent="deleteProduct(data.id)" value="Login to Purchase">
+                    value="Login to Purchase">
+                    </router-link>
                   </div>
                   <div class="atc" v-if="atc">
                     <input type="button" class="btn btn-warning"

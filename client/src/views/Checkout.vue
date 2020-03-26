@@ -36,7 +36,7 @@
             <h2> Input Your Address </h2>
             <form id="form-signUp" action="" method="POST">
                 <label for="fname">Name:</label><br>
-                <input type="text" id="Name" name="Name" value="" v-model="name" required><br>
+                <input type="text" id="Name" name="name" value="" v-model="name" required><br>
                 <label for="fname">Country:</label><br>
                 <input type="text" name="country" value="" v-model="country" required><br>
                 <label for="lname">Full Address:</label><br>
@@ -46,24 +46,34 @@
                 <label for="lname">Phone Number:</label><br>
                 <input type="text" name="phone" value="" v-model="phone" required><br><br>
                 <input type="submit" class="btn btn-warning" value="Confirm Order"
-                v-on:click.prevent="confirm">
+                v-on:click.prevent="add">
             </form>
         </div>
       </div>
     </div>
     </div>
+    <Footer/>
 </div>
 </template>
 <script>
+import axios from 'axios';
 import UserNavbar from '../components/UserNavbar.vue';
+import Footer from '../components/footer.vue';
 
 export default {
   name: 'Checkout',
   components: {
     UserNavbar,
+    Footer,
   },
   data() {
     return {
+      baseUrl: 'http://localhost:3000',
+      name: '',
+      country: '',
+      address: '',
+      zipcode: '',
+      phone: '',
     };
   },
   created() {
@@ -82,6 +92,29 @@ export default {
         }
       });
       this.$store.dispatch('deleteCart', id);
+    },
+    add() {
+      axios({
+        method: 'POST',
+        url: `${this.baseUrl}/address`,
+        headers: { token: localStorage.getItem('token') },
+        data: {
+          name: this.name,
+          country: this.country,
+          address: this.address,
+          zipcode: this.zipcode,
+          phone: this.phone,
+        },
+      })
+        .then((data) => {
+          console.log(data);
+          this.$router.push({ name: 'Confirm' });
+        })
+        .catch((err) => {
+          console.log(err.err);
+          this.alert = true;
+          this.msg = 'Field Cannot be empty!';
+        });
     },
   },
 };
