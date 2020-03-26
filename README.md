@@ -1,4 +1,4 @@
-# e-commerce-cms
+# e-commerce
 
 # Deploy Link :
 CMS side :
