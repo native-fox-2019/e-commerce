@@ -5,7 +5,7 @@ require('dotenv').config()
 module.exports = {
   up: (queryInterface, Sequelize) => {
     let superUser = [{
-      name: 'I Gusti Agung Agastya T',
+      name: 'Toko Gunpla',
       email: 'rqz.agastya@gmail.com',
       superUser: true,
       is_admin: true,
