@@ -11,12 +11,12 @@
         <p class="card-text">category : {{barang.Category.name}}</p>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-secondary" @click="actionEdit(barang)">
-            <input type="radio" name="options" data-toggle="modal" />
+            <input type="radio" name="options" data-toggle="modal" />edit
             <i class="far fa-edit"></i>
           </label>
           <label class="btn btn-secondary" @click="actionDelete(barang.id)">
             <input type="radio" name="options" />
-            <i class="fas fa-eraser"></i>
+            <i class="fas fa-eraser"></i>delete
           </label>
         </div>
       </div>

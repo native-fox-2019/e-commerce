@@ -53,9 +53,11 @@ class ControllerCart {
         return resFindOne.update({ qty: resFindOne.qty + req.body.value })
       })
       .then(result => {
+        console.log(result, '<<<<<<<<<< edit add cart then')
         res.status(200).json(result)
       })
       .catch(err => {
+        console.log(err, '<<<<<<<<<< edit add cart then')
         console.log(err)
       })
   }

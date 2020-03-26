@@ -13,6 +13,7 @@
           <img src="../assets/shopping-bag.svg" alt style="cursor:pointer;" />
 
           <span class="badge badge-secondary">{{notif}}</span>
+          <!-- <span class="badge badge-secondary"></span> -->
         </router-link>
         <router-link id="login" to="/login">
           <img src="../assets/log-in.svg" alt v-if="!isLoginPage" />
@@ -32,6 +33,8 @@
 import LoginPage from "../components/Login";
 import Footer from "../components/customer/Footer";
 import { veryfingJWT } from "../components/helper/jwt";
+import { mapState } from "vuex";
+
 export default {
   name: "Home",
   components: {
@@ -45,9 +48,9 @@ export default {
     };
   },
   computed: {
+    ...mapState(["dataCarts", "dataAllCarts"]),
     notif() {
-      let arr = this.$store.state.dataAllCarts;
-      return arr.length;
+      return this.dataAllCarts.length;
     }
   },
 
@@ -62,23 +65,23 @@ export default {
     }
     this.$store.dispatch("getAll");
     // console.log(this.notif);
-  },
-  updated() {
-    this.$store.dispatch("allCart");
+    // this.$store.dispatch("allCart");
   },
   created() {
-    this.$store.dispatch("allCart");
+    // this.$store.dispatch("allCart");
     this.$store.dispatch("getAll");
   },
   methods: {
     logoutUser() {
       localStorage.clear();
-      isLoginPage = false;
-      this.$router
-        .push({
-          path: "/"
-        })
-        .catch(() => {});
+      this.isLoginPage = false;
+      this.toHome;
+      // this.$router
+      //   .push({
+      //     path: "/",
+      //     name: "Home"
+      //   })
+      //   .catch(() => {});
     },
     toHome() {
       this.$router

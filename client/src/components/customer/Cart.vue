@@ -77,8 +77,8 @@
 import rupiah from "../helper/idr";
 import axios from "axios";
 import Swal from "sweetalert2";
-// const server = "http://localhost:3000";
-const server = "https://shrouded-mesa-95537.herokuapp.com/";
+const server = "http://localhost:3000";
+// const server = "https://shrouded-mesa-95537.herokuapp.com/";
 
 export default {
   name: "Cart",
@@ -111,7 +111,6 @@ export default {
       })
         .then(result => {
           this.carts = result.data;
-          // console.log(result, "<<<<<<<<<<<< watch");
         })
         .catch(err => {
           console.log(err);
@@ -162,6 +161,7 @@ export default {
           })
             .then(result => {
               this.getAllCart();
+              this.$store.dispatch("allCart");
             })
             .catch(err => {
               console.log(err);
@@ -188,6 +188,7 @@ export default {
           })
             .then(result => {
               this.getAllCart();
+              this.$store.dispatch("allCart");
             })
             .catch(err => {
               console.log(err);

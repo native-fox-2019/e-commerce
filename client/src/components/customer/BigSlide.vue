@@ -1,5 +1,6 @@
 <template>
   <div id="bannerBesar">
+    <!-- {{listBanners}} -->
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner" style="height:300px">
         <div class="carousel-item active">
@@ -70,10 +71,10 @@ export default {
     },
     created() {
       this.$store.dispatch("getAll");
-    },
-    mounted() {
-      console.log(this.bannerHere);
     }
+    // mounted() {
+    //   console.log(this.bannerHere);
+    // }
   }
 };
 </script>

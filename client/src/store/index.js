@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { generatingJWT, veryfingJWT } from '../components/helper/jwt'
-// const server = `http://localhost:3000`
-const server = `https://shrouded-mesa-95537.herokuapp.com`
+const server = `http://localhost:3000`
+// const server = `https://shrouded-mesa-95537.herokuapp.com`
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -53,6 +53,7 @@ export default new Vuex.Store({
     },
     CART_NOTIF(state, payload) {
       state.dataCarts = payload
+      state.dataAllCarts.push(payload)
     },
     ALL_CART(state, payload) {
       state.dataAllCarts = payload
@@ -195,10 +196,8 @@ export default new Vuex.Store({
         })
     },
     addTocart(context, id) {
-      // console.log(id, '<<<<<<< action')
       const token = localStorage.token
       const user = token ? veryfingJWT(token) : null
-      // console.log(user, '<<<<< token')
       if (localStorage.token) {
         axios({
           method: 'POST',
@@ -214,17 +213,12 @@ export default new Vuex.Store({
         })
           .then(({ data }) => {
             context.commit('CART_NOTIF', data)
-            // router.push({ name: "Cart" })
-            // console.log(data, '<<<<<<<<CART ACTION')
-
           })
           .catch(err => {
             console.log(err.response)
           })
       } else {
         console.log("belum login atau register");
-
-
         Swal.fire({
           title: "Anda Belum Login?",
           text: "Silahkan Login",
