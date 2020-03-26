@@ -43,6 +43,9 @@
               <router-link class="dropdown-item" to="/category/Drugs">Drugs</router-link>
             </div>
           </li>
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/about">About</router-link>
+          </li>
         </ul>
         <Account />
       </div>
