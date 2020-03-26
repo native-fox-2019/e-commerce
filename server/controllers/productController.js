@@ -3,11 +3,9 @@
 "use strict";
 const { Product } = require("../models");
 const { User } = require("../models");
-const { Op } = require("sequelize");
 
 class productController {
   static create(req, res, next) {
-    console.log('masuuuuuuk created')
     const UserId = req.user.id;
     const body = {
       name: req.body.name,
@@ -23,7 +21,6 @@ class productController {
         res.status(201).json(data);
       })
       .catch(err => {
-        console.log(err)
         next(err);
       });
   }
@@ -46,36 +43,19 @@ class productController {
       });
   }
 
-  static filterData(req, res, next) {
-    const key = req.query.key;
-    console.log(key)
-    if (key === "") {
-      Product.findAll().then(data => {
-        res.status(200).json(data);
-      });
-    } else {
-      Product.findAll({
-        where: {
-          category: {
-            [Op.like]: `%${key}%`
-          }
-        }
+  static findOne(req, res, next) {
+    const Id = req.params.id;
+    Product.findOne({where : {id : Id}})
+      .then(data => {
+        res.status(200).json(data)
       })
-        .then(data => {
-          if (data.length) {
-            res.status(200).json(data);
-          } else {
-            const error = {
-              status: 404,
-              msg: "data not found"
-            };
-            throw error;
-          }
-        })
-        .catch(err => {
-          next(err);
-        });
-    }
+      .catch(err => {
+        const error = {
+          status: 404,
+          msg: "data not found"
+        };
+        next(error)
+      })
   }
 
   static update(req, res, next) {

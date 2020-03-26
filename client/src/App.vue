@@ -5,8 +5,11 @@
   </div>
 </template>
 
-<style>
-.header {
-  margin-top: 0px;
-}
-</style>
+<script>
+
+export default {
+  name: 'App',
+  data: () => ({
+  }),
+};
+</script>

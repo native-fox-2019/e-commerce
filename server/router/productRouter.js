@@ -1,5 +1,3 @@
-/** @format */
-
 "use strict";
 const productController = require("../controllers/productController");
 const router = require("express").Router();
@@ -10,7 +8,7 @@ router
   .use(authentication)
   .post("/", authorization, productController.create)
   .get("/", productController.findAll)
-  .get("/filter", productController.filterData)
+  .get("/:id", productController.findOne)
   .put("/:id", authorization, productController.update)
   .delete("/:id", authorization, productController.delete);
 

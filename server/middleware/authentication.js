@@ -5,11 +5,11 @@ const { User } = require('../models')
 module.exports =(req, res, next) => {
     const token = req.headers.token
     if(!token) res.status(401).json('Access denied. No token provided')
-   try {
+    try {
         const decode = verifyTok(token)
         User.findOne({where : {id : decode.id}})
-            .then(data => {
-                if (data.id === decode.id) {
+        .then(data => {
+            if (data.id === decode.id) {
                     req.user = decode
                     next()
                 }

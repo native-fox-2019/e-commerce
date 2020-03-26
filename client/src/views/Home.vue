@@ -1,8 +1,6 @@
 <template>
 <div>
-<div class="nav">
-<Navbar class="container"></Navbar>
-</div>
+<Navbar></Navbar>
 <div id="home">
 <div class="cel">
 <Carousel></Carousel>

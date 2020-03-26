@@ -98,7 +98,7 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 .header {
     display: block;

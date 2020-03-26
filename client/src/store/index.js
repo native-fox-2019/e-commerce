@@ -11,7 +11,9 @@ export default new Vuex.Store({
     products : [],
     isLogin: localStorage.getItem('token'),
     dataLogin : null,
-    editData : {}
+    editData : {},
+    getOne : {},
+    allTransaction : []
   },
   mutations: {
     dataMutation(state, payload) {
@@ -25,9 +27,31 @@ export default new Vuex.Store({
     },
     editForm(state, data) {
       state.editData = data
+    },
+    getOne(state, data) {
+      state.getOne = data
+    },
+    allTransaction(state, data) {
+      state.allTransaction = data.data
     }
+
   },
   actions: {
+    getAllTransaction(contex) {
+      axios({
+        url : `${url}/transaction`,
+        method : 'GET',
+        headers : {
+          token : localStorage.getItem('token')
+        }
+      })
+      .then(data => {
+        contex.commit('allTransaction', data)
+      })
+      .catch(({responce}) => {
+        console.log(responce)
+      })
+    },
     findAll(contex) {
       axios({
         url : `${url}/products`,
@@ -102,7 +126,6 @@ export default new Vuex.Store({
           });
       })
       .catch(err => {
-        console.log(err)
         const error = err.response.data.message
         let errorStr = error.join('<li class="container text-left mx-5" style="margin-left: 6rem !important" >')
           Swal.fire({
@@ -114,7 +137,6 @@ export default new Vuex.Store({
       })
       },
       actionDelete(contex, id) {
-        console.log('delete d store')
         axios({
           url: `${url}/products/${id}`,
           method : 'DELETE',
@@ -142,7 +164,22 @@ export default new Vuex.Store({
               footer: "made by love 💖"
             });
         })
-      }
+      },
+      getOne(contex, id) {
+        axios({
+          url: `${url}/products/${id}`,
+          method : 'GET',
+          headers : {
+          token : localStorage.getItem('token')
+          }
+        })
+        .then(data => {
+          contex.commit('getOne', data.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
   },
   modules: {
   }

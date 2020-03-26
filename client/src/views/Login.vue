@@ -62,7 +62,6 @@ methods : {
                 localStorage.setItem('token', data.data.token)
               this.$store.commit('dataLogin', {data : {first_name : data.data.first_name, last_name : data.data.last_name}})
               this.$store.commit('isLogin')
-              console.log(data.data);
           } else {
               Swal.fire({
               position: 'center',
@@ -116,9 +115,6 @@ body {
     text-align: center;
 }
 
-.img img {
-    width: 500px;
-}
 
 form {
     width: 360px;
@@ -293,6 +289,5 @@ a:hover {
     .login-content {
         justify-content: center;
     }
-}
-
+} 
 </style>

@@ -7,6 +7,8 @@ import Register from '../views/Register'
 import Admin from '../views/Admin'
 import AdminPage from '../views/AdminPage'
 import Edit from '../views/Edit'
+import Detail from '../components/Detail'
+import Checkout from '../views/Cart'
 
 Vue.use(VueRouter)
 
@@ -46,6 +48,16 @@ const routes = [
     path : '/edit/:id',
     name : 'Edit',
     component : Edit
+  },
+  {
+    path : '/detail/:id',
+    name : 'Detail',
+    component : Detail
+  },
+  {
+    path : '/checkout',
+    name : 'Checkout',
+    component : Checkout
   }
 
 
