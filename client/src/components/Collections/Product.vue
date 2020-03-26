@@ -11,10 +11,13 @@
               <div class="product-image-container">
                 <div class="aspect-ratio">
                   <img :src="product.image_url" alt="" class="product-image">
-                  <button v-if="getStatus" @click.prevent="onAddToCart(product.id)"
-                  class="product-image-btn">
+                  <button v-if="product.stock === 0" class="sold-out-btn">Sold Out</button>
+                  <button v-if="getStatus && product.stock !== 0"
+                    @click.prevent="onAddToCart(product.id)"
+                    class="product-image-btn">
                     Add To Cart</button>
-                  <button v-if="!getStatus" @click.prevent="goToLogin" class="product-image-btn">
+                  <button v-if="!getStatus && product.stock !== 0"
+                    @click.prevent="goToLogin" class="product-image-btn">
                     Login First</button>
                 </div>
               </div>
@@ -130,6 +133,16 @@ export default {
     z-index: 0;
     opacity: 0;
     transition: all 300ms ease-in-out 0s;
+  }
+
+  .sold-out-btn {
+    position: absolute;
+    font-size: 19px;
+    height: 37px;
+    width: 100%;
+    z-index: 888;
+    background-color: black;
+    color: white;
   }
 
   .product-title {
