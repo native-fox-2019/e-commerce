@@ -11,7 +11,7 @@ export default {
     isOpen: false,
   },
   getters: {
-    products: (state) => state.products,
+    products: (state) => state.products.sort((a, b) => a.id - b.id),
     cart: (state) => state.cart,
     cartSubtotal: (state) => state.cartSubtotal,
     isOpen: (state) => state.isOpen,
@@ -102,6 +102,8 @@ export default {
       } else if (payload.status === 'minus') {
         const negative = -Math.abs(payload.price);
         commit('addSubtotal', negative);
+      } else if (payload.status === 'stay') {
+        commit('addSubtotal', 0);
       }
       commit('filterCart', { id: payload.id, quantity: payload.obj.quantity });
     },
@@ -118,8 +120,8 @@ export default {
       commit('setCartSubtotal', newSubtotal);
     },
 
-    async checkOut({ commit }, payload) {
-      await axios.put(`${heroku}/products/stocks`, payload, {
+    async checkOut({ commit }) {
+      await axios.put(`${heroku}/products/stocks`, {}, {
         headers: {
           token: localStorage.getItem('token'),
         },

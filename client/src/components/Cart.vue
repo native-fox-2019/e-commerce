@@ -90,20 +90,24 @@ export default {
 
     onAdd(id, quantity, stock, price) {
       let newQuantity = quantity + 1;
+      let status = 'plus';
       if (stock === quantity) {
+        status = 'stay';
         newQuantity = quantity;
       }
       const obj = {
         quantity: newQuantity,
       };
       this.updateQuantity({
-        id, obj, price, status: 'plus',
+        id, obj, price, status,
       });
     },
 
     onSubtract(id, quantity, price) {
       let newQuantity;
+      let status = 'minus';
       if (quantity === 1) {
+        status = 'stay';
         newQuantity = quantity;
       } else {
         newQuantity = quantity - 1;
@@ -113,24 +117,12 @@ export default {
         quantity: newQuantity,
       };
       this.updateQuantity({
-        id, obj, price, status: 'minus',
+        id, obj, price, status,
       });
     },
 
     async onCheckout() {
-      const products = this.cart;
-      const checkout = [];
-      products.forEach((el) => {
-        checkout.push({
-          id: el.id,
-          name: el.name,
-          image_url: el.image_url,
-          price: el.price,
-          stock: el.stock - el.Cart.quantity,
-          category: el.category,
-        });
-      });
-      await this.checkOut({ bulkProducts: checkout });
+      await this.checkOut();
       this.fetchProducts();
     },
   },
