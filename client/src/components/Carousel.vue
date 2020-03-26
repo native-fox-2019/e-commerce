@@ -20,10 +20,14 @@
             <div class="grid_small">
               <div class="grid">
                 <div class="grid-cell">
-                  <a @click.prevent="menCollection"><span>SHOP MEN</span></a>
+                  <a class="link link-first" @click.prevent="menCollection">
+                    <span class="link-text">SHOP MEN</span>
+                  </a>
                 </div>
                 <div class="grid-cell">
-                  <a @click.prevent="womenCollection"><span>SHOP WOMEN</span></a>
+                  <a class="link link-last" @click.prevent="womenCollection">
+                    <span class="link-text">SHOP WOMEN</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -132,15 +136,62 @@ export default {
     width: 50%;
   }
 
-  .grid-cell
-  a {
+  .link {
+    display: flex;
     text-decoration: none;
     color: white;
-    margin: 0 20px;
     text-align: center;
     outline: none;
     font-size: 16px;
     font-weight: 600;
-    cursor: pointer
+    cursor: pointer;
+    transform: translateZ(0);
+    width: 100%;
+  }
+
+  .link-first {
+    margin-right: 24px;
+  }
+
+  .link-last {
+    margin-left: 24px;
+  }
+
+  .link::before {
+    transition: all .25s;
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 2px solid #fff;
+    transform: scaleX(1);
+    transform-origin: bottom right;
+  }
+
+  .link::after {
+    transition: all .25s;
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 2px solid #fff;
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  .link:hover::before {
+    transform: scaleX(0);
+  }
+
+  .link:hover::after {
+    transform: scaleX(0);
+  }
+
+  .link-text {
+    flex-shrink: 0;
+    letter-spacing: 1px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    font-weight: 600;
+    border-bottom: 2px solid #fff;
+    transform: translateZ(0);
   }
 </style>
