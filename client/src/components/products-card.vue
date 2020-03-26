@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Banner/>
     <div class="d-flex felx-row flex-wrap justify-content-center align-center ">
       <b-card
         v-for="product in products" :key="product.id"
@@ -20,12 +19,10 @@
 </template>
 
 <script>
-import Banner from '../components/banner.vue'
 
 export default {
   name: 'Products',
   components: {
-    Banner
   },
   computed: {
     products () {

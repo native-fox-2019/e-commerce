@@ -69,7 +69,7 @@ export default new Vuex.Store({
           result.data.forEach(el => {
             el.price = new Intl.NumberFormat(['ban', 'id']).format(el.price)
           })
-          commit('LIST_PRODUCT', result.data)
+          commit('LIST_PRODUCT', result.data.Carts)
         })
     }
   },

@@ -2,6 +2,7 @@
   <div class="home">
     <Navbar/>
     <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
+    <Success v-show="success.status" :success="success" @hide="success.status=!success.status"/>
     <Banner/>
     <div>
       <b-modal id="modal-1" title="BootstrapVue">
@@ -45,6 +46,7 @@ import Navbar from '../components/navbar'
 import axios from 'axios'
 import Alert from '../components/Alert'
 import Banner from '../components/Banner'
+import Success from '../components/SuccessAlert'
 // const url = 'http://localhost:3000'
 const url = 'https://secure-eyrie-18193.herokuapp.com'
 
@@ -53,12 +55,17 @@ export default {
   components: {
     Navbar,
     Banner,
+    Success,
     Alert
   },
   data () {
     return {
       isError: {
         status: false,
+        msg: ''
+      },
+      success: {
+        stats: false,
         msg: ''
       },
       id: null
@@ -84,8 +91,9 @@ export default {
           access_token: localStorage.access_token
         }
       })
-        .then(() => {
-          this.$store.dispatch('getAll')
+        .then(data => {
+          this.success.status = true
+          this.status.msg = data.data.message
         })
         .catch(err => {
           this.isError.msg = err.response.data.msg

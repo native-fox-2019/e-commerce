@@ -1,6 +1,7 @@
 <template>
   <div class="navbar-list">
     <button @click.prevent="goToCart" class="signOut"><i class="fas fa-shopping-cart"></i></button>
+    <button @click.prevent="goHome" class="signOut">Home</button>
     <button @click.prevent="signout" class="signOut">sign out</button>
   </div>
 </template>
@@ -14,7 +15,12 @@ export default {
       this.$router.push({ name: 'Login' })
     },
     goToCart () {
+      this.$store.dispatch('getCart')
       this.$router.push({ name: 'Cart' })
+    },
+    goHome () {
+      this.$store.dispatch('getAll')
+      this.$router.push({ name: 'Home' })
     }
   }
 }

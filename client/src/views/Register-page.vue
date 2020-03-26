@@ -1,6 +1,7 @@
   <template>
   <div class="form-container">
     <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
+    <Success v-show="success.status" :success="success" @hide="success.status=!success.status"/>
     <form @submit.prevent="register">
       <div>
         <label for="name">NAME</label>

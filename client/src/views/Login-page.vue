@@ -1,7 +1,7 @@
 <template>
   <div class="form-container">
-    <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
-    <Success v-show="success.status" :success="success" @hide="isError.status=!isError.status"/>
+   <Alert v-show="isError.status" :isError="isError" @hide="isError.status=!isError.status"/>
+    <Success v-show="success.status" :success="success" @hide="success.status=!success.status"/>
     <form @submit.prevent="login">
       <div class="input-email">
         <label for="email">EMAIL</label>
