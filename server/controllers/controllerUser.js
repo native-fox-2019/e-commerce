@@ -76,38 +76,20 @@ class ControllerUser {
             .catch(next)
     }
     static checkout(req, res, next) {
-        let product = null
-        Cart.findAll({ where: { UserId: req.user.id } })
-            .then(data => {
-                data.forEach(el => {
-                    product = el
-                    Product.findOne({ where: { id: product.id } })
-                        .then(data => {
-                            console.log(123)
-                            const objUpdate = { 
-                                name: data.name, 
-                                prices: data.price, 
-                                stocks: data.stocks - product.amount, 
-                                imageURL: data.imageURL
-                            }
-                            return Product.update(objUpdate, { where: { id: data.id } })
-                        })
-                        .then(() => {
-                            Cart.destroy({ where: { id: product.id } })
-                                .then(() => console.log(`sukses checkout product ${product.name}`))
-                            // .catch(err => console.log(err))
-                        })
-                        .catch(err => console.log(err))
-                })
-                return Cart.destroy({where:{UserId:req.user.id}})
-                })
-                .then(()=>
-                res.status(200).json({
-                    message: `you've successfully check out`
-                }))
-                .catch(err => {
-                    next(err)
-                })
+        let objUpdate = null
+        Cart.findAll({ where: {UserId: req.user.id}, include: [Product]})
+        .then(data =>{
+            objUpdate = data
+            return Product.bulkCreate(data.Product, { updateOnDuplicate: ['stocks', 'updatedAt'] })
+        })
+        .then(data => Cart.destroy({ where: {UserId: req.user.id}}))
+        .then(data => res.status(200).json({
+            message: 'succesfully check out'
+        }))
+        .catch(err => {
+            console.log(err)
+            next(err)
+        })
     }
 }
 
