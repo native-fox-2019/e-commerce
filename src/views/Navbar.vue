@@ -47,7 +47,7 @@
             <router-link class="nav-link" to="/about">About</router-link>
           </li>
         </ul>
-        <Account />
+          <Account />
       </div>
     </div>
   </nav>

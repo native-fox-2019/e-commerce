@@ -37,6 +37,7 @@
 
 <script>
 import baseUrl from "../baseUrl";
+import axios from "axios";
 
 export default {
   name: "Register",
@@ -53,16 +54,13 @@ export default {
   },
   methods: {
     submit() {
-      fetch(`${baseUrl}users/register`, {
-        method: "post",
-        body: JSON.stringify({
+      axios
+        .post(`${baseUrl}users/register`, {
           email: this.email,
           password: this.password
         })
-      })
-        .then(response => response.json())
-        .then(data => {
-          this.$store.commit("setJwt", data.token);
+        .then(response => {
+          this.$store.commit("setJwt", response.data.token);
           this.$router.push("/");
         })
         .catch(() => {});

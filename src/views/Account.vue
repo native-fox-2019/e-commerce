@@ -1,6 +1,6 @@
 <template>
   <div class="account">
-    <div v-if="isLoggedIn === true" class="my-2 my-lg-0">
+    <div v-if="isLoggedIn" class="my-2 my-lg-0" key="1">
         <router-link to="/cart" class="btn text-light my-2 my-sm-0">
             <i class="fas fa-shopping-cart"></i>
         </router-link>
@@ -10,7 +10,7 @@
         v-on:click="logout"
       >Logout</button>
     </div>
-    <div v-else class="my-2 my-lg-0">
+    <div v-else class="my-2 my-lg-0" key="2">
       <router-link to="/login" class="btn btn-outline text-light my-2 my-sm-0">Login</router-link>
       <router-link to="/register" class="btn btn-outline text-light my-2 my-sm-0">Register</router-link>
     </div>
@@ -28,6 +28,8 @@ export default {
   methods: {
     logout() {
       this.$store.commit("deleteJwt");
+      this.$store.commit("emptyCart");
+      this.$router.push('/');
     }
   }
 };
