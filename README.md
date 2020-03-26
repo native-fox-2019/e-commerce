@@ -31,6 +31,7 @@ PORT=3000
     SERVER = https://afternoon-woodland-77005.herokuapp.com
     USER-CLIENT = https://coffee-break-334aa.firebaseapp.com
     USER-ADMIN = https://e-commerce-cms-a6bed.firebaseapp.com
+
 ## Server
 
     Tools: NodeJS, Express, sequelize, postgresql
@@ -47,16 +48,16 @@ PORT=3000
 | 500  | Error dari sisi server / tidak diduga-duga :v   |
 
 
-### ADMIN
+### USER
 
 | Url        | Method | Description                            |
 | ---------- | ------ | -------------------------------------- |
-| /admins/register     | POST   | Menambahkan User baru                      |
-| /admins     | GET   | Mencari atau Melihat daftar Semua User                      |
-| /admins/login     | POST   | Mendapatkan token dan mengirim token ke client                      |
+| /users/register     | POST   | Menambahkan User baru                      |
+| /users     | GET   | Mencari atau Melihat daftar Semua User                      |
+| /users/login     | POST   | Mendapatkan token dan mengirim token ke client                      |
 
 
-### 1. POST / admins / register
+### 1. POST / users / register
 
 _Request header:_
 
@@ -109,7 +110,7 @@ _Response ERROR (400, Request tidak lengkap):_
 	msg: "Bad Request"
 }
 ```
-### 2. POST / admins / login
+### 2. POST / users / login
 
 <br>
 
@@ -167,7 +168,7 @@ _Response ERROR(400, Data tidak lengkap):_
 ```
 
 
-### 3. GET / admins 
+### 3. GET / users 
 
 
 _Response (200, Respon Sukses):_
@@ -199,7 +200,7 @@ _If the "data" was empty, the response will be :_
 "[]";
 ```
 
-### 4. PUT / admins
+### 4. PUT / users
 
 _Request header:_
 
@@ -254,20 +255,20 @@ _Response ERROR(400, Data tidak lengkap):_
 ```
 
 
-## PRODUCTS
+## TRANSACTION
 
 
 | Url        | Method | Description                            |
 | ---------- | ------ | -------------------------------------- |
-| /products     | POST   | Menambahkan products baru kedalam products list                      |
-| /products     | GET   | Mencari atau Melihat products punya user                     |
-| /products/:id     | GET   | Mencari atau Melihat products berdasarkan id                  |
-| /products/:id| PUT  | Mengedit Data products         |
-| /products/:id | DELETE   | Menghapus products dari table favorite                      |
+| /transaction     | POST   | Menambahkan transaction baru kedalam transaction list                      |
+| /transaction     | GET   | Mencari atau Melihat transaction punya user                     |
+| /transaction/:id     | GET   | Mencari atau Melihat transaction berdasarkan id                  |
+| /transaction/:id| PUT  | Mengedit Data transaction         |
+| /transaction/:id | DELETE   | Menghapus transaction dari table favorite                      |
 
 
 
-### 1. POST /products
+### 1. POST /transaction
 
 _Example Input (Request Body) :_
 
@@ -314,7 +315,7 @@ _Response (400, Bad Request):_
 ]
 ```
 
-### 2.  GET / products
+### 2.  GET / transaction
 
 _Response (200, response sukses):_
 
@@ -351,7 +352,7 @@ _Response (200, response sukses):_
 ```
 
 
-### 3.  PUT / products /:id
+### 3.  PUT / transaction /:id
 
 
 _Example Input (Request Body) :_
@@ -413,7 +414,7 @@ _Response ERROR (400, data tidak lengkap):_
 
 ```
 
-### 4.  DELETE / products /:id
+### 4.  DELETE / transaction /:id
 
 
 
@@ -450,7 +451,7 @@ _Response ERROR (404, data not found):_
 
 ```
 
-### 5.  GET / products /:id
+### 5.  GET / transaction /:id
 
 
 
@@ -497,3 +498,4 @@ _Response ERROR (404, data not found):_
 }
 
 ```
+
