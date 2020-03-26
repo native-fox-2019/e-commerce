@@ -1,5 +1,6 @@
 # e-commerce
 
+please kindly visit this site:
 https://dascomix.firebaseapp.com/
 
 
