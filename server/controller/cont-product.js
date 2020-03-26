@@ -163,10 +163,23 @@ class Controller {
             }
         })
     }
-
     static addToCart(request,response,next){
-
-      Product.findOne({where:{id:request.params.id}})
+      let cartData=null
+      console.log(request.authenticationData.custId)
+      Product.findOne({where:{
+        id:request.params.id,
+      }
+    })
+      .then(data=>{
+        return Cart.findOne({where:{ProductId:request.params.id,
+          CustId:request.authenticationData.custId
+        }})
+      })
+      .then(result =>{
+        console.log(result)
+        if (!result){
+          console.log('masuk create')
+          Product.findOne({where:{id:request.params.id}})
       .then(data=>{
         if(data.stock>=request.body.amount){
           return Cart.create({
@@ -203,6 +216,64 @@ class Controller {
           }
         }
       })
+        } else {
+          console.log('masuk Update')
+          if (request.body.amount<=0){
+            next ({status:400, msg:"Amount Must be positive value"})
+          }
+          let newAmt= Number(result.amount) + Number(request.body.amount)
+          Cart.update({amount:newAmt},{where:{CustId:request.authenticationData.custId, ProductId:request.params.id}})
+          .then(data=>{
+            response.json({data,msg:'sukses'})
+          })
+          .catch(err=>{
+            next(err)
+          })
+        }
+      })
+      .catch(err=>{
+        console.log(err)
+        // next(err)
+      })
+
+
+      // Product.findOne({where:{id:request.params.id}})
+      // .then(data=>{
+      //   if(data.stock>=request.body.amount){
+      //     return Cart.create({
+      //       CustId:request.authenticationData.custId,
+      //       ProductId:request.params.id,
+      //       amount:request.body.amount
+      //     })
+      //   }else{
+      //     throw ({status:400,msg:`cannot ${data.name}, more than ${data.stock}`})
+      //   }
+      // })
+      // .then(res=>{
+      //   return Cart.findAll({where:{id:res.id}, include:Product})
+      // })
+      // .then(data=>{
+      //   response.json(data)
+      // })
+      // .catch(err=>{
+      //   if(err.errors){
+      //     let errorObj={
+      //       status:400,
+      //       msg:[],
+      //       type:err.errors[0].type
+      //   }
+      //   for (let i = 0 ; i < err.errors.length ; i++){
+      //       errorObj.msg.push(err.errors[i].message)
+      //   }
+      //   next(errorObj)
+      //   }else{
+      //     if(err.status){
+      //       next(err)
+      //     }else{
+      //       next({status:500,msg:'internal server error'})
+      //     }
+      //   }
+      // })
     }
 
     static deleteCart(request,response,next){
