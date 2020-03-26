@@ -11,7 +11,7 @@
             <h4 class="my-0">{{ userCart.name }}</h4>
             <h6 class="text-muted">Stock you want to buy: {{ userCart.Cart.stock }}</h6>
           </div>
-          <h3 class="text-muted">Rp. {{ userCart.price.toLocaleString() }}</h3>
+          <h3 class="text-muted">Rp. {{ (userCart.price * userCart.Cart.stock).toLocaleString() }}</h3>
           <div>
             <a href="" @click.prevent="deleteCart(userCart.Cart.id)" style="font-size: 30px; text-decoration: none;">
               &#10008;
