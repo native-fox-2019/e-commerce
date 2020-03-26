@@ -29,15 +29,15 @@ class ControllerUser {
                 if (data) {
                     let payload = {
                         UserId: data.UserId,
-                        ProductId: data.ProductId,
-                        amount: data.amount + Number(req.body.amount)
+                        ProductId: Number(data.ProductId),
+                        amount: Number(data.amount) + Number(req.body.amount)
                     }
                     return Cart.update(payload, { where: { id: data.id } })
                 } else {
                     let payload = {
                         UserId: req.user.id,
                         ProductId: Number(req.params.id),
-                        amount: req.body.amount
+                        amount: Number(req.body.amount)
                     }
                     console.log(payload)
                     return Cart.create(payload)
@@ -50,16 +50,17 @@ class ControllerUser {
             })
     }
     static cart(req, res, next) {
-        User.findAll({ where: { id: req.user.id }, include: [Cart] })
+        Cart.findAll({ where: { UserId: req.user.id }, include: [Product] })
             .then(data => {
-                res.status(200).json(data)
+                console.log(data[0])
+                res.status(200).json({data})
             })
             .catch(err => {
                 console.log(err)
                 next(err)
             })
     }
-    // static editProfile (req,res,next){}
+
     static removeFromCart(req, res, next) {
         let temp = null
         Cart.findOne({ where: { id: req.params.id } })
@@ -76,21 +77,23 @@ class ControllerUser {
             .then(() => res.status(200).json({ message: `succesfully removing from your cart`, }))
             .catch(next)
     }
-    static checkout(req, res, next) {
-        let objUpdate = null
-        Cart.findAll({ where: { UserId: req.user.id }, include: [Product] })
-            .then(data => {
-                objUpdate = data
-                return Product.bulkCreate(data.Product, { updateOnDuplicate: ['stocks', 'updatedAt'] })
-            })
-            .then(data => Cart.destroy({ where: { UserId: req.user.id } }))
-            .then(data => res.status(200).json({
-                message: 'succesfully check out'
-            }))
-            .catch(err => {
-                console.log(err)
-                next(err)
-            })
+    static async checkout(req, res, next) {
+        try {
+            const { id } = req.user
+            const cart = await Cart.findAll({ where: { UserId: id }, include: [Product] })
+            let checkout = []
+            cart.forEach(el => {
+                const remaining = el.Product.stocks - el.amount
+                checkout.push(Product.update({ stocks: remaining }, { where: {id: el.Product.id }}))
+            });
+            console.log(checkout)
+            checkout.push(Cart.destroy({ where: { UserId: req.user.id }}))
+            await Promise.all(checkout)
+            res.status(200).json({ message: 'check out success'})
+        } catch (err) {
+            console.log(err)
+            next(err)
+        }
     }
 }
 

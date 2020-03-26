@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Cart extends Model { }
   Cart.init({
     UserId: DataTypes.INTEGER,
-    ProductId: DataTypes.STRING,
+    ProductId: DataTypes.INTEGER,
     amount: {
       type: DataTypes.INTEGER,
       allowNull: false,
