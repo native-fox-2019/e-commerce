@@ -10,37 +10,23 @@ class userController {
             password: req.body.password,
             role: "Customer"
         }
-        console.log("ini req.body",req.body)
+        console.log("ini req.body", req.body)
 
         users.create(input)
             .then(user => {
-                console.log("ini user:", user)
-                
-                if(user.role == "Admin"){
-                    let tokenAdmin = jwt.jwtSign({
-                        id: user.id,
-                        email: user.email,
-                        role: user.role
-                    })                    
-                    console.log("ini token",tokenAdmin)
-                    console.log("ini obj token",{tokenAdmin})
-                    res.status(200).json({ tokenAdmin })
-                    console.log("ini token",tokenAdmin)
-                    console.log("ini obj token",{tokenAdmin})
-                } else if(user.role == "Customer") {
-                    let tokenCustomer = jwt.jwtSign({
-                        id: user.id,
-                        email: user.email,
-                        role: user.role
-                    })
-                    console.log("ini token",tokenCustomer)
-                    console.log("ini obj token",{tokenCustomer})
-                    res.status(200).json({ tokenCustomer })
-                    console.log("ini token",tokenCustomer)
-                    console.log("ini obj token",{tokenCustomer})
-                }
+
+                let tokenCustomer = jwt.jwtSign({
+                    id: user.id,
+                    email: user.email,
+                    role: user.role
+                })
+                console.log("ini token", tokenCustomer)
+                console.log("ini obj token", { tokenCustomer })
+                res.status(200).json({ tokenCustomer })
+                console.log("ini token", tokenCustomer)
+                console.log("ini obj token", { tokenCustomer })
             }).catch(err => {
-                res.status(401).json({msg:"email and password must be filled"})
+                res.status(401).json({ msg: "email and password must be filled" })
             })
     }
 
@@ -52,85 +38,94 @@ class userController {
         }
         let password = req.body.password
 
-        console.log("ini email", email, "ini password=>", password,"ini req.body=>",req.body)
+        console.log("ini email", email, "ini password=>", password, "ini req.body=>", req.body)
 
         users.findOne(email)
             .then(user => {
                 let isValidate = bcrypt.checker(password, user.password)
                 if (isValidate) {
-                    if(user.role == "Admin"){
+                    if (user.role == "Admin") {
                         let tokenAdmin = jwt.jwtSign({
                             id: user.id,
                             email: user.email,
                             role: user.role
-                        })                        
-                        console.log("ini token",tokenAdmin)
-                        console.log("ini obj token",{tokenAdmin})
+                        })
+                        console.log("ini token", tokenAdmin)
+                        console.log("ini obj token", { tokenAdmin })
                         res.status(200).json({ tokenAdmin })
-                        console.log("ini token",tokenAdmin)
-                        console.log("ini obj token",{tokenAdmin})
-                    } else if(user.role == "Customer") {
+                        console.log("ini token", tokenAdmin)
+                        console.log("ini obj token", { tokenAdmin })
+                    } else if (user.role == "Customer") {
                         let tokenCustomer = jwt.jwtSign({
                             id: user.id,
                             email: user.email,
                             role: user.role
-                        }) 
-                        console.log("ini token",tokenCustomer)
-                        console.log("ini obj token",{tokenCustomer})
+                        })
+                        console.log("ini token", tokenCustomer)
+                        console.log("ini obj token", { tokenCustomer })
                         res.status(200).json({ tokenCustomer })
-                        console.log("ini token",tokenCustomer)
-                        console.log("ini obj token",{tokenCustomer})
+                        console.log("ini token", tokenCustomer)
+                        console.log("ini obj token", { tokenCustomer })
                     }
                 } else {
-                    res.status(404).json({ msg:"id or email is not found" })
+                    res.status(404).json({ msg: "id or email is not found" })
                 }
             }).catch(err => {
-                res.status(500).json({ msg: "disini internal server error",
-            error:err.error })
+                res.status(500).json({
+                    msg: "disini internal server error",
+                    error: err.error
+                })
             })
     }
 
-    static getAllUser(req,res){
-        users.findAll()
-        .then(user =>{
-            res.status(200).json(user)
+    static getAllUser(req, res) {
+        users.findAll({
+            order: [['email', 'ASC']]
         })
-        .catch(err =>{
-            res.status(404).json({message:"user is not found"})
-        })
+            .then(user => {
+                res.status(200).json(user)
+            })
+            .catch(err => {
+                res.status(404).json({ message: "user is not found" })
+            })
     }
 
-    static updateUser(req,res){
+    static updateUser(req, res) {
         let input = {
-            role : req.body.role
+            role: req.body.role
         }
-        let idUser={
-            where:{
+        let idUser = {
+            where: {
                 id: req.params.id
             }
         }
-        users.update(input,idUser)
-        .then(user =>{
-            res.status(200).json(user)
-        }).catch(err =>{
-            res.status(500).json({message:"update fail"})
-        })
+        users.update(input, idUser)
+            .then(user => {
+                return users.findOne(idUser)
+                    .then(dataUser => {
+                        res.status(200).json(dataUser)
+                    }).catch(err => {
+                        res.status(404).json({ message: " user is not found" })
+                    })
+            }).catch(err => {
+                res.status(500).json({ message: "update is fail" })
+            })
     }
 
-    static deleteUser(req,res){
+    static deleteUser(req, res) {
         let id = {
-            where:{
-                id:req.params.id
+            where: {
+                id: req.params.id
             }
         }
 
         users.destroy(id)
-        .then(user =>{
-            res.status(200).json(user)
-        })
-        .catch(err =>{
-            res.status(500).json({message:"delete is fail"})
-        })
+            .then(user => {
+                res.status(200).json(user)
+            })
+            .catch(err => {
+                res.status(500).json({ message: "delete is fail" })
+            })
     }
 
 }

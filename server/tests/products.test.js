@@ -12,7 +12,7 @@ const test_productPrice = 1000000
 const test_productStock = 1
 // let test_productId
 
-beforeAll(async done  => {
+beforeAll(async done => {
     try {
         let admin = await users.create({
             email: "steven@mail.com",
@@ -24,7 +24,7 @@ beforeAll(async done  => {
         //     password: "stevenjuga",
         //     role: "User"
         // })
-        let adminToken = jwtSign({ id: admin.id, email: admin.email})
+        let adminToken = jwtSign({ id: admin.id, email: admin.email })
         // let userToken = jwtSign({ id: user.id, email: user.email})
         test_adminAccessToken = adminToken
         // test_userAccessToken = userToken
@@ -32,7 +32,7 @@ beforeAll(async done  => {
     } catch (err) {
         done(err)
     }
-    
+
 })
 
 afterAll(done => {
@@ -50,11 +50,11 @@ describe('Add new product', () => {
                     .post('/product')
                     .set('token', test_adminAccessToken)
                     .send({
-                    name: test_productName,
-                    image_url: test_productImageUrl,
-                    price: test_productPrice,
-                    stock: test_productStock
-                })
+                        name: test_productName,
+                        image_url: test_productImageUrl,
+                        price: test_productPrice,
+                        stock: test_productStock
+                    })
                 expect(status).toBe(201)
                 test_productId = body.id
                 done()
@@ -89,8 +89,8 @@ describe('Get all products', () => {
         it('Should return 200 and array of objects', async done => {
             try {
                 const { body, status } = await request(app)
-                .get('/product')
-                .set('token', test_adminAccessToken)
+                    .get('/product')
+                    .set('token', test_adminAccessToken)
                 expect(status).toBe(200)
                 expect(Array.isArray(body)).toBe(true)
                 done()
@@ -107,14 +107,14 @@ describe('Edit a product', () => {
         it('Should return 200 and object (edited, message)', async done => {
             try {
                 const { body, status } = await request(app)
-                .put(`/product/${test_productId}`)
-                .set('token', test_adminAccessToken)
-                .send({
-                    name: 'edited',
-                    image_url: test_productImageUrl,
-                    price: test_productPrice,
-                    stock: test_productStock
-                })
+                    .put(`/product/${test_productId}`)
+                    .set('token', test_adminAccessToken)
+                    .send({
+                        name: 'edited',
+                        image_url: test_productImageUrl,
+                        price: test_productPrice,
+                        stock: test_productStock
+                    })
                 expect(status).toBe(200)
                 done()
             } catch (err) {
@@ -127,14 +127,14 @@ describe('Edit a product', () => {
         it('Should return 404 and object (status, message), where name is empty', async done => {
             try {
                 const { body, status } = await request(app)
-                .put(`/products/${test_productId}`)
-                .set('access_token', test_adminAccessToken)
-                .send({
-                    name: 'test',
-                    image_url: test_productImageUrl,
-                    price: test_productPrice,
-                    stock: test_productStock
-                })
+                    .put(`/products/${test_productId}`)
+                    .set('access_token', test_adminAccessToken)
+                    .send({
+                        name: 'test',
+                        image_url: test_productImageUrl,
+                        price: test_productPrice,
+                        stock: test_productStock
+                    })
                 expect(status).toBe(404)
                 done()
             } catch (err) {
@@ -149,10 +149,10 @@ describe('Delete a product', () => {
         it('Should return 200 and object (deleted, message)', async done => {
             try {
                 const { body, status } = await request(app)
-                .delete(`/product/${test_productId}`)
-                .set('token', test_adminAccessToken)
+                    .delete(`/product/${test_productId}`)
+                    .set('token', test_adminAccessToken)
                 expect(status).toBe(200)
-                console.log(body,"isi body")
+                console.log(body, "isi body")
 
                 done()
             } catch (err) {
@@ -163,11 +163,11 @@ describe('Delete a product', () => {
 
     describe('Fail', () => {
 
-        it ('Should return 404 and object (status, message)', async done => {
+        it('Should return 404 and object (status, message)', async done => {
             try {
                 const { body, status } = await request(app)
-                .delete(`/products/${test_productId+7272}`)
-                .set('access_token', test_adminAccessToken)
+                    .delete(`/products/${test_productId + 7272}`)
+                    .set('access_token', test_adminAccessToken)
                 expect(status).toBe(404)
                 done()
             } catch (err) {

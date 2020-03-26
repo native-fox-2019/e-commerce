@@ -12,19 +12,24 @@ class productsController {
             stock: req.body.stock,
             userId: req.payloadUser.data.id
         }
-        products.create(input)
-            .then(data => {
-                res.status(201).json(data)
-            }).catch(err => {
-                res.status(500).json({message:"add fail"})
-            })
+        if (req.body.price < 1 || req.body.stock < 1) {
+            res.status(500).json({ message: "input harus lebih dari 0" })
+        } else {
+            products.create(input)
+                .then(data => {
+                    res.status(201).json(data)
+                }).catch(err => {
+                    res.status(500).json({ message: "add fail" })
+                })
+        }
     }
 
     static getAllProducts(req, res) {
         let userId = {
             where: {
                 userId: req.payloadUser.data.id
-            }
+            },
+            order: [['name', 'ASC']]
         }
         products.findAll(userId)
             .then(data => {
@@ -39,7 +44,9 @@ class productsController {
     }
 
     static getAllProductsCustomer(req, res) {
-        products.findAll()
+        products.findAll(
+            { order: [['name', 'ASC']] }
+        )
             .then(data => {
                 res.status(200).json(data)
             })
@@ -74,37 +81,41 @@ class productsController {
             }
         }
         let input = {
-            name:req.body.name,
-            image_url:req.body.image_url,
-            price:req.body.price,
-            stock:req.body.stock
+            name: req.body.name,
+            image_url: req.body.image_url,
+            price: req.body.price,
+            stock: req.body.stock
         }
-        products.update(input,idProduct)
-            .then(data => {
-                res.status(200).json(data)
-            }).catch(err => {
-                res.status(400).json({
-                    msg: "update fail"
+        if (req.body.price < 1 || req.body.stock < 1) {
+            res.status(500).json({ message: "input harus lebih dari 0" })
+        } else {
+            products.update(input, idProduct)
+                .then(data => {
+                    res.status(200).json(data)
+                }).catch(err => {
+                    res.status(400).json({
+                        msg: "update fail"
+                    })
                 })
-            })
+        }
     }
 
-    static deleteProduct(req,res){
+    static deleteProduct(req, res) {
         let idProduct = {
-            where:{
+            where: {
                 id: req.params.id
             }
         }
 
         products.destroy(idProduct)
-        .then(data=>{
-            res.status(200).json(data)
-        })
-        .catch(err =>{
-            res.status(404).json({
-                msg:"data is not found"
+            .then(data => {
+                res.status(200).json(data)
             })
-        })
+            .catch(err => {
+                res.status(404).json({
+                    msg: "data is not found"
+                })
+            })
     }
 }
 

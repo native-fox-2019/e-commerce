@@ -1,4 +1,4 @@
-const { Cart } = require('../models')
+const { Cart, products } = require('../models')
 
 class cartController {
 
@@ -27,8 +27,12 @@ class cartController {
                         productsId: req.body.id,
                         image_url: req.body.image_url,
                         price: req.body.price
-                }
-                    return Cart.update(inputUpdate, idItem)
+                    }
+                    if (req.body.price < 1 || req.body.stock < 1) {
+                        res.status(500).json({ message: "input harus lebih dari 0" })
+                    } else {
+                        return Cart.update(inputUpdate, idItem)
+                    }
                 } else {
                     return Cart.create(input)
                 }
@@ -47,7 +51,8 @@ class cartController {
         let idCustomer = {
             where: {
                 usersId: req.payloadUser.data.id
-            }
+            },
+            order: [['createdAt', 'ASC']]
         }
         Cart.findAll(idCustomer)
             .then(item => {
@@ -73,26 +78,38 @@ class cartController {
                 res.status(500).json({ message: "delete is fail" })
             })
     }
-    
-    static updateCart(req,res){
+
+    static updateCart(req, res) {
         let idItem = {
-            where:{
+            where: {
                 id: req.params.id
             }
         }
         let input = {
-            amount : req.body.amount
+            amount: req.body.amount
         }
-        Cart.update(input,idItem)
-        .then(item =>{
-            return Cart.findOne(idItem)
-        })
-        .then(item =>{
-            res.status(200).json(item)
-        })
-        .catch(err =>{
-            res.status(500).json({message: "edit is fail"})
-        })
+        products.findOne({
+            where: {
+                id: req.body.productsId
+            }
+        }).then(product => {
+            if (product.stock < req.body.amount) {
+                res.status(500).json({ message: "tidak boleh lebih dari stok" })
+            } else {
+                Cart.update(input, idItem)
+                    .then(item => {
+                        return Cart.findOne(idItem)
+                    })
+                    .then(item => {
+                        res.status(200).json(item)
+                    })
+                    .catch(err => {
+                        res.status(500).json({ message: "edit is fail" })
+                    })
+            }
+        }
+        )
     }
 }
+
 module.exports = cartController

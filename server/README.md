@@ -1,15 +1,15 @@
-1. POST /user/register
-Example Input (Request Body):
+### 1. POST /user/register
+## Example Input (Request Body):
 
 {
     "email": "test@mail.com",
     "password": "test"
 }
-Response (201):
+## Response (201):
 
 {
-       access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoiZXhwYW1wbGVAZXhhbXBsZS5jb20iLCJpYXQiOjE1ODM1NjQyODF9.jvh2CegZlsax09Cp_wcSiOed_84BUJTHJuC1IDAiTXs"
-} 
+    token: "my token"
+    } 
 Example Input (Request Body) :
 
 {
@@ -23,7 +23,7 @@ Response ERROR (401):
 }
 
 
-2. POST /user/login
+### 2. POST /user/login
 Example Input (Request Body):
 
 {
@@ -33,7 +33,7 @@ Example Input (Request Body):
 Response (200):
 
    {
-       access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoiZXhwYW1wbGVAZXhhbXBsZS5jb20iLCJpYXQiOjE1ODM1NjQyODF9.jvh2CegZlsax09Cp_wcSiOed_84BUJTHJuC1IDAiTXs"
+    token: "my token"
    } 
 Example Input (Request Body) :
 
@@ -47,14 +47,17 @@ Response ERROR (404):
     msg:"id or email is not found" 
 }
 
-Shopper
-Url	Method	Description
-/product/	POST	Menambahkan produk baru
-/product/	GET	Menampilkan list produk
-/product/:id	GET	Menampilkan produk berdasarkan id
-/product/:id	PUT	Melakukan edit ke produk
-/product/:id	DELETE	Menghapus produk dari list
-1. POST /product
+|                        Shopper                             |
+|-------------------------------------------------------------|
+| Url        |	Method	 |Description                         |
+|/product/:id|	  GET	 | Menampilkan produk berdasarkan id  |
+|/product/:id|	  PUT	 |    Melakukan edit ke produk        |
+|/product/:id|	DELETE	 |   Menghapus produk dari list       |
+| /product/	 |    POST	 |      Menambahkan produk baru       |
+| /product/	 |    GET	 |      Menampilkan list produk       |
+|----------- |-----------|----------------------------------|
+
+### 1. POST /product
 Example Input (Request Headers):
 
 {
@@ -94,11 +97,11 @@ Response ERROR (500):
 	message: "Internal server error"
 }
 
-2. GET /product
+### 2. GET /product
 Example Input (Request Headers):
 
 {
-    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmYXV6YW5AZW1haWwuY29tIiwiaWF0IjoxNTgzMjI0NDUzfQ.f9xFh_GctsZvEDEgdlmMYU13CPOlOdD4Btme8oi0tgA"
+    token: "my token"
 
 }
 Response (200):
@@ -117,7 +120,7 @@ Response (200):
 Example Input (Request Headers) :
 
 {
- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmYXV6YW5AZW1haWwuY29tIiwiaWF0IjoxNTgzMjI0NDUzfQ.f9xFh_GctsZvEDEgdlmMYU13CPOlOdD4Btme8oi0tgA   	
+ token: "my token"
 }
 Response ERROR (404):
 
@@ -125,11 +128,11 @@ Response ERROR (404):
 	msg: "data is not found"
 }
 
-3. GET /product/:id
+### 3. GET /product/:id
 Example Input (Request Headers):
 
 {
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmYXV6YW5AZW1haWwuY29tIiwiaWF0IjoxNTgzMjI0NDUzfQ.f9xFh_GctsZvEDEgdlmMYU13CPOlOdD4Btme8oi0tgA
+    token: my token
 }
 Response (200):
 
@@ -152,11 +155,11 @@ Response ERROR (404):
 {
 	msg: "data is not found"
 }
-4. PUT /product/:id
+### 4. PUT /product/:id
 Example Input (Request Headers):
 
 {
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmYXV6YW5AZW1haWwuY29tIiwiaWF0IjoxNTgzMjI0NDUzfQ.f9xFh_GctsZvEDEgdlmMYU13CPOlOdD4Btme8oi0tgA
+    token: "my token"
 }
 Example Input (Request Body):
 
@@ -177,12 +180,12 @@ Response (200):
 Example Input (Request Headers):
 
 {
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmYXV6YW5AZW1haWwuY29tIiwiaWF0IjoxNTgzMjI0NDUzfQ.f9xFh_GctsZvEDEgdlmMYU13CPOlOdD4Btme8
+    token: "wrong token"
 
 }
 Example Input (Request Body):
 
-{{
+{
 	"name" : "test",
     "image_url" : "test.com",
     "price": "150000",
@@ -199,11 +202,11 @@ Response ERROR (400):
         msg: "update fail"
     }
 
-5. DELETE /product/:id
+### 5. DELETE /product/:id
 Example Input (Request Headers):
 
 {
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmYXV6YW5AZW1haWwuY29tIiwiaWF0IjoxNTgzMjI0NDUzfQ.f9xFh_GctsZvEDEgdlmMYU13CPOlOdD4Btme8oi0tgA
+token:"my token"
 }
 Response (200):
 
@@ -220,7 +223,7 @@ Response (200):
 Example Input (Request Headers):
 
 {
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmYXV6YW5AZW1haWwuY29tIiwiaWF0IjoxNTgzMjI0NDUzfQ.f9xFh_GctsZvEDEgdlmMYU13CPOlOdD4Btme8
+    token: "Wrong token"
 
 }
 Example Input (Request Body):

@@ -1,11 +1,10 @@
 'use strict';
-const bcrypt = require('bcrypt')
-let salt = bcrypt.genSaltSync(10)
+const bcrypt = require('../helpers/bcrypt')
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('users', [{
-      email: 'steven@mail.com',
-      password: bcrypt.hashSync("steven",salt),
+      email: 'admin@mail.com',
+      password: bcrypt.hasher("admin"),
       role: "Admin",
       createdAt: new Date(),
       updatedAt: new Date()
@@ -23,7 +22,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('users', null,);
+    return queryInterface.bulkDelete('users', null);
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
