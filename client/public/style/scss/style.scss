@@ -23,6 +23,8 @@ cursive;
 
 body {
   background-color: $color-base;
+  position: relative;
+  min-height: 650px;
 }
 
 @import './navbar';
