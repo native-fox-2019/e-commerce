@@ -76,7 +76,9 @@ import { mapGetters, mapActions, mapMutations } from 'vuex';
 export default {
   name: 'Cart',
   created() {
-    this.fetchCart();
+    if (this.isOpen) {
+      this.fetchCart();
+    }
   },
   computed: mapGetters(['isOpen', 'cart', 'cartSubtotal']),
   methods: {
@@ -138,7 +140,7 @@ export default {
 <style scoped>
   .bg-modal {
     position: absolute;
-    height: 100%;
+    height: 152%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 99999999999;

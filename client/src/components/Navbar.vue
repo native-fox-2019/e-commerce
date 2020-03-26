@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <nav :class="{ change: notHome }">
+    <nav :class="{ change: !onHome }">
       <ul class="navlist start">
         <li>
           <button @click="menCollection" class="nav-button">
@@ -56,18 +56,13 @@ export default {
     }
 
     if (this.$route.path === '/') {
-      this.notHome = false;
+      this.setOnHome(true);
     }
   },
-  data() {
-    return {
-      notHome: true,
-    };
-  },
-  computed: mapGetters(['getStatus']),
+  computed: mapGetters(['getStatus', 'onHome']),
   methods: {
-    ...mapMutations(['setStatus', 'openCart']),
-    ...mapActions(['fetchCart']),
+    ...mapMutations(['setStatus', 'openCart', 'setOnHome']),
+    ...mapActions(['fetchCart', 'checkStatus']),
     login() {
       this.$router.push('/login');
     },
@@ -75,16 +70,19 @@ export default {
     logout() {
       localStorage.removeItem('token');
       this.setStatus(false);
+      this.setOnHome(true);
       this.$router.push('/');
     },
 
     home() {
+      this.setOnHome(true);
       if (this.$route.path !== '/') {
         this.$router.push('/');
       }
     },
 
     menCollection() {
+      this.checkStatus();
       if (this.$route.path !== '/collections/mens') {
         this.$router.push('/collections/mens');
       }

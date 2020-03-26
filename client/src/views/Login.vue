@@ -2,31 +2,36 @@
   <div class="login-register">
     <div class="container">
       <form class="login" @submit.prevent="onLogin">
+        <h1 style="margin-bottom: 14px">LOGIN</h1>
         <label>Email</label>
         <input v-model="login_email" type="email" placeholder="enter your email" />
         <label>Password</label>
         <input v-model="login_password" type="password" />
-        <button type="submit">Login</button>
+        <button class="btn" type="submit">Login</button>
       </form>
 
       <form class="register" @submit.prevent="onRegister">
+        <h1 style="margin-bottom: 14px">REGISTER</h1>
         <label>Name</label>
         <input v-model="name" type="text" placeholder="enter your name">
         <label>Email</label>
         <input v-model="email" type="email" placeholder="enter your email" />
         <label>Password</label>
         <input v-model="password" type="password" />
-        <button type="submit">Register</button>
+        <button class="btn" type="submit">Register</button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'Login',
+  created() {
+    this.setOnHome(false);
+  },
   data() {
     return {
       login_email: '',
@@ -38,6 +43,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['setOnHome']),
     ...mapActions(['login', 'register']),
     async onLogin() {
       const obj = {
@@ -73,12 +79,45 @@ export default {
   .container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    width: 500px;
+    justify-content: space-between;
+    width: 100%
   }
 
   .login, .register {
     display: flex;
     flex-direction: column;
+  }
+
+  .container form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container input {
+    background: #eee;
+    border: none;
+    padding: 19px 20px;
+    margin: 8px 0;
+    width: 50%;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .btn {
+    display: block;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    padding: 13px 18px;
+    border: 2px solid black;
+    text-decoration: none;
+    border-radius: 2px;
+    width: 30%;
+    margin-top: 14px;
   }
 </style>

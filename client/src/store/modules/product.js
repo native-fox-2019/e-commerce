@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const server = 'http://localhost:3000';
+// const server = 'http://localhost:3000';
+const heroku = 'https://frozen-wildwood-55741.herokuapp.com';
 
 export default {
   state: {
@@ -51,7 +52,7 @@ export default {
   },
   actions: {
     async fetchProducts({ commit }) {
-      const { data } = await axios.get(`${server}/products`, {
+      const { data } = await axios.get(`${heroku}/products`, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -61,7 +62,7 @@ export default {
     },
 
     async fetchCart({ commit }) {
-      const { data } = await axios.get(`${server}/carts`, {
+      const { data } = await axios.get(`${heroku}/carts`, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -75,7 +76,7 @@ export default {
     },
 
     async addToCart({ commit }, id) {
-      const { data } = await axios.post(`${server}/carts/product/${id}`, {}, {
+      const { data } = await axios.post(`${heroku}/carts/product/${id}`, {}, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -90,7 +91,7 @@ export default {
     },
 
     async updateQuantity({ commit }, payload) {
-      await axios.put(`${server}/carts/product/${payload.id}`, payload.obj, {
+      await axios.put(`${heroku}/carts/product/${payload.id}`, payload.obj, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -106,7 +107,7 @@ export default {
     },
 
     async removeProduct({ commit }, payload) {
-      await axios.delete(`${server}/carts/product/${payload.id}`, {
+      await axios.delete(`${heroku}/carts/product/${payload.id}`, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -118,7 +119,7 @@ export default {
     },
 
     async checkOut({ commit }, payload) {
-      await axios.put(`${server}/products/stocks`, payload, {
+      await axios.put(`${heroku}/products/stocks`, payload, {
         headers: {
           token: localStorage.getItem('token'),
         },

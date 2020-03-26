@@ -11,8 +11,11 @@
               <div class="product-image-container">
                 <div class="aspect-ratio">
                   <img :src="product.image_url" alt="" class="product-image">
-                  <button @click.prevent="onAddToCart(product.id)" class="product-image-btn">
+                  <button v-if="getStatus" @click.prevent="onAddToCart(product.id)"
+                  class="product-image-btn">
                     Add To Cart</button>
+                  <button v-if="!getStatus" @click.prevent="goToLogin" class="product-image-btn">
+                    Login First</button>
                 </div>
               </div>
               <div class="product-title">
@@ -29,22 +32,29 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'Product',
   created() {
     this.fetchProducts();
+    this.checkStatus();
+    this.setOnHome(false);
   },
-  computed: mapGetters(['products']),
+  computed: mapGetters(['products', 'getStatus']),
   methods: {
-    ...mapActions(['fetchProducts', 'addToCart']),
+    ...mapMutations(['setOnHome']),
+    ...mapActions(['fetchProducts', 'addToCart', 'checkStatus']),
     onAddToCart(id) {
       if (!localStorage.getItem('token')) {
         this.$router.push('/login');
       } else {
         this.addToCart(id);
       }
+    },
+
+    goToLogin() {
+      this.$router.push('/login');
     },
   },
 };
