@@ -13,11 +13,11 @@ class UserController {
       .then(data => {
         if (data && comparePass(password, data.password)) {
           res.status(200)
-          .json({token: generateTok({ id: data.id, email: data.email,isAdmin: data.isAdmin}), first_name : data.first_name, last_name : data.last_name}) 
+          .json({token: generateTok({ id: data.id, email: data.email,isAdmin: data.isAdmin}), first_name : data.first_name, last_name : data.last_name, email : data.email}) 
 
         } else {
           const error = {
-            status: 404,
+            status: 400,
             msg: "email or password wrong!"
           };
           throw error;

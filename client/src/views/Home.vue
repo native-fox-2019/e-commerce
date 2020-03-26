@@ -1,7 +1,7 @@
 <template>
 <div>
 <div class="nav">
-<Navbar></Navbar>
+<Navbar class="container"></Navbar>
 </div>
 <div id="home">
 <div class="cel">

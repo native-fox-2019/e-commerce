@@ -7,6 +7,7 @@ const { Op } = require("sequelize");
 
 class productController {
   static create(req, res, next) {
+    console.log('masuuuuuuk created')
     const UserId = req.user.id;
     const body = {
       name: req.body.name,

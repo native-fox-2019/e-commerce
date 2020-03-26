@@ -6,15 +6,19 @@
     <div class="spinner horizontal"></div>
     <div class="spinner diagonal part-2"></div>
   </label>
-  <div>
-  </div>
   <div id="sidebarMenu">
     <ul class="sidebarMenuInner container text-center" style="margin-top: -2em;">
       <li> <i style="font-size: 10em;" class="fab fa-aviato"></i><span style="color:#fff;margin-bottom: -1em; margin-top:-2em">rase for the sky cause tommoro will never come</span></li>
-      <li style="color: black"><a href>Category</a></li>
-      <li style="color: black"><a href>Add Product</a></li>
-      <li style="color: black"><a href>Add Staff</a></li>
-      <li><button type="button" class="btn btn-danger" style="border-radius: 50px" @click="logout">LOGOUT</button></li>
+      <li style="color: black"> <router-link to="/allCategory">Category</router-link></li>
+      <li style="color: black"><a href>Carrier</a></li>
+      <li>
+          <div v-if="!isLogin">
+          <button type="button" class="btn btn-primary" style="border-radius: 50px" @click="login">Login</button>
+          </div>
+          <div v-else>
+          <button type="button" class="btn btn-danger" style="border-radius: 50px" @click="logout">Logout</button>
+          </div>
+          </li>
     </ul>
     
   </div>
@@ -26,31 +30,27 @@
                         >
           <ul style="float: right; display:inherit; color:#fff">
                <li class="nav">
-                  <a href="">
-                      Commercial
-                  </a>
+                    <router-link to="/">
+                    <i style="font-size: 65px; color:#fff; margin-top:-20px; float:left;" class="fab fa-aviato"></i>
+                    </router-link>
               </li>
                <li class="nav">
-                  <a href="">
-                      Privat jet
-                  </a>
-              </li>
-              
-                <li class="nav">
-                  <a href="">
-                      Helicopter
-                  </a>
-              </li>
-               
-               <li class="nav">
-                  <a href="">
-                      Defence
-                  </a>
+                  <router-link to="/allCategory">
+                      See Category
+                  </router-link>
               </li>
                <li class="nav">
-                  <a  href="">
+                  <router-link to="/login">
+                   <div v-if="!isLogin">
                       Login
-                  </a>
+                   </div>
+                    <div v-else>
+                        <a href="#" @click.prevent="logout">
+                      Logout
+                      </a>
+                   </div>
+                  </router-link>
+
               </li>
             
           </ul>
@@ -62,11 +62,36 @@
 
 <script>
 import Vue from 'vue'
+import Swal from 'sweetalert2'
 export default Vue.extend({
     name : 'Navbar',
+    data() {
+        return {
+        }
+    },
+    computed : {
+        isLogin() {
+            return this.$store.state.isLogin
+        }
+    },
     methods : {
         logout() {
-            localStorage.removeItem('token')
+             if (!localStorage.getItem('token')) {
+                 this.$router.push({path : '/'})
+             } else {
+                 localStorage.removeItem('token')
+                 this.$router.push({path : '/login'})
+                 Swal.fire({
+                 position: "center",
+                 icon: "success",
+                 title: "Thank You & See you again",
+                 showConfirmButton: false,
+                 timer: 3000
+               });
+             }
+        },
+        login() {
+            this.$router.push({path : '/login'})
         }
     }
 

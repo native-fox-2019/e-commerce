@@ -2,6 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import AllCategory from '../views/AllCategory'
+import Login from '../views/Login'
+import Register from '../views/Register'
+import Admin from '../views/Admin'
+import AdminPage from '../views/AdminPage'
+import Edit from '../views/Edit'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -9,13 +15,40 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    // meta: { requiresAuth: true }
   },
   {
     path: '/allCategory',
     name: 'AllCategory',
-    component: AllCategory
+    component: AllCategory,
+    meta: { requiresAuth: true }
+  },
+  {
+    path : '/login',
+    name : "Login",
+    component : Login
+  },
+  {
+    path : '/register',
+    name : "Register",
+    component : Register
+  },
+  {
+    path : '/admin',
+    name :'Admin',
+    component : AdminPage
+  },
+  {
+    path : '/adminpage',
+    name :'AdminPage',
+    component : Admin
+  },
+  {
+    path : '/edit/:id',
+    name : 'Edit',
+    component : Edit
   }
+
+
 ]
 
 const router = new VueRouter({
@@ -28,7 +61,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!localStorage.getItem('token')) {
       next({
-        path: '/',
+        path: '/login',
         query: { redirect: to.fullPath }
       })
     } else {

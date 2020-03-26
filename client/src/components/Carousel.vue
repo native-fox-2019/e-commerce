@@ -18,8 +18,12 @@
       caption=""
       img-src="https://desktopwalls.net/wp-content/uploads/2014/06/Boeing%20Aircraft%20Plane%20On%20Runway%20Free%20Wallpaper%20HD.jpg"
     >
-      <h3>please login to see our product</h3>
-      <button type="button" class="btn btn-outline-primary" style="border-radius:50px; width:130px; height:43px;"><h4>Login</h4></button>
+        <router-link to="/login">
+      <div v-if="!isLogin">
+      <h3 style="color:white">please login to see our product</h3>
+      <button type="button" class="btn btn-outline-light" style="border-radius:50px; width:130px; height:43px;"><h4>Login</h4></button>
+        </div>
+        </router-link>
     </b-carousel-slide>
      <b-carousel-slide
       caption=""
@@ -59,6 +63,12 @@
         sliding: null
       }
     },
+    computed : {
+      isLogin() {
+        return this.$store.state.isLogin
+      }
+    },
+  
     created () {
       this.sliding
     },
