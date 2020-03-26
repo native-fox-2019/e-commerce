@@ -8,6 +8,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'landingPage',
+    meta: {open: true}
+  },
+  {
+    path: '/products',
     name: 'MainPage',
     component: MainPage
   },
@@ -29,7 +34,19 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!localStorage.getItem('token')) {
       next({
-        path: '/'
+        path: '/products'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+
+  if (to.matched.some(record => record.meta.open)) {
+    if (!localStorage.getItem('token') || localStorage.getItem('token')) {
+      next({
+        path: '/products'
       })
     } else {
       next()
