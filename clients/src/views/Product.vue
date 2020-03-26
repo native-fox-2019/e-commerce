@@ -121,7 +121,24 @@ export default {
           });
         }
       } catch (error) {
-        errorHandler(error);
+        if (error.response[0].message === "Validation min on stock failed") {
+          Swal.fire({
+            title: "This product is almost out of stock",
+            text:
+              "Mohon maaf saat in stock barang sudah hampir habis, mohon kurangi jumlah barang dan coba lagi.",
+            icon: "waning",
+            showConfirmButton: false,
+            timer: 3000,
+            showClass: {
+              popup: "animated fadeInDown faster"
+            },
+            hideClass: {
+              popup: "animated fadeOutUp faster"
+            }
+          });
+        } else {
+          errorHandler(error);
+        }
       }
     },
     formatRupiah(angka) {

@@ -7,7 +7,9 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import vuetify from "./plugins/vuetify";
+import GSignInButton from "vue-google-signin-button";
 
+Vue.use(GSignInButton);
 Vue.use(LoadScript);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);

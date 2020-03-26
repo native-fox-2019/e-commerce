@@ -58,6 +58,10 @@ export default {
       this.$router.push({
         path: "/login"
       });
+      Toast.fire({
+        icon: "success",
+        title: "Sign out successfully , See you again !"
+      });
     },
     cart() {
       if (!localStorage.access_token) {

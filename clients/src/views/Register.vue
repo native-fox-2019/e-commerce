@@ -32,11 +32,15 @@
             <span class="focus-input100"></span>
           </div>
 
-          <div class="container-login100-form-btn mt-5">
+          <div class="container-login100-form-btn mt-4">
             <button class="login100-form-btn">Sign Up</button>
           </div>
+          <div class="text-center w-full p-t-20 p-b-20">
+            <span class="txt1" style="margin-left: 5px;">Or login with</span>
+          </div>
+          <Google></Google>
 
-          <div class="flex-col-c p-t-65 p-b-40">
+          <div class="flex-col-c p-t-40 p-b-40">
             <span class="txt1 p-b-9">Already have an account?</span>
 
             <a href="/login" @click.prevent="changePage" class="txt3">Sign in now</a>
@@ -48,6 +52,7 @@
 </template>
 <script>
 import { axios } from "../config/axios";
+import Google from "../components/Google";
 import Swal from "sweetalert2";
 const Toast = Swal.mixin({
   toast: true,
@@ -62,6 +67,9 @@ const Toast = Swal.mixin({
 });
 export default {
   name: "Register",
+  components: {
+    Google
+  },
   data() {
     return {
       fullname: "",
