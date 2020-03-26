@@ -1,6 +1,7 @@
 <template>
     <div class="login" style="height : 100vh">
-        <h1 class="p-5" style="color : white; background-color : black; opacity : 50%">Motorcycle Build and Repair</h1>
+    <h1 class="p-2" style="color : white; background-color : black; opacity : 50%">Motorcycle Build and Repair</h1>
+    <img class="img mt-0 p-0" alt="" src="../assets/logo.png" style="width : 15%;">
         <div class="m-5" style="display: flex; flex-direction:row; justify-content : center; align-content : center; align-items : center; flex-wrap : nowrap">
             <div class="card" style="opacity:70%; background-color: black">
                 <h1 style="color : white" class="mt-3">Login</h1>
@@ -14,7 +15,7 @@
                         <input style="color : black" type="password" class="form-control" v-model="password_login" required>
                     </div>
                     <button type="submit" class="btn btn-warning mb-1">Login</button><br>
-                    <a @click="register" href="">Don't have an account ? Register</a>
+                    <a @click.prevent="register" href="">Don't have an account ? Register</a>
                 </form>
             </div>
         </div>
@@ -44,13 +45,15 @@ export default {
             })
             .then(data=>{
                 let timerInterval
-                // localStorage.setItem('token', data.data.access_token)
+                localStorage.setItem('token', data.data.access_token)
+                localStorage.setItem('name', data.data.name)
                 this.$router.push({
                     path : '/'
                 })
                 Swal.fire({
                 title: `Welcome back, ${data.data.name}`,
-                timer: 2000,
+                text: `Please Wait`,
+                timer: 4000,
                 timerProgressBar: true,
                 onBeforeOpen: () => {
                     Swal.showLoading()
@@ -80,7 +83,6 @@ export default {
                     timer: 2000,
                     text: `${err.response.data.message}`
                 })
-                // console.log(err.response.data.message)
             })
         },
         register(){
@@ -98,4 +100,8 @@ export default {
     background-size: cover;
     background-position: center
 }
+.img { 
+  filter: invert(100%); 
+  -webkit-filter:red(80%); 
+  } 
 </style>

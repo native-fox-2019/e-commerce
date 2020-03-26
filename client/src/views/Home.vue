@@ -1,17 +1,35 @@
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <h1>HOME</h1>
+    <Navbar />
+    <img class="img mt-0 p-0" alt="" src="../assets/logo.png" style="width : 55%;">
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-
+import Navbar from '../components/Navbar'
 export default {
-  name: 'Home',
   components: {
+    Navbar
+  },
+  data () {
+    return {
 
+    }
+  },
+  methods : {
   }
 }
 </script>
+
+<style scoped>
+.home{
+    background-image: url('../assets/home.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center
+}
+.img { 
+  filter: invert(100%); 
+  -webkit-filter:red(80%); 
+  } 
+</style>

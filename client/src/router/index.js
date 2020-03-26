@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import Cart from '../views/Cart.vue'
+import ProductList from '../views/ProductList.vue'
 
 Vue.use(VueRouter)
 
@@ -10,8 +12,20 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    meta : {requiresAuth:true},
+    // meta : {requiresAuth:true},
     component: Home
+  },
+  {
+    path: '/productlist',
+    name: 'ProductList',
+    // meta : {requiresAuth:true},
+    component: ProductList
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    meta : {requiresAuth:true},
+    component: Cart
   },
   {
     path: '/login',

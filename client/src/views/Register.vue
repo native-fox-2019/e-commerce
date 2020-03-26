@@ -1,6 +1,6 @@
 <template>
     <div class="register" style="height : 100vh">
-        <h1 class="p-5" style="color : white; background-color : black; opacity : 50%">Motorcycle Build and Repair</h1>
+        <h1 class="p-2" style="color : white; background-color : black; opacity : 50%">Motorcycle Build and Repair</h1>
         <div class="m-5" style="display: flex; flex-direction:row; justify-content : center; align-content : center; align-items : center; flex-wrap : nowrap">
             <div class="card" style="opacity:70%; background-color: black">
                 <h1 style="color : white" class="mt-3">Register</h1>
@@ -22,7 +22,7 @@
                         <input style="color : black" type="password" class="form-control" v-model="confirm_password_register" required>
                     </div>
                     <button type="submit" class="btn btn-warning mb-1">Register</button><br>
-                    <a @click="login" href="">Already have an account ? Login</a>
+                    <a @click.prevent="login" href="">Already have an account ? Login</a>
                 </form>
             </div>
         </div>
@@ -56,13 +56,15 @@ export default {
                 })
                 .then(data=>{
                     let timerInterval
-                    // localStorage.setItem('token', data.data.access_token)
+                    localStorage.setItem('token', data.data.token)
+                    localStorage.setItem('name', data.data.name)
                     this.$router.push({
                         path : '/'
                     })
                     Swal.fire({
                     title: `Welcome, ${data.data.name}`,
-                    timer: 2000,
+                    text: `Please Wait`,
+                    timer: 4000,
                     timerProgressBar: true,
                     onBeforeOpen: () => {
                         Swal.showLoading()
@@ -81,7 +83,7 @@ export default {
                     }
                     }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        console.log('register Success')
+                        console.log('Register Success')
                     }
                     })
                 })
@@ -92,7 +94,6 @@ export default {
                         timer: 2000,
                         text: `${err.response.data.message}`
                     })
-                    // console.log(err.response.data.message)
                 })
             } else {
                 Swal.fire({
@@ -118,4 +119,8 @@ export default {
     background-size: cover;
     background-position: center
 }
+.img { 
+  filter: invert(100%); 
+  -webkit-filter:red(80%); 
+  } 
 </style>
