@@ -1,17 +1,20 @@
 <template>
   <div id="app">
     <Navbar />
+    <Statistics />
     <router-view/>
   </div>
 </template>
 
 <script>
 import Navbar from "./views/Navbar.vue";
+import Statistics from "./views/Statistics.vue";
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    Statistics
   }
 }
 </script>

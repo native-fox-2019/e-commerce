@@ -1,3 +1,9 @@
+<style scoped>
+#corona{
+  font-size: 20px;
+}
+</style>
+
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(215, 17, 73);">
     <div class="container">
@@ -51,6 +57,6 @@ export default {
   name: "Navbar",
   components: {
     Account
-  }
+  },
 };
 </script>
