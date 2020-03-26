@@ -96,6 +96,7 @@ class ProductController {
         el.updatedAt = new Date();
       })
       const edited = await Product.bulkCreate(bulkProducts, { updateOnDuplicate: ['stock', 'updatedAt'] });
+      await Cart.destroy({ where: { UserId: req.userData.id } });
       res.status(200).json({ message: 'Success Buy' });
     } catch (err) {
       next(err);

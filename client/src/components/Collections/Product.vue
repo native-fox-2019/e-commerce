@@ -18,6 +18,7 @@
               <div class="product-title">
                 <p class="typography-title">{{ product.name }}</p>
               </div>
+              <p class="typography-price">Stock {{ product.stock }}</p>
               <p class="typography-price">IDR {{ product.price }}</p>
             </a>
           </div>
