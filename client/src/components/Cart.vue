@@ -87,26 +87,22 @@ export default {
       this.removeProduct({ id, price });
     },
 
-    onAdd(id, quantity, stock, price) {
+    async onAdd(id, quantity, stock, price) {
       let newQuantity = quantity + 1;
-      let status = 'plus';
       if (stock === quantity) {
-        status = 'stay';
         newQuantity = quantity;
       }
       const obj = {
         quantity: newQuantity,
       };
-      this.updateQuantity({
-        id, obj, price, status,
+      await this.updateQuantity({
+        id, obj, price,
       });
     },
 
-    onSubtract(id, quantity, price) {
+    async onSubtract(id, quantity, price) {
       let newQuantity;
-      let status = 'minus';
       if (quantity === 1) {
-        status = 'stay';
         newQuantity = quantity;
       } else {
         newQuantity = quantity - 1;
@@ -115,8 +111,8 @@ export default {
       const obj = {
         quantity: newQuantity,
       };
-      this.updateQuantity({
-        id, obj, price, status,
+      await this.updateQuantity({
+        id, obj, price,
       });
     },
 

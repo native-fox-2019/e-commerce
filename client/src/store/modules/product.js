@@ -97,16 +97,12 @@ export default {
           token: localStorage.getItem('token'),
         },
       });
-
-      if (payload.status === 'plus') {
-        commit('addSubtotal', payload.price);
-      } else if (payload.status === 'minus') {
-        const negative = -Math.abs(payload.price);
-        commit('addSubtotal', negative);
-      } else if (payload.status === 'stay') {
-        commit('addSubtotal', 0);
-      }
-      commit('filterCart', { id: payload.id, quantity: payload.obj.quantity });
+      await commit('filterCart', { id: payload.id, quantity: payload.obj.quantity });
+      let subtotal = 0;
+      this.state.product.cart.forEach((el) => {
+        subtotal += el.price * el.Cart.quantity;
+      });
+      commit('setCartSubtotal', subtotal);
     },
 
     async removeProduct({ commit }, payload) {
@@ -129,6 +125,7 @@ export default {
       });
 
       commit('setCart', []);
+      commit('setCartSubtotal', 0);
     },
   },
 };
