@@ -8,6 +8,14 @@ This application is deployed in heroku for backend and firebase for frontend as 
 Heroku link: https://fierce-taiga-43282.herokuapp.com
 Firebase link: https://ecommerce-all.firebaseapp.com
 
+contoh input akun yang telah dimasukkan di admin: 
+email: admin1@mail.com
+password: admin1
+
+contoh input akun yang telah dimasukkan di customer:
+email: cust1@mail.com
+password: cust1
+
 ------------
 Method & URL 
 GET | POST | DELETE | PUT
@@ -15,7 +23,7 @@ Example of method and url can be found in link:
 https://documenter.getpostman.com/view/10571187/SzS8s59u?version=latest#3e0c48e4-5252-4f69-9555-4c99a2edef86
 
 -----------
-URL Params
+Params
 
 Required:
 id=[integer]
