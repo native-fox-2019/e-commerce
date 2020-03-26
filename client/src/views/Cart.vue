@@ -131,7 +131,7 @@ export default {
                 .then(({ data }) => {
                   swal({
                     icon: 'success',
-                    text: `${data.message}, wait for the confmirmation via email`,
+                    text: `${data.message}, wait for the confirmation via email`,
                   });
                   this.carts = this.carts.filter((cart) => cart.id !== this.item.id);
                   this.item = {};
@@ -162,7 +162,7 @@ export default {
                 .then(({ data }) => {
                   swal({
                     icon: 'success',
-                    text: `${data.message}, wait for the confmirmation via email`,
+                    text: `${data.message}, wait for the confirmation via email`,
                   });
                   this.carts = [];
                   this.item = {};
