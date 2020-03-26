@@ -9,11 +9,16 @@ email : fauzan@admin.com
 
 password : 1234
 
+Use Google Chrome Browser For Better Result
+
+
 -------------------------
 
 USER side :
 
 ## [fznakbar e-commerce](https://fznakbar-e-commerce.firebaseapp.com)
+
+Use Google Chrome Browser For Better Result
 
 # Endpoint:
 ## [http://localhost:3000](http://localhost:3000)
