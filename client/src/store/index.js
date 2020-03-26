@@ -9,10 +9,27 @@ export default new Vuex.Store({
     return {
       products: [],
       priceList: [],
+      carts: [],
       authenticated: false,
     };
   },
   mutations: {
+    getCarts(state) {
+      const option = {
+        method: 'get',
+        headers: { usertoken: localStorage.getItem('usertoken') },
+        url: 'https://hidden-cliffs-82328.herokuapp.com/cart',
+      };
+      axios.get(option)
+        .then((data) => {
+          data.data.forEach((product) => {
+            state.carts.push(product);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     getProducts(state) {
       axios.get('https://guarded-thicket-66622.herokuapp.com/product')
         .then((data) => {
@@ -25,9 +42,9 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    checkLogin() {
+    checkLogin(state) {
       if (localStorage.getItem('usertoken')) {
-        this.state.authenticated = true;
+        state.authenticated = true;
       }
     },
   },
@@ -35,6 +52,10 @@ export default new Vuex.Store({
     getProducts() {
       this.state.products = [];
       this.commit('getProducts');
+    },
+    getCarts() {
+      this.state.carts = [];
+      this.commit('getCarts');
     },
   },
   modules: {

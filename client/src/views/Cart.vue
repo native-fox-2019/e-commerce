@@ -8,7 +8,6 @@
             <template v-for="(item, index) in items">
               <v-list-item
                 :key="item.title"
-                @click="add"
               >
                 <v-list-item-avatar>
                   <v-img :src="item.image_url"></v-img>
@@ -78,8 +77,8 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch('getProducts');
-    this.items = this.$store.state.products;
+    this.$store.dispatch('getCarts');
+    this.items = this.$store.state.carts;
     this.priceList = this.$store.state.priceList;
     this.$store.commit('checkLogin');
     this.toIdr(this.totalPrice);

@@ -124,6 +124,7 @@ export default {
           this.dialog = true;
           setTimeout(() => {
             this.dialog = false;
+            this.$store.state.authenticated = true;
             localStorage.setItem('usertoken', result.data.usertoken);
             this.$router.push('/');
           }, 4000);

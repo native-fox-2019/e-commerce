@@ -1,6 +1,7 @@
 const { User, Cart } = require('../models')
 const { compare } = require('../helpers/bcrypt')
 const jwt = require('jsonwebtoken')
+const axios = require('axios')
 
 class Controller {
   static register(req, res, next) {
@@ -65,8 +66,61 @@ class Controller {
        next(err)
      })
   }
+  static getCart(req, res, next) {
+    let userData = jwt.verify(req.headers.usertoken, process.env.SECRET)
+    let UserId = userData.id
+    let ProductId = []
+    let cart = []
 
+    Cart.findAll({
+      where: { UserId }
+    })
+      .then(data => {
+        if(data.length > 0){
+          data.forEach(element => {
+            ProductId.push(element.ProductId);
+          });
+          return axios.get('https://guarded-thicket-66622.herokuapp.com/product')
+        }else{
+          next({ status: 404, message: 'Carts is empty!'})
+        }
+      })
+      .then(products => {
+        console.log(products)
+        ProductId.forEach(element => {
+        console.log('masuk 1')
+          products.data.forEach(product => {
+            console.log('masuk 2')
+            if(product.id === element){
+              cart.push(product)
+              console.log('masuk 3')
+            }
+          })
+        })
+        res.status(200).json({ cart })
+      })
+      .catch(err => {
+        console.log(err)
+        next(err)
+      })
+  }
+  static addToCart(req, res, next) {
+    let ProductId = req.body.ProductId
+    let userData = jwt.verify(req.headers.usertoken, process.env.SECRET)
+    let UserId = userData.id
+    console.log(ProductId)
+    Cart.create({
+      UserId,
+      ProductId
+    })
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        next(err)
+      })
 
+  }
 }
 
 module.exports = Controller

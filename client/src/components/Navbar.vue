@@ -73,7 +73,9 @@ export default {
   methods: {
     login() {},
     logout() {
+      this.$router.push('/');
       localStorage.removeItem('usertoken');
+      this.$store.state.authenticated = false;
     },
     toCart() {
       this.$router.push('/cart');
