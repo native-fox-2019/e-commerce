@@ -2,6 +2,7 @@
 
 admin email: admin@mail.com
 admin password :tests
+https://dascomix.firebaseapp.com/
 
 
 GET PRODUCT ROUTE
