@@ -1,5 +1,11 @@
-# e-commerce-cms
+# e-commerce
 
+### Deployment Link
+
+```bash
+CMS : https://luxury-watch-store.firebaseapp.com/
+USER : https://luxury-watch-store.firebaseapp.com/admin
+```
 
 # Server dependencies
 ### Dependencies
@@ -41,19 +47,40 @@ CLIENT : http://localhost:8080
 Tools: NodeJS, Express, sequelize, postgresql
 ```
 
+# Client Tools
+```bash
+Vue, Vue CLI, Vuex
+```
+
 # .env example
 ```bash
-port =
 JWT_KEY =
 ```
 # User
 | URL | Method | Description |
 | --- | --- | --- |
-| /user/register        | POST | mendaftar user baru|
-| /user/login           | POST | login dan mendaptkan akses token |
+| /user/register        | POST | creating new user|
+| /user/login           | POST | login and get access token |
+| /userproduct          | GET  | generate product list|
+| /addtocart            | POST | adding product to cart |
+| /editstock/:id        | PUT  | editing the amount of product stock|
+| /getcart              | GET  | generate product that added to cart by user |
+| /deletecart/:id       | DELETE | removing product from user cart|
+| /address              | POST | creating user address |
+| /address              | GET | generate user address|
 
 
-# POST 
+# Admin
+| URL | Method | Description |
+| --- | --- | --- |
+| /admin/register        | POST | creating new admin|
+| /admin/login           | POST | login and get access token |
+| /product               | POST | add products|
+| /product               | GET | show all products |
+| /product/:id           | GET | get products by id|
+| /product/:id           | PUT | edit product content by id |
+| /product/:id           | DELETE | delete products by id|
+
 
 ### Full Documentation
 

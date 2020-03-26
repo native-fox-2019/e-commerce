@@ -1,9 +1,18 @@
 <template>
 <div id="upper">
     <div class="d-flex justify-content-around">
+        <div>
+        <img src="../assets/order.png">
         <p>Fast Shipping</p>
+        </div>
+        <div>
+        <img src="../assets/stamp.png">
         <p>100% Authentic</p>
+        </div>
+        <div>
+        <img src="../assets/money.png">
         <p>100% Money Back Guarantee</p>
+        </div>
     </div>
     <hr>
 </div>
