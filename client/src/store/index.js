@@ -44,7 +44,9 @@ export default new Vuex.Store({
       } else {
         const emptyCart = [
           {
-            name: 'you havent buy anything yet'
+            Product: {
+              name: 'you havent buy anything yet'
+            }
           }
         ]
         state.products = emptyCart
@@ -77,13 +79,15 @@ export default new Vuex.Store({
         }
       })
         .then(result => {
-          console.log(result)
-          if (result.data) {
-            result.data.forEach(el => {
-              el.price = new Intl.NumberFormat(['ban', 'id']).format(el.price)
+          console.log('=======', result.data.data)
+          if (result.data.data) {
+            result.data.data.forEach(el => {
+              el.Product.price = `Rp. ${new Intl.NumberFormat(['ban', 'id']).format(el.Product.price)}`
             })
-            commit('LIST_PRODUCT', result.data.Carts)
+            console.log(123)
+            commit('LIST_PRODUCT', result.data.data)
           } else {
+            console.log(456)
             commit('LIST_PRODUCT', null)
           }
         })

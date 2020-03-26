@@ -35,7 +35,7 @@
             <h6>{{product.price}}</h6>
             <h4>available: {{product.stocks}}</h4>
           </b-card-text>
-          <b-button @click="setId(product.id)" v-b-modal.modal-1>add to cart</b-button>
+          <b-button v-if="product.stocks>0" @click="setId(product.id)" v-b-modal.modal-1>add to cart</b-button>
         </b-card>
       </div>
     </div>
@@ -97,14 +97,14 @@ export default {
         }
       })
         .then(data => {
-          console.log(this.id)
+          console.log(data.data.message)
           this.success.status = true
-          this.status.msg = data.data.message
+          this.success.msg = data.data.message
         })
         .catch(err => {
-          console.log(err.response)
-          // this.isError.msg = err.response.data.msg
-          // this.isError.status = true
+          console.log(err)
+          this.isError.status = true
+          this.isError.msg = err.response.data.message
         })
     },
     setId (id) {

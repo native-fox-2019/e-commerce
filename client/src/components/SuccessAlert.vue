@@ -25,6 +25,7 @@ export default {
 
 <style>
 .alert-success {
+  z-index: 4;
   position: fixed;
   width: 95vw;
   padding: 20px;
