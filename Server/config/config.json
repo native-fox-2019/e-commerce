@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "e-commerce_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "e-commerce_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "qxfyddonzukavw",
+    "password": "877918999089882308342134686a7c5909cf3b245940138a118fca8a5ba6d330",
+    "database": "d451427kvl61qc",
+    "host": "ec2-3-211-48-92.compute-1.amazonaws.com",
+    "dialect": "postgres"
+  }
+}

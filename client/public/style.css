@@ -1,0 +1,192 @@
+@font-face{
+    font-family: "gotham";
+    src: url(./font/Gotham-Book.otf);
+    font-weight: normal;
+}
+@font-face{
+    font-family: "gotham";
+    src: url(./font/Gotham-Medium.otf);
+    font-weight: 500;
+}
+@font-face{
+    font-family: "montserrat";
+    src: url(./font/montserrat.regular.ttf);
+    font-weight: 400;
+}
+
+body{
+    margin: 0;
+    font-family: gotham;
+    position: relative;
+}
+.page{
+    min-height: 64.7vh;
+    padding-top: 10em;
+}
+a{
+    text-decoration: none; color: black;
+}
+.header{
+    width: 100%; height: 90px; background-color: rgb(0, 0, 0); padding: 10px 0px; display: flex; flex-direction: column; justify-content: center;
+    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.432); margin-bottom: 80px; position: fixed; top: 0; z-index: 99;
+}
+.title{
+    color: white; display: inline; font-size: 20px; margin-left: 20px; font-family: montserrat;
+}
+.nav{
+    float: right; margin-right: 20px; color: white; text-decoration: none; margin-top: 5px;
+}
+.nav a{
+    color: white; text-decoration: none; margin: 0px 10px; text-transform: uppercase; padding: 5px 0px;
+}
+.nav .active{
+    font-weight: 500; border-bottom: 2px solid white; font-size: 16.5px;
+}
+.footer{
+    width: 100%; height: 80px; display: flex; align-items: center; font-size: 14px; justify-content: center;
+    background-color: black; color: white;
+    margin-top: 50px;
+}
+.login{
+    text-align: center; width: 400px; height: 400px; border: 2px solid black; margin: 0px auto; display: flex; align-items: center;
+    justify-content: center; border-radius: 30px;
+}
+.register{
+    text-align: center; width: 400px; height: auto; border: 2px solid black; margin: 0px auto; display: flex; align-items: center;
+    justify-content: center; border-radius: 30px; padding: 40px 0px;
+}
+.home{
+    text-align: center;
+}
+.products{
+    width: 100%; height: auto; display: flex; justify-content: center; margin-top: 20px; flex-wrap: wrap;
+    background-color: rgba(211, 211, 211, 0.089); margin: 0 auto; padding: 20px 0;
+}
+.card{
+    width: 250px; height: 350px; border: 1px solid rgb(194, 191, 191); margin: 20px 10px; padding: 15px 15px; text-align: left;
+    display: flex; flex-direction: column; position: relative; border-radius: 10px; position: relative; background-color: white;
+}
+.card:hover{
+    bottom: 5px; box-shadow: 0px 5px 8.5px 2px rgba(0, 0, 0, 0.425);
+}
+.card-name{
+    font-size: 16px; margin: 5px 0px; font-weight: 500; font-family: gotham; min-height: 57px;
+}
+.card-name:hover{
+    text-decoration: underline;
+}
+.card-price{
+    font-size: 15px; color: goldenrod;;
+}
+.login h3, .register h3{
+    font-size: 27px; margin-top: 0px;
+}
+.login form input, .register form input{
+    width: 200px; height: 20px; padding: 10px 10px; font-size: 15px; margin-top: 10px; margin-bottom: 10px; border-radius: 10px;
+}
+.login form button, .register form button{
+    width: 225px; height: 45px; padding: 10px 10px; font-size: 15px; margin-top: 10px; margin-bottom: 10px; border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.897); color: white;
+}
+.login form button:hover, .register form button:hover, .btn-edit:hover, .btn-delete:hover, .add-product form button:hover, .edit-product form button:hover{
+    cursor: pointer;
+}
+.product{
+    width: 100%;
+}
+.product-content{
+    width: 90%; display: flex; margin: 0px auto; justify-content: center; flex-wrap: wrap;
+}
+.product-image, .product-details{
+    padding: 20px 20px;
+}
+.product-details{
+    max-width: 50%;
+}
+.add-to-cart{
+    margin-top: 20px; border-top: 1px solid rgba(0, 0, 0, 0.397); padding: 20px 0px
+}
+.add-to-cart input{
+    width: 200px; height: 25px; margin-top: 10px; font-size: 15px; text-align: center;
+}
+.add-to-cart button{
+    width: 206px; height: 35px; margin-top: 10px; padding: 5px 5px; font-size: 15px; background-color: goldenrod; color: whitesmoke;
+    font-weight: 500;
+}
+.add-to-cart button:hover{
+    cursor: pointer;
+}
+.product-name h2{
+    margin-top: 0; font-size: 23px; margin-bottom: 30px;
+}
+.product-price{
+    margin-bottom: 30px; font-size: 30px; font-family: montserrat; color: goldenrod;
+}
+.product-stock{
+    font-size: 18px
+}
+.carts{
+    width: 90%; background-color: rgba(211, 211, 211, 0.089); margin: 20px auto; flex-wrap: wrap;
+    padding: 20px 0px;
+}
+.cart{
+    width: 70%; display: flex; justify-content: space-between; padding: 20px 20px; margin: 20px auto;
+    background-color: white; border:1px solid rgb(194, 191, 191); min-height: 135px; position: relative;
+    flex-wrap: wrap;
+}
+.cart:hover{
+    bottom: 5px; box-shadow: 0px 5px 8.5px 2px rgba(0, 0, 0, 0.425);
+}
+.cart-content{
+    display: flex; max-width: 85%;
+}
+.cart-details h3{
+    margin-top: 0px; margin-bottom: 10px;
+}
+.cart-image{
+    margin-right: 30px;
+}
+.cart-checkout button:hover, .cart-delete{
+    cursor: pointer;
+}
+.cart-checkout{
+    margin-bottom: 10px;
+}
+.cart-checkout button{
+    background-color: goldenrod; color: white; width: 80px; height: 25px; font-size: 12px; border-radius: 7px;
+}
+.cart-delete{
+    display: flex; justify-content: flex-end;
+}
+.checkout-all{
+    width: 73.5%; margin: 10px auto;
+}
+.checkout-all button{
+    width: 250px; height: 35px; font-size: 16px; background-color: goldenrod; color: white; font-weight: 500; padding: 5px 0
+}
+.checkout-all button:hover{
+    cursor: pointer;
+}
+.modal-cust{
+    width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.473); position: absolute; top: 0;
+    display: flex; justify-content: center; align-items: center; left: 0;
+}
+.address{
+    width: 450px; height: 500px; background-color: white; color: black; border-radius: 30px; display: flex; justify-content: center; 
+    align-items: center; position: relative; text-align: center;
+}
+.address form button{
+    width: 150px; height: 30px; font-size: 13px; background-color: goldenrod; color: white; font-weight: 500; padding: 5px 0
+}
+.address form button:hover{
+    cursor: pointer;
+}
+.address form textarea{
+    font-size: 15px;
+}
+.close{
+    position: absolute; top: 10px; right: 20px; font-size: 30px; transform: rotate(45deg);
+}
+.close:hover{
+    cursor: pointer;
+}
