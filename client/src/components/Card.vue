@@ -20,7 +20,7 @@
 
 <script>
 import axios from "axios";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export default {
   props: ["PropProduct"],
@@ -51,7 +51,7 @@ export default {
         confirmButtonText: "Yes, delete it!"
       }).then(result => {
         if (result.value) {
-          this.deleteAction()
+          this.deleteAction();
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
       });

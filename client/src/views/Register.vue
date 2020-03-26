@@ -36,8 +36,8 @@ export default {
         }
       })
         .then(response => {
-          localStorage.setItem("tokenAdmin", response.data.tokenAdmin);
-          this.$router.push("product");
+          localStorage.setItem("tokenCustomer", response.data.tokenCustomer);
+          this.$router.push("/");
         })
         .catch(() => {
         });

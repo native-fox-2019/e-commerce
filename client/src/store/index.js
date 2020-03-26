@@ -63,14 +63,15 @@ export default new Vuex.Store({
       console.log(payload,"ini payload")
       state.userArr.forEach(user =>{
         if(user.id == payload.id){
-          user == payload
+          user.role = payload.role
         }
       })
     },
     updateAmount(state,payload){
+      console.log("di store",payload)
       state.customerCart.forEach(item =>{
         if(item.id == payload.id){
-          item = payload
+          item.amount = payload.amount
         }
       })
     },
@@ -83,6 +84,9 @@ export default new Vuex.Store({
     },
     deleteItem(state,payload){
       state.checkOutItem = state.checkOutItem.filter(item => item.id != payload.id)
+    },
+    emptyCheckout(state){
+      state.checkOutItem = []
     }
   },
 
@@ -149,9 +153,11 @@ export default new Vuex.Store({
       context.commit('filterUser',id)
     },
     updateUserRole(context,payload){
+      console.log(payload,"ini payload di update user role")
       context.commit('updateRole',payload)
     },
     updateAmountCart(context,payload){
+      console.log("di store",payload)
       context.commit('updateAmount',payload)
     },
     itemCheckout(context,payload){

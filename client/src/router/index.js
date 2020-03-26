@@ -13,24 +13,14 @@ import Thankyou from "../views/Thankyou"
 Vue.use(VueRouter);
 
 const beforeEnter = async (to, from, next) => {
-  if (localStorage.getItem("tokenCustomer")) {
+  if (localStorage.getItem("tokenAdmin") || (localStorage.getItem("tokenCustomer"))) {
+    next()
+  } else {
     next({
       path: '/login'
     })
   }
-   else if (localStorage.getItem("tokenAdmin")) {
-    next({
-      path: '/product'
-    })
-  } else if (localStorage.getItem("tokenCustomer")) {
-    next({
-      path: '/'
-    })
-  } else {
-    next()
-  }
 }
-
 
 const routes = [
   {
@@ -42,13 +32,13 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
-    beforeEnter
+    // beforeEnter
   },
   {
     path: "/register",
     name: "Register",
     component: Register,
-    beforeEnter
+    // beforeEnter
   },
   {
     path: "/about",
@@ -82,7 +72,7 @@ const routes = [
     name: "Cart",
     component: Cart,
     // meta: { requiresAuth: true },
-    // beforeEnter
+    beforeEnter
   },
   {
     path: "/admin",

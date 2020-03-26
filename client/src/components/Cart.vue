@@ -127,9 +127,17 @@ export default {
     },
     checked: function() {
       if (this.checked == true) {
-        this.$store.dispatch("plusItem",{id: this.id, amount: this.amount, productsId: this.productsId});
+        this.$store.dispatch("plusItem", {
+          id: this.id,
+          amount: this.amount,
+          productsId: this.productsId
+        });
       } else {
-        this.$store.dispatch("minusItem",{id: this.id, amount: this.amount, productsId: this.productsId});
+        this.$store.dispatch("minusItem", {
+          id: this.id,
+          amount: this.amount,
+          productsId: this.productsId
+        });
       }
     }
   }
