@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 
 const axios = Axios.create({
   baseURL: "https://jadilapak.herokuapp.com"
-  // baseURL: "http://localhost:3000"
 });
 
 function errorHandler(error) {

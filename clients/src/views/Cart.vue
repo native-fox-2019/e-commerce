@@ -20,7 +20,7 @@
               <v-card-title class="headline" style="color:#39387a;">Total Harga :</v-card-title>
               <h1 class="ml-5" style="color:#39387a;">{{formatRupiah(totalCart)}}</h1>
               <v-card-actions>
-                <v-btn class="mx-auto" color="#39387a" block>Check Out</v-btn>
+                <v-btn class="mx-auto" color="#39387a" block @click.prevent="checkout">Check Out</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -31,10 +31,6 @@
           <v-toolbar-title>Total Product</v-toolbar-title>
 
           <v-spacer></v-spacer>
-
-          <!-- <v-btn icon>
-            <v-icon style="color:white;" @click.prevent="cancel">mdi-delete</v-icon>
-          </v-btn>-->
         </v-app-bar>
 
         <v-container>
@@ -133,34 +129,44 @@ export default {
     this.$store.dispatch("fetchCart");
   },
   methods: {
-    // async cancel() {
-    //   try {
-    //     let result = await Swal.fire({
-    //       title: "Hapus semua barang?",
-    //       text: "Barang yang kamu pilih akan dihapus dari keranjangmu.",
-    //       showCancelButton: true,
-    //       reverseButtons: true,
-    //       confirmButtonColor: "#39387a",
-    //       cancelButtonColor: "#d33",
-    //       confirmButtonText: "Hapus Barang",
-    //       cancelButtonText: "Kembali"
-    //     });
-    //     if (result.value) {
-    //       let { data } = await axios.delete("/cart", {
-    //         headers: {
-    //           access_token: localStorage.access_token
-    //         }
-    //       });
-    //       this.$store.dispatch("fetchCart");
-    //       Toast.fire({
-    //         icon: "success",
-    //         title: "Barang berhasil dihapus dari keranjang."
-    //       });
-    //     }
-    //   } catch (error) {
-    //     errorHandler(error);
-    //   }
-    // },
+    async checkout() {
+      try {
+        let result = await Swal.fire({
+          title: "Sudah selesai berbelanja?",
+          text: "Periksa kembali apakah barang yang dibeli sudah sesuai. ",
+          showCancelButton: true,
+          reverseButtons: true,
+          confirmButtonColor: "#39387a",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Check Out",
+          cancelButtonText: "Lanjut Belanja"
+        });
+        if (result.value) {
+          let { data } = await axios.delete("/cart", {
+            headers: {
+              access_token: localStorage.access_token
+            }
+          });
+          this.$store.dispatch("fetchCart");
+          Swal.fire({
+            title: "Thank you for your order",
+            text:
+              "We are currently proccessing your order and we will email you with the confirmation shortly.",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 4000,
+            showClass: {
+              popup: "animated fadeInDown faster"
+            },
+            hideClass: {
+              popup: "animated fadeOutUp faster"
+            }
+          });
+        }
+      } catch (error) {
+        errorHandler(error);
+      }
+    },
     async remove(item) {
       try {
         let result = await Swal.fire({
@@ -206,54 +212,42 @@ export default {
         .join("");
       return "Rp. " + rupiah;
     },
-    // async minus(item) {
-    //   try {
-    //     let input = {
-    //       qty: Number(item.qty) - 1,
-    //       total: Number(item.total) - Number(item.Product.price)
-    //     };
-    //     let { data } = await axios.put(`/cart/${item.id}`, input, {
-    //       headers: {
-    //         access_token: localStorage.access_token
-    //       }
-    //     });
-    //     this.$store.dispatch("fetchCart");
-    //   } catch (error) {
-    //     errorHandler(error);
-    //   }
-    // },
-    minus(item) {
-      let state = this.one.filter(i => i.id !== item.id);
-      let data = this.one.filter(i => i.id === item.id);
-      data[0].qty = Number(data[0].qty) - 1;
-      data[0].total = Number(data[0].total) - Number(item.Product.price);
-      state.push(data[0]);
-      this.$store.commit("showCart", state);
+    async minus(item) {
+      try {
+        let input = {
+          qty: Number(item.qty) - 1,
+          total: Number(item.total) - Number(item.Product.price),
+          ProductId: item.ProductId,
+          parameter: "minus"
+        };
+        let { data } = await axios.put(`/cart/${item.id}`, input, {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        });
+        this.$store.dispatch("fetchCart");
+      } catch (error) {
+        errorHandler(error);
+      }
     },
-    plus(item) {
-      let state = this.one.filter(i => i.id !== item.id);
-      let data = this.one.filter(i => i.id === item.id);
-      data[0].qty = Number(data[0].qty) + 1;
-      data[0].total = Number(data[0].total) + Number(item.Product.price);
-      state.push(data[0]);
-      this.$store.commit("showCart", state);
+    async plus(item) {
+      try {
+        let input = {
+          qty: Number(item.qty) + 1,
+          total: Number(item.total) + Number(item.Product.price),
+          ProductId: item.ProductId,
+          parameter: "plus"
+        };
+        let { data } = await axios.put(`/cart/${item.id}`, input, {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        });
+        this.$store.dispatch("fetchCart");
+      } catch (error) {
+        errorHandler(error);
+      }
     }
-    // async plus(item) {
-    //   try {
-    //     let input = {
-    //       qty: Number(item.qty) + 1,
-    //       total: Number(item.total) + Number(item.Product.price)
-    //     };
-    //     let { data } = await axios.put(`/cart/${item.id}`, input, {
-    //       headers: {
-    //         access_token: localStorage.access_token
-    //       }
-    //     });
-    //     this.$store.dispatch("fetchCart");
-    //   } catch (error) {
-    //     errorHandler(error);
-    //   }
-    // }
   }
 };
 </script>
