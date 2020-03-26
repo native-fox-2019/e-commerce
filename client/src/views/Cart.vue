@@ -9,7 +9,7 @@
             <div class="cart" v-for="cart in carts" :key="cart.id">
                 <div class="cart-content">
                     <div class="cart-image">
-                        <img :src="cart.Product.image_url" width="auto" height="130px">
+                        <img :src="cart.Product.image_url" width="130px" height="auto">
                     </div>
                     <div class="cart-details">
                         <h3>{{cart.Product.name}}</h3>
