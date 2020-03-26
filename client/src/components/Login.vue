@@ -24,8 +24,8 @@ import Register from "../components/Register";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { veryfingJWT } from "../components/helper/jwt";
-const server = `http://localhost:3000`;
-// const server = "https://shrouded-badlands-50874.herokuapp.com";
+// const server = `http://localhost:3000`;
+const server = "https://shrouded-mesa-95537.herokuapp.com";
 export default {
   components: {
     Register

@@ -188,11 +188,11 @@ body::after {
 }
 
 .svgcontainer svg#fourohfour .st1 {
-  fill: #fff;
+  fill: #707070;
 }
 
 .svgcontainer svg#fourohfour .st2 {
-  fill: #fff;
+  fill: #707070;
 }
 
 .backgroundfun {
