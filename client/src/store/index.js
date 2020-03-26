@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         isLogin: localStorage.getItem('access_token') ? true : false,
-        rootUrl: 'http://localhost:3000',
+        rootUrl: process.env.VUE_APP_ROOTURL,
         products: [],
         user_info: {},
         product_temp: {},
