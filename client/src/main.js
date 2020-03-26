@@ -6,7 +6,9 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import VueSweetalert2 from "vue-sweetalert2";
 import axios from "axios";
 Vue.prototype.$axios = axios.create({
-  baseURL: "http://localhost:3000"
+  // baseURL: "http://localhost:3000"
+  baseURL: "https://blooming-brook-94817.herokuapp.com"
+  
 });
 import "sweetalert2/dist/sweetalert2.min.css";
 import "bootstrap/dist/css/bootstrap.css";

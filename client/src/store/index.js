@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 const api = axios.create({
-  baseURL: "http://localhost:3000"
+  // baseURL: "http://localhost:3000"
+  baseURL: "https://blooming-brook-94817.herokuapp.com"
 });
 Vue.use(Vuex)
 
