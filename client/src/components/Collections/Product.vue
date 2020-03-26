@@ -1,12 +1,44 @@
 <template>
   <div class="container">
-    <div class="product">
+    <div v-if="$route.path === '/collections/mens'" class="product">
       <div class="product-child">
         <div class="product-child-name">
           <h2 class="typography-h2">Men's Shoes</h2>
         </div>
         <div class="product-child-results">
-          <div v-for="product in products" :key="product.id" class="product-child-result">
+          <div v-for="product in menProducts" :key="product.id" class="product-child-result">
+            <a class="product-link">
+              <div class="product-image-container">
+                <div class="aspect-ratio">
+                  <img :src="product.image_url" alt="" class="product-image">
+                  <button v-if="product.stock === 0" class="sold-out-btn">Sold Out</button>
+                  <button v-if="getStatus && product.stock !== 0"
+                    @click.prevent="onAddToCart(product.id)"
+                    class="product-image-btn">
+                    Add To Cart</button>
+                  <button v-if="!getStatus && product.stock !== 0"
+                    @click.prevent="goToLogin" class="product-image-btn">
+                    Login First</button>
+                </div>
+              </div>
+              <div class="product-title">
+                <p class="typography-title">{{ product.name }}</p>
+              </div>
+              <p class="typography-price">Stock {{ product.stock }}</p>
+              <p class="typography-price">IDR {{ product.price }}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="$route.path === '/collections/womens'" class="product">
+      <div class="product-child">
+        <div class="product-child-name">
+          <h2 class="typography-h2">Women's Shoes</h2>
+        </div>
+        <div class="product-child-results">
+          <div v-for="product in womenProducts" :key="product.id" class="product-child-result">
             <a class="product-link">
               <div class="product-image-container">
                 <div class="aspect-ratio">
@@ -44,7 +76,7 @@ export default {
     this.checkStatus();
     this.setOnHome(false);
   },
-  computed: mapGetters(['products', 'getStatus']),
+  computed: mapGetters(['menProducts', 'womenProducts', 'getStatus']),
   methods: {
     ...mapMutations(['setOnHome']),
     ...mapActions(['fetchProducts', 'addToCart', 'checkStatus']),

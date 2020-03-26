@@ -23,7 +23,12 @@ const routes = [
   },
   {
     path: '/collections/mens',
-    name: 'Collections',
+    name: 'Mens Collections',
+    component: Collections,
+  },
+  {
+    path: '/collections/womens',
+    name: 'Womens Collections',
     component: Collections,
   },
 ];

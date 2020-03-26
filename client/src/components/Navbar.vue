@@ -10,7 +10,7 @@
           </button>
         </li>
         <li>
-          <button class="nav-button">
+          <button @click="womenCollection" class="nav-button">
             <div class="nav-button-content">
               <p class="nav-content-description">WOMEN</p>
             </div>
@@ -62,7 +62,7 @@ export default {
   computed: mapGetters(['getStatus', 'onHome']),
   methods: {
     ...mapMutations(['setStatus', 'openCart', 'setOnHome']),
-    ...mapActions(['fetchCart', 'checkStatus']),
+    ...mapActions(['fetchCart', 'checkStatus', 'fetchProducts']),
     login() {
       this.$router.push('/login');
     },
@@ -83,8 +83,17 @@ export default {
 
     menCollection() {
       this.checkStatus();
+      this.fetchProducts();
       if (this.$route.path !== '/collections/mens') {
         this.$router.push('/collections/mens');
+      }
+    },
+
+    womenCollection() {
+      this.checkStatus();
+      this.fetchProducts();
+      if (this.$route.path !== 'collections/womens') {
+        this.$router.push('/collections/womens');
       }
     },
 

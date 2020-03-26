@@ -11,7 +11,8 @@ export default {
     isOpen: false,
   },
   getters: {
-    products: (state) => state.products.sort((a, b) => a.id - b.id),
+    menProducts: (state) => state.products.filter((el) => el.category === 'Men').sort((a, b) => a.id - b.id),
+    womenProducts: (state) => state.products.filter((el) => el.category === 'Women').sort((a, b) => a.id - b.id),
     cart: (state) => state.cart,
     cartSubtotal: (state) => state.cartSubtotal,
     isOpen: (state) => state.isOpen,

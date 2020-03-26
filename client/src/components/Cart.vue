@@ -1,5 +1,4 @@
 <template>
-<div class="bg-modal" :class="{ open: isOpen }">
   <div class="cart-container">
     <div class="cart-wrapper" :class="{ enter: isOpen }">
       <div class="cart">
@@ -36,7 +35,8 @@
                         )">
                         +</a>
                       <p>{{ product.Cart.quantity }}</p>
-                      <a @click="onSubtract(product.id, product.Cart.quantity, product.price)">-</a>
+                      <a @click="onSubtract(product.id, product.Cart.quantity, product.price)">
+                        -</a>
                     </div>
 
                     <div v-if="product.quantity">
@@ -67,7 +67,6 @@
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -144,7 +143,7 @@ export default {
   }
 
   .cart-container {
-    z-index: 9999999;
+    z-index: 9999999999;
     position: relative;
     width: 100%;
     height: 100%;

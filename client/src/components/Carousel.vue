@@ -20,10 +20,10 @@
             <div class="grid_small">
               <div class="grid">
                 <div class="grid-cell">
-                  <a href=""><span>SHOP MEN</span></a>
+                  <a @click.prevent="menCollection"><span>SHOP MEN</span></a>
                 </div>
                 <div class="grid-cell">
-                  <a href=""><span>SHOP WOMEN</span></a>
+                  <a @click.prevent="womenCollection"><span>SHOP WOMEN</span></a>
                 </div>
               </div>
             </div>
@@ -35,9 +35,29 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Carousel',
+  methods: {
+    ...mapActions(['fetchProducts', 'checkStatus']),
+
+    menCollection() {
+      this.checkStatus();
+      this.fetchProducts();
+      if (this.$route.path !== '/collections/mens') {
+        this.$router.push('/collections/mens');
+      }
+    },
+
+    womenCollection() {
+      this.checkStatus();
+      this.fetchProducts();
+      if (this.$route.path !== 'collections/womens') {
+        this.$router.push('/collections/womens');
+      }
+    },
+  },
 };
 </script>
 
