@@ -2,6 +2,7 @@
   <div>
     <UserNavbar />
     <UserShowProduct />
+    <Footer />
   </div>
 </template>
 
@@ -9,11 +10,13 @@
 
 import UserNavbar from '../components/UserNavbar.vue';
 import UserShowProduct from '../components/UserShowProduct.vue';
+import Footer from '../components/Footer.vue';
 export default {
   name: 'Home',
   components: {
     UserNavbar,
-    UserShowProduct
+    UserShowProduct,
+    Footer
   }
 }
 </script>
