@@ -74,7 +74,7 @@ export default {
         for (let o = 0; o < products.length; o++) {
           if (checkout[n].productsId == products[o].id) {
             axios({
-              url: `https://murmuring-caverns-76029.herokuapp.com/${products[o].id}`,
+              url: `https://murmuring-caverns-76029.herokuapp.com/product/${products[o].id}`,
               method: "PUT",
               data: {
                 stock: (products[o].stock =

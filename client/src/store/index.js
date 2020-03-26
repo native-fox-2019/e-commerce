@@ -88,7 +88,7 @@ export default new Vuex.Store({
     getAllProducts(context) {
       axios({
         method: "GET",
-        url: "http://localhost:3000/product/customer"
+        url: "https://murmuring-caverns-76029.herokuapp.com/product/customer"
       }).then(response => {
         context.commit("fillProduct", response.data)
       })
@@ -96,7 +96,7 @@ export default new Vuex.Store({
     getAllProductsCart(context) {
       axios({
         method: "GET",
-        url: "http://localhost:3000/cart",
+        url: "https://murmuring-caverns-76029.herokuapp.com/cart",
         headers: { token: localStorage.getItem("tokenAdmin") || localStorage.getItem("tokenCustomer") }
       }).then(response => {
         context.commit("fillCart", response.data)
@@ -105,7 +105,7 @@ export default new Vuex.Store({
     getAllProductsAdmin(context) {
       axios({
         method: "GET",
-        url: "http://localhost:3000/product",
+        url: "https://murmuring-caverns-76029.herokuapp.com/product",
         headers: { token: localStorage.getItem("tokenAdmin") }
       }).then(response => {
         context.commit("fillProductAdmin", response.data)
@@ -133,7 +133,7 @@ export default new Vuex.Store({
     },
     getAllUsers(context) {
       axios({
-        url: "http://localhost:3000/user",
+        url: "https://murmuring-caverns-76029.herokuapp.com/user",
         method: "GET",
         headers: { token: localStorage.getItem("tokenAdmin") }
       }).then(response => {

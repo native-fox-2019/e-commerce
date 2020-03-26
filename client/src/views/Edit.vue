@@ -34,7 +34,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" @click.prevent="update">Submit</b-button>
+      <b-button type="submit" variant="primary" @click.prevent="update">Update</b-button>
       <b-button variant="danger" @click.prevent="back">Back</b-button>
 
     </b-form>
