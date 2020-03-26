@@ -7,7 +7,7 @@
             <ul class="middle-nav">
                 <li>
                     <router-link to="/">
-                        <span v-if="this.$store.state.isLogin">See Product</span>
+                        <span>See Product</span>
                     </router-link>
                 </li>
                 <li>

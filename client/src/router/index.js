@@ -28,11 +28,7 @@ const routes = [{
     {
         path: '/',
         name: 'MainPage',
-        meta: {
-            requireLogin: true
-        },
-        component: Product,
-        children: []
+        component: Product
     },
     {
         path: '/product/:id',
