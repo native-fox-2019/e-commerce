@@ -79,24 +79,30 @@ class ProductController {
   };
 
   static async updateStock(req, res, next) {
+    // try {
+    //   let { bulkProducts } = req.body
+    //   bulkProducts.forEach(el => {
+    //     el.updatedAt = new Date();
+    //   })
+    //   const edited = await Product.bulkCreate(bulkProducts, { updateOnDuplicate: ['stock', 'updatedAt'] });
+    //   await Cart.destroy({ where: { UserId: req.userData.id } });
+    //   res.status(200).json({ message: 'Success Buy' });
+    // } catch (err) {
+    //   next(err);
+    // }
+
     try {
-      // const { id } = req.params;
-      let { bulkProducts } = req.body
-      // const product = await Product.findOne({ where: { id } });
-      // if (!product) {
-      //   next(
-      //     {
-      //       status: 400,
-      //       message: 'Data not found',
-      //     },
-      //   );
-      //   return false;
-      // }
-      bulkProducts.forEach(el => {
-        el.updatedAt = new Date();
-      })
-      const edited = await Product.bulkCreate(bulkProducts, { updateOnDuplicate: ['stock', 'updatedAt'] });
-      await Cart.destroy({ where: { UserId: req.userData.id } });
+      const { id } = req.userData;
+      const user = await User.findOne({ where: { id }, include: [ Product ] });
+      let query = [];
+      user.Products.forEach((el) => {
+        const newStock = el.stock - el.Cart.quantity;
+
+        query.push(Product.update({ stock: newStock }, { where: { id: el.id } }));
+        query.push(Cart.destroy({ where: { id: el.Cart.id } }));
+      });
+
+      await Promise.all(query);
       res.status(200).json({ message: 'Success Buy' });
     } catch (err) {
       next(err);
