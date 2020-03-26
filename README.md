@@ -13,6 +13,7 @@ Password: admin
 # List of available endpoints:
 - `POST /users/login`
 - `POST /users/register`
+- `POST /users/resetpassword`
 - `GET /products`
 - `PATCH /products/:id`
 - `POST /products`
@@ -83,6 +84,29 @@ Status 200
 {
    token: "YOUR_TOKEN",
    role: "YOUR_ROLE"
+}
+```
+
+# POST /users/resetpassword
+
+## Reset User's Password
+## Endpoint
+> /users/resetpassword
+
+## Request:
+```
+{
+    email: string,
+    newPassword: string
+}
+```
+All req.body is **required**
+
+## Response:
+Status 200
+```
+{
+    msg: 'Success'
 }
 ```
 # GET /products

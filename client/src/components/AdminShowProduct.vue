@@ -1,6 +1,7 @@
 <template>
 <div style="margin-top: 80px;" id="card">
   <div class="card mx-3 mb-2 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;" v-for="product in products" :key="product.id">
+    <span class="sold-out-overlay" v-if="product.stock < 1">Sold Out</span>
     <img class="card-img-top img-fluid rounded" :src="product.image_url" :alt="product.name">
     <div class="card-body">
       <h4 class="card-title">{{ product.name }}</h4>
@@ -44,4 +45,16 @@ export default {
 	align-content: flex-start;
 }
 
+.sold-out-overlay {
+  background: #654ea3;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 1000;
+  padding: 5px 10px;
+  position: absolute;
+  height: 40px;
+  width: 100px;
+  right: 20px;
+  top: 20px;
+}
 </style>

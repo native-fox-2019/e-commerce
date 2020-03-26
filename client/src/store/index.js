@@ -47,6 +47,15 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    resetPassword({ dispatch, state }, data) {
+      // buar server
+      state.loading = true;
+      axios({
+        method: 'POST',
+        url: baseUrl + '/users/resetpassword',
+        data
+      })
+    },
     checkout({ state, dispatch }) {
       state.loading = true;
       axios({

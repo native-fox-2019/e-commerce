@@ -3,6 +3,7 @@
   <h1>Sign In</h1>
   <input type="email" placeholder="Email" v-model="email" class="mb-1" />
   <input type="password" placeholder="Password" v-model="password" class="mb-2" />
+  <a href="" @click.prevent="forgotPassword">Forgot your password?</a>
   <button type="submit">Sign In</button>
 </form>
 </template>
@@ -27,26 +28,14 @@ export default {
     loginUser() {
       const obj = { email: this.email, password: this.password };
       this.$store.dispatch('loginUser', obj);
+    },
+    forgotPassword() {
+      this.$router.push('/forgotpassword')
     }
   }
 }
 </script>
 
 <style>
-
-.social-container {
-    margin: 20px 0;
-}
-
-.social-container a {
-    border: 1px solid #dddddd;
-    border-radius: 50%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
-    height: 40px;
-    width: 40px;
-}
 
 </style>

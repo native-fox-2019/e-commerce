@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     hooks: {
-      beforeCreate: (instance, options) => {
+      beforeSave: (instance, options) => {
         instance.password = hash(instance.password);
       }
     }

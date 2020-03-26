@@ -8,6 +8,7 @@ import EditProduct from '../views/EditProduct.vue';
 import AddCart from '../views/AddCart.vue';
 import Cart from '../views/Cart.vue';
 import EditCart from '../views/EditCart.vue';
+import ForgetPassword from '../components/ForgotPassword.vue';
 
 Vue.use(VueRouter)
 
@@ -57,6 +58,11 @@ const routes = [
     name: 'EditCart',
     component: EditCart,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/forgotpassword',
+    name: 'ForgetPassword',
+    component: ForgetPassword,
   },
 ]
 
