@@ -56,7 +56,7 @@ export default {
             return this.$store.state.cart
         },
         totalPrice(){
-            return this.$store.state.cart.reduce((prev,curr)=>prev+Number(curr.price),0)
+            return this.$store.state.cart.reduce((prev,curr)=>prev+(Number(curr.price) * Number(curr.stock) ),0)
         }
     },
     methods:{

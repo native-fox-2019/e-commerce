@@ -45,7 +45,14 @@ export default {
     },
     methods:{
        logout(){
-           this.$store.dispatch('logout')
+           this.$bvModal.msgBoxConfirm('Are You sure want to logout?')
+           .then((result)=>{
+               if(result){
+                    this.$store.dispatch('logout')
+                    this.$bvModal.msgBoxOk('See you again')
+               }
+           })
+          
        },
        onSearch(){
            this.$store.state.searchText=this.search
