@@ -108,5 +108,6 @@ export default {
   a {
     font-size: 14px;
     font-weight: 400;
+    color: white;
   }
 </style>
