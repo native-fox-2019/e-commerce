@@ -45,7 +45,11 @@
               <em>{{name}}</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#" @click.prevent="logout()">Logout</b-dropdown-item>
+            <b-dropdown-item href="#" @click.prevent="logout()"> 
+              <router-link to="/">
+                Logout
+              </router-link>
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </div>
       </b-navbar-nav>

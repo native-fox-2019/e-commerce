@@ -1,6 +1,5 @@
 <template>
   <div style="margin-top: 60px">
-
     <div class="row mx-5 pt-2">
       <b-card class="col-7">
         <router-link to="/" class="m-2">
@@ -34,7 +33,8 @@
         <b-card>
           <div>
             <div class="d-flex justify-content-center">
-              <b-button type="button" variant="success" @click.prevent="addToCart(productDetail)">Add to Cart</b-button>
+              <b-button type="button" variant="success" @click.prevent="addToCart(productDetail)" v-if="productDetail.stock>0">Add to Cart</b-button>
+              <b-button type="button" variant="warning" v-else>Out of stock</b-button>
             </div>
           </div>
         </b-card>
@@ -65,6 +65,7 @@ export default {
       })
     },
     addToCart(productDetail){
+      if (this.$store.state.isLogin) {
       this.$axios({
         url: '/carts',
         method: 'post',
@@ -90,6 +91,12 @@ export default {
           })
         console.log(response.data)
       })
+      }else{
+        this.$swal.fire({
+            icon: 'error',
+            text: 'You Must Login First',
+          })
+      }
     }
   },
   created(){

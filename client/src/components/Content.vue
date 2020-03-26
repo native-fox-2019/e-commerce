@@ -22,7 +22,7 @@ export default {
   },
   data(){
     return {
-      items: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+      // items: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
       // products: []
     }
   },

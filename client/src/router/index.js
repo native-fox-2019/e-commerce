@@ -6,6 +6,7 @@ import Register from "../views/Register.vue";
 import Content from "../components/Content.vue";
 import DetailProduct from "../components/DetailProduct.vue";
 import Cart from "../components/Cart.vue";
+import History from "../components/History.vue";
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
         path: "cart",
         name: "Cart",
         component: Cart
+      },
+      {
+        path: "history",
+        name: "History",
+        component: History
       }
     ]
   }

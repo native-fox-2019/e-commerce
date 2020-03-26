@@ -12,7 +12,8 @@ export default new Vuex.Store({
     name: localStorage.getItem("name"),
     products: [],
     carts: [],
-    cartTotal: 0
+    cartTotal: 0,
+    histories: []
   },
   mutations: {
     login(state, payload) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     carts(state, payload) {
       state.carts = payload;
       state.cartTotal = payload.length;
+    },
+    histories(state, payload) {
+      state.histories = payload
     }
   },
   actions: {
@@ -54,6 +58,21 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.commit("carts", data);
+        })
+        .catch(({ response }) => {
+          console.log(response);
+        });
+    },
+    getHistory(context) {
+      api({
+        method: "get",
+        url: "/histories",
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      })
+        .then(({ data }) => {
+          context.commit("histories", data);
         })
         .catch(({ response }) => {
           console.log(response);

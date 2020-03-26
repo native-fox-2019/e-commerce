@@ -1,60 +1,91 @@
 <template>
-<div v-if="allCart">
-<div class="container" style="margin-top: 70px">
-  <b-list-group-item v-for="cart in allCart" :key="cart.id"
-  class="col-12 d-flex justify-content-between align-items-center">
-    <div class="col-6 d-flex justify-content-start">
-      <div class="">
-        <img :src="`${cart.Product.image_url}`" class="img"/>
-      </div>
-      <div class="text-left">
-        <h4 class="">{{cart.Product.name}}</h4>
-        <h5>{{formatPrice(cart.Product.price)}}</h5>
-      </div>
-    </div>
-    <div class="col-2 d-flex justify-content-between align-items-center">
-      <div class="p-1 m-1">
-        <b-button variant="outline-danger" class="mb-2" size="sm"
-          @click.prevent="deleteCart(cart)">
-          <b-icon-trash class="h3 m-0 p-0"></b-icon-trash>
+<div>
+  <div class="container" style="margin-top: 70px" v-if="allCart.length!=0">
+    <div>
+      <router-link to="/" class="m-2">
+        <b-button variant="info">
+          Back
         </b-button>
-      </div>
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <b-button variant="outline-info" class="mb-2" size="sm"
-          @click.prevent="decrementQty(cart)">
-            <b-icon-dash class="h3 m-0 p-0"></b-icon-dash>
-          </b-button>
-        </div>
-        <div>
-          <b-card class="p-0 m-0">{{cart.quantity}}</b-card>
-        </div>
-        <div>
-          <b-button variant="outline-info" class="mb-2" size="sm"
-          @click.prevent="incrementQty(cart)">
-            <b-icon-plus class="h3 m-0 p-0"></b-icon-plus>
-          </b-button>
-        </div>
-      </div>
+      </router-link>
+      <router-link to="/history" class="m-2">
+        <b-button variant="dark">
+          Show History
+        </b-button>
+      </router-link>
     </div>
-    <b-card class="col-3">
-      <div> {{formatPrice(cart.quantity * cart.Product.price)}} </div>
-    </b-card>
-  </b-list-group-item>
-    <b-card >
-      <div class="d-flex justify-content-center align-items-center flex-column">
-        <div>
-          <h4>Total Belanja</h4>
+    <b-list-group-item v-for="cart in allCart" :key="cart.id"
+    class="col-12 d-flex justify-content-between align-items-center mt-3">
+      <div class="col-6 d-flex justify-content-start">
+        <div class="">
+          <img :src="`${cart.Product.image_url}`" class="img"/>
         </div>
-        <div>
-          <b-card class="h3">{{formatPrice(total)}}</b-card>
-        </div>
-        <div>
-          <b-button variant="success" @click.prevent="checkout(allCart)">Checkout</b-button>
+        <div class="text-left">
+          <h4 class="">{{cart.Product.name}}</h4>
+          <h5>{{formatPrice(cart.Product.price)}}</h5>
         </div>
       </div>
+      <div class="col-2 d-flex justify-content-between align-items-center">
+        <div class="p-1 m-1">
+          <b-button variant="outline-danger" class="mb-2" size="sm"
+            @click.prevent="deleteCart(cart)">
+            <b-icon-trash class="h3 m-0 p-0"></b-icon-trash>
+          </b-button>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <b-button variant="outline-info" class="mb-2" size="sm"
+            @click.prevent="decrementQty(cart)">
+              <b-icon-dash class="h3 m-0 p-0"></b-icon-dash>
+            </b-button>
+          </div>
+          <div>
+            <b-card class="p-0 m-0">{{cart.quantity}}</b-card>
+          </div>
+          <div>
+            <b-button variant="outline-info" class="mb-2" size="sm"
+            @click.prevent="incrementQty(cart)">
+              <b-icon-plus class="h3 m-0 p-0"></b-icon-plus>
+            </b-button>
+          </div>
+        </div>
+      </div>
+      <b-card class="col-3">
+        <div> {{formatPrice(cart.quantity * cart.Product.price)}} </div>
+      </b-card>
+    </b-list-group-item>
+      <b-card >
+        <div class="d-flex justify-content-center align-items-center flex-column">
+          <div>
+            <h4>Total Belanja</h4>
+          </div>
+          <div>
+            <b-card class="h3">{{formatPrice(total)}}</b-card>
+          </div>
+          <div>
+            <b-button variant="success" @click.prevent="checkout(allCart)">Checkout</b-button>
+          </div>
+        </div>
+      </b-card>
+  </div>
+  <div class="container" style="margin-top: 70px" v-else>
+    <router-link to="/history" class="m-2">
+      <b-button variant="dark">
+        Show History
+      </b-button>
+    </router-link>
+    <b-card>
+      <div class="d-flex justify-content-center align-items-center flex-column">
+        <h1 class="mt-4">
+          Cart Empty
+        </h1>
+        <router-link to="/" class="my-4">
+          <b-button variant="info">
+            Back to Product List
+          </b-button>
+        </router-link>
+      </div>
     </b-card>
-</div>
+  </div>
 </div>
 </template>
 
@@ -149,13 +180,14 @@ export default {
     },
     checkout(allCart) {
       this.$axios
-        .post('/carts/checkout', allCart, {
+        .post('/carts/checkout', {totalPrice: this.total, cart: allCart}, {
           headers: {
             token: localStorage.getItem('token'),
           },
         })
         .then(() => {
-          this.$Swal.fire(
+          this.$store.dispatch('getCart');
+          this.$swal.fire(
             'Checkout Success',
             'Youre transaction Successfull.',
             'success',
@@ -163,7 +195,7 @@ export default {
           this.showCart = false;
         })
         .catch((err) => {
-          this.$Swal.fire(
+          this.$swal.fire(
             'Transaction Failed!',
             `${err}.`,
             'error',

@@ -22,8 +22,12 @@
           }).format(product.price)}}
         </em>
       </b-card-text>
-
-      <b-button href="#" variant="success" @click.prevent="addToCart(product)">Add to Cart</b-button>
+      <div v-if="product.stock > 0">
+        <b-button href="#" variant="success" @click.prevent="addToCart(product)">Add to Cart</b-button>
+      </div>
+      <div v-else>
+        <b-button href="#" variant="warning">Out of stock</b-button>
+      </div>
     </b-card>
   </div>
 </template>
@@ -39,6 +43,7 @@ export default {
   props:["product"],
   methods: {
     addToCart(product){
+      if (this.$store.state.isLogin) {
       this.$axios({
         url: '/carts',
         method: 'post',
@@ -64,6 +69,12 @@ export default {
           })
         console.log(response.data)
       })
+      } else {
+        this.$swal.fire({
+            icon: 'error',
+            text: 'You Must Login First',
+          })
+      }
     }
   },
 }
