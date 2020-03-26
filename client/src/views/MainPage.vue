@@ -18,9 +18,7 @@
           </div>
         </div>
       </nav>
-
       <ProductModal/>
-
     </div>
   </div>
 </template>
@@ -40,9 +38,18 @@ export default {
   },
   created() {
     this.$store.dispatch('products')
+    this.$store.dispatch('shoppingCart')
   },
   computed: mapGetters(['productsDesc']),
   methods: {
   }
 }
 </script>
+
+<style>
+#banner {
+    background-image: url('../assets/banner.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+</style>

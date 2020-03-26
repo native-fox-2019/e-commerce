@@ -1,9 +1,16 @@
 <template>
   <div class="AuthPage">
-    <div class="h1 my-5">{{ haveAccount ? 'Login' : 'Register' }}</div>
+    <div class="h1 my-5" v-if="haveAccount">Login</div>
+    <div class="h1 my-5" v-else>Register</div>
     <div class="container text-center shadow pt-3 auth-form">
       <div class="form-group d-flex flex-row justify-content-start">
-        <button class="btn btn-outline-secondary mx-3" @click.prevent="gotoMainPage()">↰</button>
+        <button
+          class="btn btn-outline-secondary mx-3"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Back to Main Page"
+          @click.prevent="gotoMainPage()"
+        >↰</button>
       </div>
       <!-- LOGIN START -->
       <form class="container text-center" v-if="haveAccount" @submit.prevent="login()">
@@ -26,7 +33,7 @@
       <!-- LOGIN END -->
 
       <!-- REGISTER START -->
-      <form class="container text-center" v-if="!haveAccount" @submit.prevent="register()">
+      <form class="container text-center" v-else @submit.prevent="register()">
         <div class="form-group">
           <input class="form-control text-center mb-3" type="text" placeholder="Username" v-model="username">
         </div>
@@ -58,18 +65,6 @@
 <script>
 // @ is an alias to /src
 import Axios from 'axios'
-import Swal from 'sweetalert2'
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top',
-  showConfirmButton: false,
-  timer: 2000,
-  timerProgressBar: true,
-  onOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
 
 export default {
   name: 'AuthPage',
@@ -84,15 +79,19 @@ export default {
   },
   methods: {
     gotoMainPage() {
-      this.$router.push({
-        path: '/'
-      })
+      this.$router.push({ path: '/' })
     },
     gotoLogin() {
       this.haveAccount = true
     },
     gotoRegister() {
       this.haveAccount = false
+    },
+    resetAuthForm() {
+      this.username = ''
+      this.email = ''
+      this.password = ''
+      this.passwordConfirm = ''
     },
     login() {
       Axios({
@@ -104,41 +103,17 @@ export default {
         }
       })
       .then(({ data }) => {
-        localStorage.access_token = data.access_token
-        this.$router.push({
-          path: '/'
-        })
-        Toast.fire({
-          icon: 'success',
-          title: 'Login Success!'
-        })
+        this.resetAuthForm()
+        this.$store.dispatch('login', data)
       })
       .catch(err => {
-        let msg = null;
-        if (err.response) {
-          if (Array.isArray(err.response.data.message)) {
-            msg = err.response.data.message.join('<br>');
-          } else {
-            msg = err.response.data.message;
-          }
-        } else if (err.request) {
-          msg = err.request;
-        } else {
-          msg = err.message;
-        }
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          html: `${msg}`
-        })
+        this.$store.dispatch('showError', err)
       })
     },
     register() {
       if (this.password !== this.passwordConfirm) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          html: `Your Password & Confirm Password didn't match!`
+        this.$store.dispatch('showError', {
+          message: 'Your Password & Confirm Password didn\'t match!'
         })
         this.password = ''
         this.passwordConfirm = ''
@@ -149,43 +124,16 @@ export default {
           data: {
             username: this.username,
             email: this.email,
-            password: this.password,
-            role: this.role
-          },
-          headers: { access_token: localStorage.access_token }
+            password: this.password
+          }
         })
-        .then(({ data }) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Register Success!',
-            html: `Username: ${data.username}
-                  <br>Email: ${data.email}
-                  <br>Role: ${data.role}`
-          })
-          this.username = ''
-          this.email = ''
-          this.password = ''
-          this.passwordConfirm = ''
-          this.role = ''
+        .then(() => {
+          this.resetAuthForm()
+          this.haveAccount = true
+          this.$store.dispatch('swalMixin', 'Register Success!')
         })
         .catch(err => {
-          let msg = null;
-          if (err.response) {
-            if (Array.isArray(err.response.data.message)) {
-              msg = err.response.data.message.join('<br>');
-            } else {
-              msg = err.response.data.message;
-            }
-          } else if (err.request) {
-            msg = err.request;
-          } else {
-            msg = err.message;
-          }
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            html: `${msg}`
-          })
+          this.$store.dispatch('showError', err)
         })
       }
     }

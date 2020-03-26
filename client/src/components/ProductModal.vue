@@ -1,87 +1,51 @@
 <template>
-	<b-modal id="ProductModalModal" ref="ProductModalModal" title="Product Form" hide-header hide-footer>
-        <div class="form-group row">
-            <div class="col-sm-12">
-                <div class="h4">{{ id ? 'Edit' : 'Add' }} Product</div>
+	<b-modal id="ProductModal" ref="ProductModal" hide-header hide-footer>
+        <div class="form-group row mb-0">
+            <div class="col-6 col-sm-6 image-preview">
+                <img id="image_preview" :src="image_url" class="img-thumbnail">
+            </div>
+            <div class="col-6 col-sm-6 d-flex flex-column justify-content-between">
+                <h2>{{ name }}</h2>
+                <h5>IDR {{ priceMark }}</h5>
+                <h5 v-if="stock">{{ stock }} left in stock</h5>
+                <h5 v-if="!stock">OUT OF STOCK</h5>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <form id="ProductDetail" @submit.prevent="">
+                    <div class="form-group row mb-0">
+                        <div class="col-12 d-flex flex-row justify-content-between" style="position: relative; bottom: 0px;">
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-secondary"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Cancel"
+                                    @click.prevent="hideModal()"
+                                >
+                                    ↰
+                                </button>
+                                <b-form-spinbutton
+                                    style="width: 120px"
+                                    type="number"
+                                    min="1"
+                                    :max="100"
+                                    step="1"
+                                    v-model="quantity"
+                                ></b-form-spinbutton>
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-success"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Add to Cart"
+                                    @click.prevent="triggerAddToCart()"
+                                >
+                                    &#10010;
+                                </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-		<form id="ProductModal" @submit.prevent="">
-			<div class="form-group row">
-				<label for="name" class="col-sm-3 col-form-label">Name</label>
-				<div class="col-sm-9">
-					<input
-                        type="text"
-                        class="form-control"
-                        id="name"
-                        v-model="name"
-                    />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="image_url" class="col-sm-3 col-form-label">Image URL</label>
-				<div class="col-sm-9">
-					<input
-						type="text"
-						class="form-control"
-						id="image_url"
-						v-model="image_url"
-					/>
-				</div>
-			</div>
-            <div class="form-group row">
-				<label for="image_preview" class="col-sm-3 col-form-label">Image View</label>
-                <div class="col-sm-9 d-flex flex-row justify-content-center">
-                    <img id="image_preview" :src="image_url" class="img-thumbnail">
-                </div>
-			</div>
-            <div class="form-group row">
-				<label for="price" class="col-sm-3 col-form-label">Price</label>
-				<div class="col-sm-9">
-					<b-form-spinbutton
-						type="number"
-                        min="1000"
-						class="form-control"
-						id="price"
-                        max="10000000"
-                        step="1000"
-						v-model="price"
-					></b-form-spinbutton>
-				</div>
-			</div>
-            <div class="form-group row">
-				<label for="stock" class="col-sm-3 col-form-label">stock</label>
-				<div class="col-sm-9">
-					<b-form-spinbutton
-						type="number"
-                        min="1"
-						class="form-control"
-						id="stock"
-                        max="1000"
-                        step="1"
-						v-model="stock"
-					></b-form-spinbutton>
-				</div>
-			</div>
-            <div class="form-group row mt-5 mb-0">
-                <div class="col-sm-12">
-                    <button
-                        v-if="!id"
-                        type="submit"
-                        class="btn btn-outline-success float-right mr-2"
-                        @click.prevent="triggerAdd()"
-                    >
-                        &#10010;
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-outline-secondary float-right"
-                        @click.prevent="hideModal()"
-                    >
-                        ↰
-                    </button>
-                </div>
-            </div>
-		</form>
 	</b-modal>
 </template>
 
@@ -96,32 +60,37 @@ export default {
             id: null,
             name: '',
             image_url: '',
-            price: null,
-            stock: null
+            price: 0,
+            stock: 0,
+            quantity: 1
         }
     },
-    computed: mapState(['productDetail']),
+    computed: {
+        ...mapState(['productDetail']),
+        priceMark() {
+            return this.price.toLocaleString()
+        }
+        },
     methods: {
-        ...mapActions(['productAdd','productEdit','productDelete']),
+        ...mapActions(['addToCart','editCart','productDelete']),
         hideModal() {
             this.clearForm()
-            this.$refs.ProductModalModal.hide()
+            this.$refs.ProductModal.hide()
         },
         clearForm() {
             this.id = null,
             this.name = '',
             this.image_url = '',
-            this.price = null,
-            this.stock = null
+            this.price = 0,
+            this.stock = 0,
+            this.quantity = 1
         },
-        triggerAdd() {
-            let newProduct = {
-                name: this.name,
-                image_url: this.image_url,
-                price: this.price,
-                stock: this.stock
+        triggerAddToCart() {
+            let newItem = {
+                id: this.id,
+                quantity: this.quantity,
             }
-            this.productAdd(newProduct)
+            this.addToCart(newItem)
             this.hideModal()
         },
         triggerEdit() {
@@ -141,7 +110,7 @@ export default {
                         price: this.price,
                         stock: this.stock
                     }
-                    this.productEdit({ updateProduct, productId })
+                    this.editCart({ updateProduct, productId })
                     this.hideModal()
                 }
             })
@@ -173,3 +142,13 @@ export default {
     }
 };
 </script>
+
+<style>
+* {
+    font-family: 'Share Tech', Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+}
+
+</style>

@@ -20,23 +20,23 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    productDetail: {}
+    productDetail: {},
+    shoppingCart: [],
+    // totalPrice: 0
   },
   mutations: {
     products(state, data) {
       state.products = data
     },
+    shoppingCart(state, cart) {
+      state.shoppingCart = cart
+    },
     logout(state) {
       state.products = []
-    },
-    productAdd(state, newProduct) {
-      state.products.push(newProduct)
+      state.shoppingCart = []
     },
     productFind(state, found) {
       state.productDetail = found
-    },
-    productDelete(state, id) {
-      state.products = state.products.filter(product => product.id !== id)
     },
     productFormReset(state) {
       state.productDetail = {}
@@ -52,48 +52,62 @@ export default new Vuex.Store({
         context.commit('products', data)
       })
       .catch(err => {
-        this.dispatch('showError',err)
+        context.dispatch('showError',err)
       })
+    },
+    shoppingCart(context) {
+      if (localStorage.access_token) {
+        Axios({
+          method: 'GET',
+          url: 'http://localhost:3000/shop/cart',
+          headers: { access_token: localStorage.access_token }
+        })
+        .then(({ data }) => {
+          let cart = data.Products
+          // let totalPrice = 0;
+          // cart.forEach(x => {
+          //   totalPrice += (x.shoppingCart.quantity * x.price );
+          // })
+          context.commit('shoppingCart', cart)
+        })
+        .catch(err => {
+          context.dispatch('showError', err)
+        })
+      }
+    },
+    login({ dispatch }, data) {
+      localStorage.access_token = data.access_token
+      router.push({ path: '/' })
+      dispatch('swalMixin', 'Login Success!')
     },
     logout(context) {
       delete localStorage.access_token
-      router.push({ path: '/' })
+      router.push({ path: '/auth' })
       context.commit('logout')
     },
-    productAdd(context, newProduct) {
+    gotoCart({ dispatch }) {
+      if (localStorage.access_token) {
+        router.push({ path: '/cart' })
+      } else {
+        dispatch('showError', { message: 'You must login first!' })
+      }
+    },
+    addToCart({ dispatch }, newItem) {
         Axios({
         method: 'POST',
-        url: 'http://localhost:3000/shop',
+        url: 'http://localhost:3000/shop/cart',
         headers: {
           access_token: localStorage.access_token
         },
-        data: newProduct
+        data: newItem
       })
-      .then(({ data }) => {
-        context.commit('productAdd', data)
-        Toast.fire({
-          icon: 'success',
-          title: 'Add Success!'
-        })
+      .then(() => {
+        dispatch('shoppingCart')
+        dispatch('swalMixin', 'Added to Cart!')
       })
       .catch(err => {
-        let msg = null;
-        if (err.response) {
-          if (Array.isArray(err.response.data.message)) {
-            msg = err.response.data.message.join('<br>');
-          } else {
-            msg = err.response.data.message;
-          }
-        } else if (err.request) {
-          msg = err.request;
-        } else {
-          msg = err.message;
-        }
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          html: `${msg}`
-        })
+        if (err.response.status === 401) router.push({ path: '/auth' })
+        context.dispatch('showError',err)
       })
     },
     productFind(context, id) {
@@ -105,94 +119,24 @@ export default new Vuex.Store({
         context.commit('productFind', data)
       })
       .catch(err => {
-        let msg = null;
-        if (err.response) {
-          if (Array.isArray(err.response.data.message)) {
-            msg = err.response.data.message.join('<br>');
-          } else {
-            msg = err.response.data.message;
-          }
-        } else if (err.request) {
-          msg = err.request;
-        } else {
-          msg = err.message;
-        }
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          html: `${msg}`
-        })
+        context.dispatch('showError', err)
       })
     },
-    productEdit({ dispatch }, { updateProduct, productId }) {
+    editCart({ dispatch }, editItem) {
       Axios({
         method: 'PUT',
-        url: 'http://localhost:3000/shop/' + productId,
+        url: 'http://localhost:3000/shop/cart' + editItem.id,
         headers: {
           access_token: localStorage.access_token
         },
-        data: updateProduct
+        data: editItem
       })
-      .then(() => {
+      .then(({ data }) => {
         dispatch('products')
-        Toast.fire({
-          icon: 'success',
-          title: 'Edit Success!'
-        })
+        dispatch('swalMixin', data.message)
       })
       .catch(err => {
-        let msg = null;
-        if (err.response) {
-          if (Array.isArray(err.response.data.message)) {
-            msg = err.response.data.message.join('<br>');
-          } else {
-            msg = err.response.data.message;
-          }
-        } else if (err.request) {
-          msg = err.request;
-        } else {
-          msg = err.message;
-        }
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          html: `${msg}`
-        })
-      })
-    },
-    productDelete(context, id) {
-      Axios({
-        method: 'DELETE',
-        url: 'http://localhost:3000/shop/' + id,
-        headers: {
-          access_token: localStorage.access_token
-        }
-      })
-      .then(() => {
-        context.commit('productDelete', id)
-        Toast.fire({
-          icon: 'success',
-          title: 'Delete Success!'
-        })
-      })
-      .catch(err => {
-        let msg = null;
-        if (err.response) {
-          if (Array.isArray(err.response.data.message)) {
-            msg = err.response.data.message.join('<br>');
-          } else {
-            msg = err.response.data.message;
-          }
-        } else if (err.request) {
-          msg = err.request;
-        } else {
-          msg = err.message;
-        }
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          html: `${msg}`
-        })
+        dispatch('showError', err)
       })
     },
     productFormReset(context) {
@@ -236,7 +180,8 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    productsDesc: state => state.products.sort((a,b) => b.id -a.id)
+    productsDesc: state => state.products.sort((a,b) => b.id -a.id),
+    checkoutList: state => state.shoppingCart
   },
   modules: {
   }

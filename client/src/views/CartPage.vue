@@ -16,8 +16,8 @@
 
 <script>
 import Navbar from '../components/Navbar.vue'
-import ProductModal from '../components/ProductModal.vue'
 import ProductList from '../components/ProductList.vue'
+import ProductModal from '../components/ProductModal.vue'
 
 export default {
   name: 'CartPage',

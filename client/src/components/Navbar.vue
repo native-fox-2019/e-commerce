@@ -1,10 +1,33 @@
 <template>
-    <nav class="navbar navbar-light shadow mb-3 position-sticky sticky-top" style="background-color: rgba(255,255,255,.5)">
+    <nav class="navbar navbar-light shadow mb-3 position-sticky sticky-top" style="background-color: rgba(255,255,255,.75)">
     <a class="navbar-brand">Tunggalika</a>
     <form class="form-inline">
-        <b-button variant="outline-success" class="m-2 my-sm-0" @click.prevent="triggerAddForm()" v-b-modal.ProductModalModal>🛍</b-button>
-        <b-button variant="outline-danger" class="m-2 my-sm-0" @click.prevent="triggerLogout()" v-if="isLogin">⇱</b-button>
-        <b-button variant="outline-primary" class="m-2 my-sm-0"  @click.prevent="gotoAuth()" v-else>😃</b-button>
+        <b-button
+            variant="outline-success"
+            class="my-sm-0"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="My Shopping Cart"
+            @click.prevent="gotoCart()"
+        >🛍</b-button>
+            <b-button
+            variant="outline-danger"
+            class="ml-2 my-sm-0"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Log Out"
+            @click.prevent="triggerLogout()"
+            v-if="isLogin"
+        >⇱</b-button>
+        <b-button
+            variant="outline-primary"
+            class="ml-2 my-sm-0"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Login / Register"
+            @click.prevent="gotoAuth()"
+            v-else
+        >😃</b-button>
     </form>
     </nav>
 </template>
@@ -28,9 +51,9 @@ const Toast = Swal.mixin({
 export default {
     name: 'Navbar',
     methods: {
-        ...mapActions(['logout']),
-        triggerAddForm() {
-            this.productFormReset()
+        gotoCart() {
+            this.$store.dispatch('gotoCart')
+            // this.$router.push({ path: '/cart' })
         },
         triggerLogout() {
             Swal.fire({
@@ -42,16 +65,14 @@ export default {
                 })
                 .then((result) => {
                 if (result.value) {
-                    delete localStorage.access_token
-                    this.$store.state.productList = []
-                    this.$router.push({
-                        path: '/'
-                    })
+                    // delete localStorage.access_token
+                    // this.$store.state.productList = []
+                    // this.$router.push({ path: '/' })
+                    this.$store.dispatch('logout')
                     Toast.fire({
                         icon: 'success',
                         title: 'Logout Success!'
                     })
-                    // this.$store.dispatch('logout')
                 }
             })
         },
