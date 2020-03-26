@@ -12,7 +12,8 @@ export default new Vuex.Store({
         products: [],
         user_info: {},
         product_temp: {},
-        cart: []
+        cart: [],
+        isLoading: false
     },
     mutations: {
         setProduct: function (state, payload) {
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     },
     actions: {
         errorHandler: function (context, err_payload) {
+            this.state.isLoading = false;
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -32,6 +34,7 @@ export default new Vuex.Store({
             });
         },
         messageHandler: function (context, msg_payload) {
+            this.state.isLoading = false;
             Swal.fire({
                 icon: 'success',
                 title: 'Error',
@@ -43,11 +46,13 @@ export default new Vuex.Store({
             });
         },
         getAllProduct: function (context) {
+            this.state.isLoading = true;
             axios({
                     method: 'get',
                     url: `${this.state.rootUrl}/product/all`,
                 })
                 .then(result => {
+                    this.state.isLoading = false;
                     context.commit('setProduct', result.data)
                 })
                 .catch(err => {

@@ -81,7 +81,7 @@ header h4 {
 
 .user-access {
   max-width: 500px;
-  margin: 4.5rem auto 8rem auto;
+  margin: 4.5rem auto 6rem auto;
   border-radius: 10px;
   padding: 2rem;
   background-color: #252526;
@@ -147,6 +147,7 @@ header h4 {
   width: 100%;
   bottom: 0px;
   left: 0px;
+  margin-top: 5rem;
 }
 .footer .footer-content {
   font-size: 18px;
@@ -465,6 +466,12 @@ header h4 {
 }
 .order-card h4 {
   font-size: large;
+}
+
+.preloader {
+  position: fixed;
+  top: 70px;
+  right: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */

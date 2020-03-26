@@ -34,27 +34,10 @@ body {
 @import './cartPage';
 @import './detailProduct';
 @import './modal';
+@import './orderPage';
 
-.order-container {
-  .title {
-    text-align: center;
-    margin: 30px 40% 0 40%;
-    font-size: 24px;
-    padding: 15px;
-    background-color: $color-primary;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-}
-
-.order-card {
-  padding: 10px 15px;
-  margin: 30px 40% 30px 40%;
-  text-align: center;
-  border: 1px $color-font solid;
-  cursor: pointer;
-
-  h4 {
-    font-size: large;
-  }
+.preloader {
+  position: fixed;
+  top: 70px;
+  right: 20px;
 }

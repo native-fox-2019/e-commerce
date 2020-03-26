@@ -33,19 +33,20 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-    name: 'Login',
+    name: "Login",
     data() {
         return {
-            login_email: '',
-            login_password: ''
+            login_email: "",
+            login_password: ""
         };
     },
     methods: {
         login: function() {
+            this.$store.state.isLoading = true;
             axios({
-                method: 'post',
+                method: "post",
                 url: `${this.$store.state.rootUrl}/user/login`,
                 data: {
                     email: this.login_email,
@@ -53,17 +54,18 @@ export default {
                 }
             })
                 .then(result => {
+                    this.$store.state.isLoading = false;
                     localStorage.setItem(
-                        'access_token',
+                        "access_token",
                         result.data.access_token
                     );
-                    this.login_email = '';
-                    this.login_password = '';
+                    this.login_email = "";
+                    this.login_password = "";
                     this.$store.state.isLogin = true;
-                    this.$router.push({name: 'MainPage'});
+                    this.$router.push({ name: "MainPage" });
                 })
                 .catch(err => {
-                    this.$store.dispatch('errorHandler', err.response);
+                    this.$store.dispatch("errorHandler", err.response);
                 });
         }
     }

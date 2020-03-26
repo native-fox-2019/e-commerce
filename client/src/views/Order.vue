@@ -3,11 +3,7 @@
         <div class="order-container">
             <h4 class="title">My Order</h4>
 
-            <div
-                class="order-list"
-                v-for="order in orders"
-                :key="order.order_code"
-            >
+            <div class="order-list" v-for="order in orders" :key="order.order_code">
                 <OrderCard
                     v-bind:order="order"
                     v-on:openOrderDetailModal="openOrderDetailModal($event)"
@@ -38,18 +34,15 @@
                                     orderDetail.status == 'Waiting confirmation'
                                 "
                                 v-on:click="deleteOrder(orderDetail.id)"
-                                >Cancel</span
-                            >
+                            >Cancel</span>
                             <span
                                 v-if="orderDetail.status == 'On Process'"
                                 v-on:click="finishOrder(orderDetail.id)"
-                                >Done</span
-                            >
+                            >Done</span>
                             <span
                                 v-if="orderDetail.status == 'Finished'"
                                 v-on:click="deleteOrder(orderDetail.id)"
-                                >Finished</span
-                            >
+                            >Finished</span>
                         </div>
                     </div>
                 </div>
@@ -58,12 +51,12 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
-import OrderCard from '../components/OrderCard.vue';
-import Swal from 'sweetalert2';
+import axios from "axios";
+import OrderCard from "../components/OrderCard.vue";
+import Swal from "sweetalert2";
 
 export default {
-    name: 'Order',
+    name: "Order",
     components: {
         OrderCard
     },
@@ -72,23 +65,25 @@ export default {
             orders: [],
             orderDetailModal: false,
             orderDetails: [],
-            selectedOrderCOde: ''
+            selectedOrderCOde: ""
         };
     },
     methods: {
         getAllOrder: function() {
+            this.$store.state.isLoading = true;
             axios({
-                method: 'get',
+                method: "get",
                 url: `${this.$store.state.rootUrl}/order`,
                 headers: {
-                    access_token: localStorage.getItem('access_token')
+                    access_token: localStorage.getItem("access_token")
                 }
             })
                 .then(result => {
+                    this.$store.state.isLoading = false;
                     this.orders = result.data;
                 })
                 .catch(err => {
-                    this.$store.dispatch('errorHandler', err.response);
+                    this.$store.dispatch("errorHandler", err.response);
                 });
         },
         closeOrderDetailModal: function() {
@@ -101,23 +96,25 @@ export default {
         },
         deleteOrder: function(order_id) {
             Swal.fire({
-                title: 'Delete this order?',
+                title: "Delete this order?",
                 text: "You won't be able to revert this!",
-                icon: 'warning',
+                icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
             }).then(result => {
                 if (result.value) {
+                    this.$store.state.isLoading = true;
                     axios({
-                        method: 'delete',
+                        method: "delete",
                         url: `${this.$store.state.rootUrl}/order/${order_id}`,
                         headers: {
-                            access_token: localStorage.getItem('access_token')
+                            access_token: localStorage.getItem("access_token")
                         }
                     })
                         .then(result => {
+                            this.$store.state.isLoading = false;
                             let newOrder = [];
                             this.orderDetails.forEach(element => {
                                 if (element.id != order_id) {
@@ -125,59 +122,61 @@ export default {
                                 }
                             });
                             Swal.fire(
-                                'Deleted!',
-                                'Your order has been canceled.',
-                                'success'
+                                "Deleted!",
+                                "Your order has been canceled.",
+                                "success"
                             );
                             this.getAllOrder();
                             this.orderDetails = newOrder;
                         })
                         .catch(err => {
-                            this.$store.dispatch('errorHandler', err.response);
+                            this.$store.dispatch("errorHandler", err.response);
                         });
                 }
             });
         },
         finishOrder: function(order_id) {
             Swal.fire({
-                title: 'Finish this order?',
-                text: 'Hereby you confirm your order has arrived',
-                icon: 'warning',
+                title: "Finish this order?",
+                text: "Hereby you confirm your order has arrived",
+                icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes"
             }).then(result => {
                 if (result.value) {
+                    this.$store.state.isLoading = true;
                     axios({
-                        method: 'patch',
+                        method: "patch",
                         url: `${this.$store.state.rootUrl}/order/finishOrder/${order_id}`,
                         headers: {
-                            access_token: localStorage.getItem('access_token')
+                            access_token: localStorage.getItem("access_token")
                         }
                     })
                         .then(result => {
                             return axios({
-                                method: 'get',
+                                method: "get",
                                 url: `${this.$store.state.rootUrl}/order/${this.selectedOrderCOde}`,
                                 headers: {
                                     access_token: localStorage.getItem(
-                                        'access_token'
+                                        "access_token"
                                     )
                                 }
                             });
                         })
                         .then(result => {
+                            this.$store.state.isLoading = false;
                             this.orderDetails = result.data;
                             Swal.fire(
-                                'Done!',
-                                'Thank you for shopping at Toko Gunpla.',
-                                'success'
+                                "Done!",
+                                "Thank you for shopping at Toko Gunpla.",
+                                "success"
                             );
                             this.getAllOrder();
                         })
                         .catch(err => {
-                            this.$store.dispatch('errorHandler', err.response);
+                            this.$store.dispatch("errorHandler", err.response);
                         });
                 }
             });

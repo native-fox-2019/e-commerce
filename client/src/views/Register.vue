@@ -5,12 +5,7 @@
         </div>
         <form v-on:submit.prevent="register" class="register-form">
             <div class="textbox">
-                <input
-                    type="text"
-                    id="register-name"
-                    placeholder="Name"
-                    v-model="register_name"
-                />
+                <input type="text" id="register-name" placeholder="Name" v-model="register_name" />
             </div>
             <div class="textbox">
                 <input
@@ -49,22 +44,23 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
-    name: 'Register',
+    name: "Register",
     data() {
         return {
-            register_name: '',
-            register_email: '',
-            register_password: '',
-            register_password_confirm: ''
+            register_name: "",
+            register_email: "",
+            register_password: "",
+            register_password_confirm: ""
         };
     },
     methods: {
         register: function() {
             if (this.register_password == this.register_password_confirm) {
+                this.$store.state.isLoading = true;
                 axios({
-                    method: 'post',
+                    method: "post",
                     url: `${this.$store.state.rootUrl}/user/registration`,
                     data: {
                         name: this.register_name,
@@ -74,21 +70,22 @@ export default {
                 })
                     .then(result => {
                         localStorage.setItem(
-                            'access_token',
+                            "access_token",
                             result.data.access_token
                         );
-                        this.register_name = '';
-                        this.register_email = '';
-                        this.register_password = '';
-                        this.register_password_confirm = '';
+                        this.$store.state.isLoading = false;
+                        this.register_name = "";
+                        this.register_email = "";
+                        this.register_password = "";
+                        this.register_password_confirm = "";
                         this.$store.state.isLogin = true;
-                        this.$router.push({name: 'MainPage'});
+                        this.$router.push({ name: "MainPage" });
                     })
                     .catch(err => {
-                        this.$store.dispatch('errorHandler', err.response);
+                        this.$store.dispatch("errorHandler", err.response);
                     });
             } else {
-                this.$store.dispatch('errorHandler', {
+                this.$store.dispatch("errorHandler", {
                     data: {
                         message: "Confirmation password doesn't match"
                     }
