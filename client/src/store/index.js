@@ -4,6 +4,7 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 let url = 'http://localhost:3000'
+// let url = 'https://powerful-meadow-02119.herokuapp.com'
 export default new Vuex.Store({
   state: {
     products : [],

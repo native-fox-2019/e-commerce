@@ -37,6 +37,7 @@ import {mapState} from 'vuex'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 let url = `http://localhost:3000`
+// let url = 'https://powerful-meadow-02119.herokuapp.com'
 export default {
     computed : mapState(['cart', 'totalCart']),
     components : {
