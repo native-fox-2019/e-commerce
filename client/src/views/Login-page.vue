@@ -30,8 +30,8 @@
 import axios from 'axios'
 import Alert from '../components/Alert'
 import Success from '../components/SuccessAlert'
-// const url = 'http://localhost:3000'
-const url = 'https://secure-eyrie-18193.herokuapp.com'
+const url = 'http://localhost:3000'
+// const url = 'https://cryptic-inlet-94242.herokuapp.com/'
 
 export default {
   name: 'Login-page',
@@ -56,7 +56,7 @@ export default {
   methods: {
     login () {
       axios({
-        url: `${url}/user/login`,
+        url: `${url}/login`,
         method: 'post',
         data: {
           email: this.email,
@@ -64,6 +64,7 @@ export default {
         }
       })
         .then(data => {
+          console.log(data)
           localStorage.setItem('access_token', data.data.access_token)
           this.$router.push({ name: 'Home' })
           this.success.status = true

@@ -35,8 +35,8 @@
 <script>
 import axios from 'axios'
 import Alert from '../components/Alert'
-// const url = 'http://localhost:3000'
-const url = 'https://secure-eyrie-18193.herokuapp.com'
+const url = 'http://localhost:3000'
+// const url = 'https://cryptic-inlet-94242.herokuapp.com/'
 export default {
   name: 'register-page',
   components: {
@@ -50,6 +50,10 @@ export default {
       isError: {
         status: false,
         msg: ''
+      },
+      success: {
+        status: false,
+        msg: ''
       }
     }
   },
@@ -59,7 +63,7 @@ export default {
     },
     register () {
       axios({
-        url: `${url}/user/register`,
+        url: `${url}/register`,
         method: 'post',
         data: {
           name: this.name,

@@ -5,14 +5,15 @@
     <Success v-show="success.status" :success="success" @hide="success.status=!success.status"/>
     <Banner/>
     <div>
-      <b-modal id="modal-1" title="BootstrapVue">
+      <b-modal id="modal-1" title="Add To Cart">
           <form @submit.prevent="addToCart(id)">
             <div>
               <label for="amount">AMOUNT</label>
             </div>
             <div>
-              <input type="number" name="amount">
+              <input type="number" name="amount" v-model="amount">
             </div>
+            <div> <button type="submit">add now</button></div>
           </form>
       </b-modal>
     </div>
@@ -32,7 +33,7 @@
           class="mb-2 shadow p-3 mb-5 bg-white rounded">
           <b-card-text>
             <h6>{{product.price}}</h6>
-            <h4>{{product.stock}}</h4>
+            <h4>available: {{product.stocks}}</h4>
           </b-card-text>
           <b-button @click="setId(product.id)" v-b-modal.modal-1>add to cart</b-button>
         </b-card>
@@ -47,8 +48,8 @@ import axios from 'axios'
 import Alert from '../components/Alert'
 import Banner from '../components/Banner'
 import Success from '../components/SuccessAlert'
-// const url = 'http://localhost:3000'
-const url = 'https://secure-eyrie-18193.herokuapp.com'
+const url = 'http://localhost:3000'
+// const url = 'https://cryptic-inlet-94242.herokuapp.com/'
 
 export default {
   name: 'Home',
@@ -60,6 +61,7 @@ export default {
   },
   data () {
     return {
+      amount: 0,
       isError: {
         status: false,
         msg: ''
@@ -86,18 +88,23 @@ export default {
     addToCart (id) {
       axios({
         url: `${url}/user/addtocart/${id}`,
-        method: 'delete',
+        method: 'post',
         headers: {
           access_token: localStorage.access_token
+        },
+        data: {
+          amount: this.amount
         }
       })
         .then(data => {
+          console.log(this.id)
           this.success.status = true
           this.status.msg = data.data.message
         })
         .catch(err => {
-          this.isError.msg = err.response.data.msg
-          this.isError.status = true
+          console.log(err.response)
+          // this.isError.msg = err.response.data.msg
+          // this.isError.status = true
         })
     },
     setId (id) {

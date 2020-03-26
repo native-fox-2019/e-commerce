@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-const url = 'https://secure-eyrie-18193.herokuapp.com'
+// const url = 'https://cryptic-inlet-94242.herokuapp.com/'
+const url = 'http://localhost:3000'
 
 Vue.use(Vuex)
 
@@ -38,7 +39,16 @@ export default new Vuex.Store({
   },
   mutations: {
     LIST_PRODUCT (state, payload) {
-      state.products = [...payload]
+      if (payload) {
+        state.products = [...payload]
+      } else {
+        const emptyCart = [
+          {
+            name: 'you havent buy anything yet'
+          }
+        ]
+        state.products = emptyCart
+      }
     }
   },
   actions: {
@@ -51,6 +61,7 @@ export default new Vuex.Store({
         }
       })
         .then(result => {
+          console.log(result)
           result.data.forEach(el => {
             el.price = new Intl.NumberFormat(['ban', 'id']).format(el.price)
           })
@@ -66,10 +77,15 @@ export default new Vuex.Store({
         }
       })
         .then(result => {
-          result.data.forEach(el => {
-            el.price = new Intl.NumberFormat(['ban', 'id']).format(el.price)
-          })
-          commit('LIST_PRODUCT', result.data.Carts)
+          console.log(result)
+          if (result.data) {
+            result.data.forEach(el => {
+              el.price = new Intl.NumberFormat(['ban', 'id']).format(el.price)
+            })
+            commit('LIST_PRODUCT', result.data.Carts)
+          } else {
+            commit('LIST_PRODUCT', null)
+          }
         })
     }
   },
