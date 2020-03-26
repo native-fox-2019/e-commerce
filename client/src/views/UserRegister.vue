@@ -38,7 +38,7 @@ export default {
   name: 'UserRegister',
   data() {
     return {
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://pure-plains-87911.herokuapp.com',
       name: '',
       email: '',
       password: '',
@@ -60,14 +60,16 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password,
+          datas: '',
+          err: '',
         },
       })
         .then((data) => {
-          console.log(data);
+          this.datas = data;
           this.$router.push({ name: 'UserLogin' });
         })
         .catch((error) => {
-          console.log(error);
+          this.err = error;
         });
     },
   },

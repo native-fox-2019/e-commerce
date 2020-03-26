@@ -21,7 +21,7 @@ export default {
   name: 'Panel',
   data() {
     return {
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://pure-plains-87911.herokuapp.com',
       email: '',
       password: '',
     };

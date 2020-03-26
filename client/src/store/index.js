@@ -32,7 +32,7 @@ export default new Vuex.Store({
     getProducts(context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/product',
+        url: 'https://pure-plains-87911.herokuapp.com/product',
         headers: { token: localStorage.getItem('token') },
       })
         .then((data) => {
@@ -45,7 +45,7 @@ export default new Vuex.Store({
     Products(context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/userproduct',
+        url: 'https://pure-plains-87911.herokuapp.com/userproduct',
       })
         .then((data) => {
           context.commit('userProducts', data.data);
@@ -65,7 +65,7 @@ export default new Vuex.Store({
           if (willEdit) {
             axios({
               method: 'PUT',
-              url: `http://localhost:3000/product/${params.id}`,
+              url: `https://pure-plains-87911.herokuapp.com/product/${params.id}`,
               headers: { token: localStorage.getItem('token') },
               data: {
                 name: params.name,
@@ -106,7 +106,7 @@ export default new Vuex.Store({
           if (willDelete) {
             axios({
               method: 'DELETE',
-              url: `http://localhost:3000/product/${id}`,
+              url: `https://pure-plains-87911.herokuapp.com/product/${id}`,
               headers: { token: localStorage.getItem('token') },
             })
               .then((data) => {
@@ -136,7 +136,7 @@ export default new Vuex.Store({
           if (willAdd) {
             axios({
               method: 'POST',
-              url: 'http://localhost:3000/addtocart',
+              url: 'https://pure-plains-87911.herokuapp.com/addtocart',
               headers: { token: localStorage.getItem('token') },
               data: {
                 ProductId: Number(id),
@@ -146,7 +146,7 @@ export default new Vuex.Store({
                 console.log(data);
                 axios({
                   method: 'PUT',
-                  url: `http://localhost:3000/editstock/${id}`,
+                  url: `https://pure-plains-87911.herokuapp.com/editstock/${id}`,
                   headers: { token: localStorage.getItem('token') },
                   data: {
                     stock: Number(this.state.eachProduct.stock - 1),
@@ -176,7 +176,7 @@ export default new Vuex.Store({
       this.state.total = 0;
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/getcart',
+        url: 'https://pure-plains-87911.herokuapp.com/getcart',
         headers: { token: localStorage.getItem('token') },
       })
         .then((data) => {
@@ -199,14 +199,14 @@ export default new Vuex.Store({
           if (willDelete) {
             axios({
               method: 'DELETE',
-              url: `http://localhost:3000/deletecart/${id}`,
+              url: `https://pure-plains-87911.herokuapp.com/deletecart/${id}`,
               headers: { token: localStorage.getItem('token') },
             })
               .then((data) => {
                 console.log(data);
                 axios({
                   method: 'PUT',
-                  url: `http://localhost:3000/editstock/${this.state.eachCart.Product.id}`,
+                  url: `https://pure-plains-87911.herokuapp.com/editstock/${this.state.eachCart.Product.id}`,
                   headers: { token: localStorage.getItem('token') },
                   data: {
                     stock: Number(this.state.eachCart.Product.stock + 1),
