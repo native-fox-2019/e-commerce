@@ -7,6 +7,7 @@
         <input v-model="login_email" type="email" placeholder="enter your email" />
         <label>Password</label>
         <input v-model="login_password" type="password" />
+        <Error v-if="loginError" :errors="errors" />
         <button class="btn" type="submit">Login</button>
       </form>
 
@@ -18,6 +19,7 @@
         <input v-model="email" type="email" placeholder="enter your email" />
         <label>Password</label>
         <input v-model="password" type="password" />
+        <Error v-if="registerError" :errors="errors" />
         <button class="btn" type="submit">Register</button>
       </form>
     </div>
@@ -26,9 +28,13 @@
 
 <script>
 import { mapActions, mapMutations } from 'vuex';
+import Error from '../components/Error.vue';
 
 export default {
   name: 'Login',
+  components: {
+    Error,
+  },
   created() {
     this.setOnHome(false);
   },
@@ -39,29 +45,58 @@ export default {
       name: '',
       email: '',
       password: '',
-      isError: false,
+      errors: null,
+      loginError: false,
+      registerError: false,
     };
+  },
+  watch: {
+    login_email() {
+      this.errors = null;
+    },
+    login_password() {
+      this.errors = null;
+    },
+    name() {
+      this.errors = null;
+    },
+    email() {
+      this.errors = null;
+    },
+    password() {
+      this.errors = null;
+    },
   },
   methods: {
     ...mapMutations(['setOnHome']),
     ...mapActions(['login', 'register']),
     async onLogin() {
-      const obj = {
-        email: this.login_email,
-        password: this.login_password,
-      };
-      await this.login(obj);
-      this.$router.push('/');
+      try {
+        const obj = {
+          email: this.login_email,
+          password: this.login_password,
+        };
+        await this.login(obj);
+        this.$router.push('/');
+      } catch (err) {
+        this.loginError = true;
+        this.errors = err.message;
+      }
     },
 
     async onRegister() {
-      const obj = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-      };
-      await this.register(obj);
-      this.$router.push('/');
+      try {
+        const obj = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        };
+        await this.register(obj);
+        this.$router.push('/');
+      } catch (err) {
+        this.registerError = true;
+        this.errors = err;
+      }
     },
   },
 };

@@ -28,14 +28,18 @@ export default {
         localStorage.setItem('token', data.token);
         commit('setStatus', true);
       } catch (err) {
-        console.log(err.response.data);
+        throw err.response.data;
       }
     },
 
     async register({ commit }, obj) {
-      const { data } = await axios.post(`${heroku}/register`, obj);
-      localStorage.setItem('token', data.token);
-      commit('setStatus', true);
+      try {
+        const { data } = await axios.post(`${heroku}/register`, obj);
+        localStorage.setItem('token', data.token);
+        commit('setStatus', true);
+      } catch (err) {
+        throw err.response.data;
+      }
     },
 
     checkStatus({ commit }) {
