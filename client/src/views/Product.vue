@@ -11,10 +11,10 @@
                 </b-list-group>
             </b-col>
             <b-col sm="9">
-                <Loading v-if="products.length===0"/>
+                <Loading v-if="products.length===0 && isLoading"/>
                 <div v-else>
                     <b-row>
-                        <ProductCard v-for="product in products" :key="product.id" :product="product" />
+                        <ProductCard v-for="(product,index) in products" :key="index" :product="product" />
                     </b-row>
                     <b-row v-if="products.length && !emptyResult && !isLoading" class="justify-content-md-center mb-5">
                         <a href="#" :disabled="true" @click.prevent="loadMore">View more product</a> 
@@ -40,14 +40,12 @@ export default {
             currPage:1,
             isSearch:false,
             emptyResult:false,
+            SEARCHTEXT:''
         }
     },
     created(){
-        let category=this.$route.query.category;
-        let search=this.$route.query.search;
-        if(search)
-            this.isSearch=true
-        this.loadProduct(search?search:category,this.isSearch)
+        var search=this.getInputType()
+        this.loadProduct(search,this.isSearch)
         vm=this
     },
     computed:{
@@ -65,6 +63,8 @@ export default {
         searchText:(val)=>{
             if(vm){
                 vm.loadProduct(val,true)
+                vm.SEARCHTEXT=val
+                vm.currPage=1
             }
         }
     },
@@ -81,17 +81,26 @@ export default {
                     if(data.length===0)
                         self.emptyResult=true
                 }
-                 console.log(self.PRODUCT)
             }
+        },
+
+        getInputType(){
+            let category=this.$route.query.category;
+            let search=this.$route.query.search;
+            if(search)
+                this.isSearch=true
+            return search?this.SEARCHTEXT:category
         },
         loadMore(){
             this.currPage++;
-            this.loadProduct(this.category,this.isSearch,true)
+            var search=this.getInputType()
+            this.loadProduct(search,this.isSearch,true)
         },
         toPage(category){
             this.$router.push('/product?category='+category)
             this.emptyResult=false
             this.currPage=1
+            this.isSearch=false
             this.loadProduct(category)
         },
         loadProduct(input,isSearch,appended){
