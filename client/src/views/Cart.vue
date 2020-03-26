@@ -28,7 +28,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="container-lg bg-dark text-white p-5" style="margin-top:100px;">
+    <div class="container-lg bg-dark text-white p-5" style="margin-top:100px; margin-bottom:190px;">
       <h3>{{ msg }}</h3>
       <div v-if="totalInt != 0">
         <h4 class="mt-3">Total order : {{ grandTotal }}</h4>
