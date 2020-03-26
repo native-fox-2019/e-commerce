@@ -65,7 +65,7 @@ import axios from "axios"
         let id = this.$store.state.productEdit.data.id
         axios({
           method:"PUT",
-          url:`http://localhost:3000/product/${id}`,
+          url:`https://murmuring-caverns-76029.herokuapp.com/product/${id}`,
           data:{
             name:this.name,
             image_url:this.image_url,

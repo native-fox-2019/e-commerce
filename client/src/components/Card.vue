@@ -33,7 +33,7 @@ export default {
     Edit() {
       axios({
         method: "get",
-        url: `http://localhost:3000/product/${this.id}`,
+        url: `https://murmuring-caverns-76029.herokuapp.com/product/${this.id}`,
         headers: { token: localStorage.getItem("tokenAdmin") }
       }).then(response => {
         this.$store.dispatch("holdEditData", response.data);
@@ -60,7 +60,7 @@ export default {
     deleteAction() {
       axios({
         method: "delete",
-        url: `http://localhost:3000/product/${this.id}`,
+        url: `https://murmuring-caverns-76029.herokuapp.com/product/${this.id}`,
         headers: { token: localStorage.getItem("tokenAdmin") }
       }).then(() => {
         this.$store.dispatch("deleteData", this.id);

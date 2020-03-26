@@ -55,7 +55,7 @@ export default {
     },
     updateRole() {
       axios({
-        url: "http://localhost:3000/user/" + this.id,
+        url: "https://murmuring-caverns-76029.herokuapp.com/user/" + this.id,
         method: "put",
         data: {
           role: this.selected
@@ -83,7 +83,7 @@ export default {
     deleteActionUser() {
       axios({
         method: "delete",
-        url: `http://localhost:3000/user/${this.id}`,
+        url: `https://murmuring-caverns-76029.herokuapp.com/user/${this.id}`,
         headers: {
           token: localStorage.getItem("tokenAdmin")
         }

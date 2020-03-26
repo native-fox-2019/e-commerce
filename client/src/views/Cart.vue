@@ -74,7 +74,7 @@ export default {
         for (let o = 0; o < products.length; o++) {
           if (checkout[n].productsId == products[o].id) {
             axios({
-              url: `http://localhost:3000/product/${products[o].id}`,
+              url: `https://murmuring-caverns-76029.herokuapp.com/${products[o].id}`,
               method: "PUT",
               data: {
                 stock: (products[o].stock =
@@ -106,7 +106,7 @@ export default {
       }
       for (let m = 0; m < checkout.length; m++) {
         axios({
-          url: "http://localhost:3000/cart/" + checkout[m].id,
+          url: "https://murmuring-caverns-76029.herokuapp.com/cart/" + checkout[m].id,
           method: "DELETE",
           headers: {
             token:

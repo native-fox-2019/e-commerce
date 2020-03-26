@@ -59,7 +59,7 @@ export default {
     addProduct() {
       axios({
         method: "POST",
-        url: "http://localhost:3000/product/",
+        url: "https://murmuring-caverns-76029.herokuapp.com/product/",
         data: {
           name: this.name,
           image_url: this.image_url,

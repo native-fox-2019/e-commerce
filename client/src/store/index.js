@@ -16,24 +16,19 @@ export default new Vuex.Store({
   mutations: {
     fillProduct(state, payload) {
       state.products = payload
-      console.log(state.products)
     },
     fillProductAdmin(state, payload) {
       state.productsAdmin = payload
-      console.log(state.productsAdmin)
     },
     fillCart(state, payload) {
       state.customerCart = payload
-      console.log(state.customerCart)
     },
     commitNewData(state, payload) {
       state.products.push(payload);
       state.productsAdmin.push(payload);
     },
     commitEditData(state, payload) {
-      console.log("ini payload mutation", payload)
       state.productEdit["data"] = payload
-      console.log("ini state.productedit", state.productEdit.data)
     },
     deleteDataArray(state, id) {
       state.products = state.products.filter(item => item.id !== id)
@@ -60,7 +55,6 @@ export default new Vuex.Store({
       state.userArr=state.userArr.filter(user => user.id != id)
     },
     updateRole(state,payload){
-      console.log(payload,"ini payload")
       state.userArr.forEach(user =>{
         if(user.id == payload.id){
           user.role = payload.role
@@ -68,7 +62,6 @@ export default new Vuex.Store({
       })
     },
     updateAmount(state,payload){
-      console.log("di store",payload)
       state.customerCart.forEach(item =>{
         if(item.id == payload.id){
           item.amount = payload.amount
@@ -77,7 +70,6 @@ export default new Vuex.Store({
     },
     checkOut(state,payload){
       state.checkOutItem.push(payload[0])   
-      console.log(state.checkOutItem,"ini state checkout item")
     },
     addItem(state,payload){
       state.checkOutItem.push(payload)
@@ -125,7 +117,6 @@ export default new Vuex.Store({
     },
 
     holdEditData(context, payload) {
-      console.log("ini payload action", payload)
       context.commit('commitEditData', payload)
     },
     deleteData(context, id) {
@@ -153,11 +144,9 @@ export default new Vuex.Store({
       context.commit('filterUser',id)
     },
     updateUserRole(context,payload){
-      console.log(payload,"ini payload di update user role")
       context.commit('updateRole',payload)
     },
     updateAmountCart(context,payload){
-      console.log("di store",payload)
       context.commit('updateAmount',payload)
     },
     itemCheckout(context,payload){

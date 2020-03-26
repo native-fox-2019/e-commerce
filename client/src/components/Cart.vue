@@ -47,7 +47,7 @@ export default {
     AddCart() {
       axios({
         method: "post",
-        url: `http://localhost:3000/cart`,
+        url: `https://murmuring-caverns-76029.herokuapp.com/cart`,
         data: {
           productsId: this.id,
           amount: this.amount,
@@ -82,7 +82,7 @@ export default {
     deleteActionCart() {
       axios({
         method: "delete",
-        url: `http://localhost:3000/cart/${this.id}`,
+        url: `https://murmuring-caverns-76029.herokuapp.com/cart/${this.id}`,
         headers: {
           token:
             localStorage.getItem("tokenAdmin") ||
@@ -95,7 +95,7 @@ export default {
     submitAmount() {
       axios({
         method: "PUT",
-        url: `http://localhost:3000/cart/` + this.id,
+        url: `https://murmuring-caverns-76029.herokuapp.com/cart/` + this.id,
         headers: {
           token:
             localStorage.getItem("tokenAdmin") ||

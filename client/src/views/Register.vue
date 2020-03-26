@@ -29,7 +29,7 @@ export default {
     registerUser() {
       axios({
         method: "POST",
-        url: "http://localhost:3000/user/register",
+        url: "https://murmuring-caverns-76029.herokuapp.com/user/register",
         data: {
           email: this.email,
           password: this.password

@@ -31,7 +31,7 @@ export default {
     loginUser() {
       axios({
         method: "POST",
-        url: "http://localhost:3000/user/login",
+        url: "https://murmuring-caverns-76029.herokuapp.com/user/login",
         data: {
           email: this.email,
           password: this.password
