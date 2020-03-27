@@ -97,12 +97,10 @@ export default {
         }
       })
         .then(data => {
-          console.log(data.data.message)
           this.success.status = true
           this.success.msg = data.data.message
         })
         .catch(err => {
-          console.log(err)
           this.isError.status = true
           this.isError.msg = err.response.data.message
         })

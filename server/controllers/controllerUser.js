@@ -2,8 +2,6 @@
 
 require('dotenv').config()
 const { Sequelize, User, Product, Cart } = require('../models')
-const { sign } = require('../helpers/jwt')
-const { checkPass } = require('../helpers/bcrypt')
 const Op = Sequelize.Op
 
 class ControllerUser {
@@ -28,6 +26,7 @@ class ControllerUser {
             .then(data => {
                 if (data) {
                     let payload = {
+                        
                         UserId: data.UserId,
                         ProductId: Number(data.ProductId),
                         amount: Number(data.amount) + Number(req.body.amount)
@@ -43,7 +42,7 @@ class ControllerUser {
                     return Cart.create(payload)
                 }
             })
-            .then(data => res.status(201).json({ message: `item(s) has been added to your cart` }))
+            .then(() => res.status(201).json({ message: `item(s) has been added to your cart` }))
             .catch(err => {
                 console.log(err)
                 next(err)

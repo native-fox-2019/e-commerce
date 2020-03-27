@@ -30,8 +30,8 @@
 import axios from 'axios'
 import Alert from '../components/Alert'
 import Success from '../components/SuccessAlert'
-const url = 'http://localhost:3000'
-// const url = 'https://cryptic-inlet-94242.herokuapp.com/'
+// const url = 'http://localhost:3000'
+const url = 'https://cryptic-inlet-94242.herokuapp.com'
 
 export default {
   name: 'Login-page',

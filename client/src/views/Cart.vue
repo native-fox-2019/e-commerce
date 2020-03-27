@@ -66,6 +66,7 @@ export default {
         }
       })
         .then(data => {
+          this.$store.dispatch('getCart')
           this.success.status = true
           this.success.msg = data.data.message
         })
