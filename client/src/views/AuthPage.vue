@@ -96,7 +96,7 @@ export default {
     login() {
       Axios({
         method: 'POST',
-        url: 'http://localhost:3000/shop/login',
+        url: 'https://mighty-stream-85910.herokuapp.com/shop/login',
         data: {
           username: this.username,
           password: this.password
@@ -120,7 +120,7 @@ export default {
       } else {
         Axios({
           method: 'POST',
-          url: 'http://localhost:3000/shop/register',
+          url: 'https://mighty-stream-85910.herokuapp.com/shop/register',
           data: {
             username: this.username,
             email: this.email,

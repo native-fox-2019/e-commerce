@@ -41,7 +41,7 @@ export default new Vuex.Store({
     products(context) {
       Axios({
         method: 'GET',
-        url: 'http://localhost:3000/shop'
+        url: 'https://mighty-stream-85910.herokuapp.com/shop'
       })
       .then(({ data }) => {
         context.commit('products', data)
@@ -54,7 +54,7 @@ export default new Vuex.Store({
       if (localStorage.access_token) {
         Axios({
           method: 'GET',
-          url: 'http://localhost:3000/shop/cart',
+          url: 'https://mighty-stream-85910.herokuapp.com/shop/cart',
           headers: { access_token: localStorage.access_token }
         })
         .then(({ data }) => {
@@ -91,7 +91,7 @@ export default new Vuex.Store({
     addToCart({ dispatch }, newItem) {
         Axios({
         method: 'POST',
-        url: 'http://localhost:3000/shop/cart',
+        url: 'https://mighty-stream-85910.herokuapp.com/shop/cart',
         headers: {
           access_token: localStorage.access_token
         },
@@ -109,7 +109,7 @@ export default new Vuex.Store({
     findCart(context, id) {
       Axios({
         method: 'GET',
-        url: 'http://localhost:3000/shop/cart/' + id,
+        url: 'https://mighty-stream-85910.herokuapp.com/shop/cart/' + id,
         headers: {
           access_token: localStorage.access_token
         }
@@ -124,7 +124,7 @@ export default new Vuex.Store({
     productFind(context, id) {
       Axios({
         method: 'GET',
-        url: 'http://localhost:3000/shop/' + id,
+        url: 'https://mighty-stream-85910.herokuapp.com/shop/' + id,
       })
       .then(({ data }) => {
         context.commit('productFind', data)
@@ -136,7 +136,7 @@ export default new Vuex.Store({
     editCart({ dispatch }, editItem) {
       Axios({
         method: 'PUT',
-        url: 'http://localhost:3000/shop/cart/' + editItem.id,
+        url: 'https://mighty-stream-85910.herokuapp.com/shop/cart/' + editItem.id,
         headers: {
           access_token: localStorage.access_token
         },
@@ -153,7 +153,7 @@ export default new Vuex.Store({
     deleteCart({ dispatch }, id) {
       Axios({
         method: 'DELETE',
-        url: 'http://localhost:3000/shop/cart/' + id,
+        url: 'https://mighty-stream-85910.herokuapp.com/shop/cart/' + id,
         headers: {
           access_token: localStorage.access_token
         }
@@ -169,7 +169,7 @@ export default new Vuex.Store({
     checkout({ dispatch }) {
       Axios({
         method: 'POST',
-        url: 'http://localhost:3000/shop/checkout',
+        url: 'https://mighty-stream-85910.herokuapp.com/shop/checkout',
         headers: {
           access_token: localStorage.access_token
         }
