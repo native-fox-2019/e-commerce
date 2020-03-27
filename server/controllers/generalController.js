@@ -25,9 +25,7 @@ class GeneralController {
             if(data){
                 if(checkPass(password, data)){
                     const {id,role} = data
-            console.log('access_token','=============')
             let access_token = sign({id,role})
-                    console.log(access_token,'=============')
                     res.status(200).json({access_token})
                 } else {
                     next ({
@@ -51,7 +49,6 @@ class GeneralController {
         Product.findAll({order:[['id','asc']]})
         .then(data => res.status(200).json(data))
         .catch(err =>{
-            console.log(err)
             next(err)
         })
     }

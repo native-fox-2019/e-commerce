@@ -46,8 +46,6 @@ beforeAll((done) => {
 })
 
 afterAll(done => {
-    console.log(access_token_admin)
-    console.log(access_token_user)
     queryInterface
         .bulkDelete('Users', {})
         .then(() => queryInterface

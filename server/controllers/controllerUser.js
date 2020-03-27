@@ -38,24 +38,21 @@ class ControllerUser {
                         ProductId: Number(req.params.id),
                         amount: Number(req.body.amount)
                     }
-                    console.log(payload)
                     return Cart.create(payload)
                 }
             })
             .then(() => res.status(201).json({ message: `item(s) has been added to your cart` }))
             .catch(err => {
-                console.log(err)
                 next(err)
             })
     }
     static cart(req, res, next) {
         Cart.findAll({ where: { UserId: req.user.id }, include: [Product] })
             .then(data => {
-                console.log(data[0])
+                (data[0])
                 res.status(200).json({data})
             })
             .catch(err => {
-                console.log(err)
                 next(err)
             })
     }
@@ -85,14 +82,28 @@ class ControllerUser {
                 const remaining = el.Product.stocks - el.amount
                 checkout.push(Product.update({ stocks: remaining }, { where: {id: el.Product.id }}))
             });
-            console.log(checkout)
             checkout.push(Cart.destroy({ where: { UserId: req.user.id }}))
             await Promise.all(checkout)
             res.status(200).json({ message: 'check out success'})
         } catch (err) {
-            console.log(err)
             next(err)
         }
+    }
+    static updateCart (req,res,next) {
+        const {UserId,ProductId, amount} = req.body
+        Cart.update( {UserId,ProductId, amount} ,{where:{
+            [Op.and]:[
+                {UserId},
+                {ProductId}
+            ]
+        }})
+        .then(data => {
+            console.log(data)
+            res.status(200).json({msg: 'succesfully change the amount'})})
+        .catch (err => {
+            console.log(err)
+            next(err)
+        })
     }
 }
 

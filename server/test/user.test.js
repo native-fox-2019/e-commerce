@@ -43,7 +43,6 @@ describe('user register', () => {
                 })
                 .then(data => {
                     const { body, status } = data
-                    console.log('masuk sii')
                     expect(status).toBe(400)
                     expect(body).toHaveProperty('msg')
                     expect(Array.isArray(body.msg)).toBe(true)

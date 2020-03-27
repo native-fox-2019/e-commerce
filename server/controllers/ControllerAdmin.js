@@ -19,7 +19,6 @@ class ControllerAdmin {
         Product.findOne({ where: { id } })
             .then(data => {
                 if (data) {
-                    console.log(data)
                     res.status(200).json(data)
                 } else {
                     throw {
@@ -44,7 +43,6 @@ class ControllerAdmin {
                 res.status(200).json(data)
             })
             .catch(err => {
-                console.log(err.name)
                 next(err)
             })
     }

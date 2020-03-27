@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const secret = process.env.JWT_SECRET
 
 function sign (obj) {
-    console.log('456')
     return jwt.sign(obj, secret)
 }
 
