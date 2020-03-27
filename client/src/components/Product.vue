@@ -71,7 +71,7 @@ export default {
       })
       .catch(({response})=>{
         this.spinner = false
-        if (response.data.message === "Product already in cart") {
+        if (localStorage.getItem("token")) {
           this.$swal.fire({
             icon: 'error',
             html: response.data.message,
@@ -79,7 +79,7 @@ export default {
         } else {
           this.$swal.fire({
             icon: 'error',
-            text: 'You Must Login First',
+            html: 'You Must Login First',
           })
         }
         console.log(response.data)
