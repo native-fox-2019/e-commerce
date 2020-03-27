@@ -70,9 +70,9 @@ export default {
           this.success.status = true
           this.success.msg = data.data.message
         })
-        .catch(err => {
+        .catch(() => {
           this.isError.status = false
-          this.isError.msg = err.response.data.msg
+          this.isError.msg = 'checkout failed'
         })
     },
     getCart () {
