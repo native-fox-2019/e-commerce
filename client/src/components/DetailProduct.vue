@@ -98,10 +98,17 @@ export default {
       })
       .catch(({response})=>{
         this.spinner = false
+        if (response.data.message === "Product already in cart") {
+          this.$swal.fire({
+            icon: 'error',
+            html: response.data.message,
+          })
+        } else {
           this.$swal.fire({
             icon: 'error',
             text: 'You Must Login First',
           })
+        }
         console.log(response.data)
       })
       }else{

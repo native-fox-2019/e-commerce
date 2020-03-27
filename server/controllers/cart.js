@@ -39,14 +39,24 @@ class Controller {
         })
   }
   static create(req, res, next) {
-    console.log(req.body)
     const UserId = req.user
-    const { ProductId } = req.body         
-    Cart
-    .create({ 
-        UserId: UserId,
-        ProductId: ProductId,
-        quantity: 1,
+    const { ProductId } = req.body 
+    console.log(req.body);
+    Cart.findOne({
+      where: {
+        UserId: req.user, ProductId
+      }
+    })
+      .then(data => {
+      if (data) {
+        throw{ status: 400, message: "Product already in cart"}
+      } else {
+        return Cart.create({
+          UserId: UserId,
+          ProductId: ProductId,
+          quantity: 1
+        });
+      }
     })
     .then(data =>{
       console.log(data)
