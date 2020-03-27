@@ -1,14 +1,23 @@
 <template>
     <nav class="navbar navbar-light shadow mb-3 position-sticky sticky-top" style="background-color: rgba(255,255,255,.75)">
-    <a class="navbar-brand">Tunggalika</a>
+    <a href="#" class="navbar-brand" @click.prevent="gotoMainPage()">Tunggalika</a>
     <form class="form-inline">
+        <button
+            class="btn btn-outline-secondary"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Back to Main Page"
+            @click.prevent="gotoMainPage()"
+            v-if="this.$route.path === '/cart'"
+        >↰</button>
         <b-button
             variant="outline-success"
-            class="my-sm-0"
+            class="ml-2 my-sm-0"
             data-toggle="tooltip"
             data-placement="bottom"
             title="My Shopping Cart"
             @click.prevent="gotoCart()"
+            v-if="this.$route.path === '/'"
         >🛍</b-button>
             <b-button
             variant="outline-danger"
@@ -69,10 +78,6 @@ export default {
                     // this.$store.state.productList = []
                     // this.$router.push({ path: '/' })
                     this.$store.dispatch('logout')
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Logout Success!'
-                    })
                 }
             })
         },
@@ -80,6 +85,9 @@ export default {
             this.$router.push({
                 path: '/auth'
             })
+        },
+        gotoMainPage() {
+            this.$router.push({ path: '/' })
         }
     },
     computed: {

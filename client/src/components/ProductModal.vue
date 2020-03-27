@@ -38,8 +38,20 @@
                                     data-placement="bottom"
                                     title="Add to Cart"
                                     @click.prevent="triggerAddToCart()"
+                                    v-if="path === '/'"
                                 >
                                     &#10010;
+                                </button>
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-warning"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Change Qty"
+                                    @click.prevent="triggerEditCart()"
+                                    v-if="path === '/cart'"
+                                >
+                                    🖉
                                 </button>
                         </div>
                     </div>
@@ -62,28 +74,34 @@ export default {
             image_url: '',
             price: 0,
             stock: 0,
-            quantity: 1
+            quantity: 1,
+            cartId: null
         }
     },
     computed: {
-        ...mapState(['productDetail']),
+        ...mapState(['productDetail','cartDetail']),
         priceMark() {
             return this.price.toLocaleString()
-        }
         },
+        path() {
+            return this.$route.path
+        }
+    },
     methods: {
-        ...mapActions(['addToCart','editCart','productDelete']),
+        ...mapActions(['addToCart','editCart']),
         hideModal() {
             this.clearForm()
             this.$refs.ProductModal.hide()
+            // this.$store.commit('modalReset')
         },
         clearForm() {
-            this.id = null,
-            this.name = '',
-            this.image_url = '',
-            this.price = 0,
-            this.stock = 0,
+            this.id = null
+            this.name = ''
+            this.image_url = ''
+            this.price = 0
+            this.stock = 0
             this.quantity = 1
+            this.cartId = null
         },
         triggerAddToCart() {
             let newItem = {
@@ -93,7 +111,7 @@ export default {
             this.addToCart(newItem)
             this.hideModal()
         },
-        triggerEdit() {
+        triggerEditCart() {
             Swal.fire({
                 title: 'Edit this?',
                 icon: 'warning',
@@ -103,29 +121,11 @@ export default {
                 })
                 .then((result) => {
                 if (result.value) {
-                    let productId = this.id
-                    let updateProduct = {
-                        name: this.name,
-                        image_url: this.image_url,
-                        price: this.price,
-                        stock: this.stock
+                    let editItem = {
+                        id: this.cartId,
+                        quantity: this.quantity
                     }
-                    this.editCart({ updateProduct, productId })
-                    this.hideModal()
-                }
-            })
-        },
-        triggerDelete() {
-            Swal.fire({
-                title: 'Delete this?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                })
-                .then((result) => {
-                if (result.value) {
-                    this.productDelete(this.id)
+                    this.editCart(editItem)
                     this.hideModal()
                 }
             })
@@ -133,14 +133,23 @@ export default {
     },
     watch: {
         productDetail() {
-                this.id = this.productDetail.id;
-                this.name = this.productDetail.name;
-                this.image_url = this.productDetail.image_url;
-                this.price = this.productDetail.price;
-                this.stock = this.productDetail.stock;
+            this.id = this.productDetail.id
+            this.name = this.productDetail.name
+            this.image_url = this.productDetail.image_url
+            this.price = this.productDetail.price
+            this.stock = this.productDetail.stock
+        },
+        cartDetail() {
+            this.id = this.cartDetail.Product.id
+            this.name = this.cartDetail.Product.name
+            this.image_url = this.cartDetail.Product.image_url
+            this.price = this.cartDetail.Product.price
+            this.stock = this.cartDetail.Product.stock
+            this.quantity = this.cartDetail.quantity
+            this.cartId = this.cartDetail.id
         }
     }
-};
+}
 </script>
 
 <style>

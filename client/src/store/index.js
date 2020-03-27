@@ -3,17 +3,6 @@ import Vuex from 'vuex'
 import router from '../router/index.js'
 import Axios from 'axios'
 import Swal from 'sweetalert2'
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top',
-  showConfirmButton: false,
-  timer: 2000,
-  timerProgressBar: true,
-  onOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
 
 Vue.use(Vuex)
 
@@ -22,25 +11,31 @@ export default new Vuex.Store({
     products: [],
     productDetail: {},
     shoppingCart: [],
-    // totalPrice: 0
+    cartDetail: {},
+    totalPrice: 0
   },
   mutations: {
     products(state, data) {
       state.products = data
     },
-    shoppingCart(state, cart) {
+    shoppingCart(state, { cart, total }) {
       state.shoppingCart = cart
+      state.totalPrice = total
     },
     logout(state) {
       state.products = []
       state.shoppingCart = []
     },
-    productFind(state, found) {
-      state.productDetail = found
+    productFind(state, data) {
+      state.productDetail = data
     },
-    productFormReset(state) {
-      state.productDetail = {}
+    findCart(state, data) {
+      state.cartDetail = data
     },
+    // modalReset(state) {
+    //   state.productDetail = {}
+    //   state.cartDetail = {}
+    // }
   },
   actions: {
     products(context) {
@@ -52,7 +47,7 @@ export default new Vuex.Store({
         context.commit('products', data)
       })
       .catch(err => {
-        context.dispatch('showError',err)
+        context.dispatch('showError', err)
       })
     },
     shoppingCart(context) {
@@ -64,11 +59,11 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           let cart = data.Products
-          // let totalPrice = 0;
-          // cart.forEach(x => {
-          //   totalPrice += (x.shoppingCart.quantity * x.price );
-          // })
-          context.commit('shoppingCart', cart)
+          let total = 0
+          cart.forEach(i => {
+              total += i.price * i.ShoppingCart.quantity
+          });
+          context.commit('shoppingCart', { cart, total })
         })
         .catch(err => {
           context.dispatch('showError', err)
@@ -84,6 +79,7 @@ export default new Vuex.Store({
       delete localStorage.access_token
       router.push({ path: '/auth' })
       context.commit('logout')
+      context.dispatch('swalMixin', 'Logout Success!')
     },
     gotoCart({ dispatch }) {
       if (localStorage.access_token) {
@@ -107,7 +103,22 @@ export default new Vuex.Store({
       })
       .catch(err => {
         if (err.response.status === 401) router.push({ path: '/auth' })
-        context.dispatch('showError',err)
+        dispatch('showError',err)
+      })
+    },
+    findCart(context, id) {
+      Axios({
+        method: 'GET',
+        url: 'http://localhost:3000/shop/cart/' + id,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+      .then(({ data }) => {
+        context.commit('findCart', data)
+      })
+      .catch(err => {
+        context.dispatch('showError', err)
       })
     },
     productFind(context, id) {
@@ -125,35 +136,67 @@ export default new Vuex.Store({
     editCart({ dispatch }, editItem) {
       Axios({
         method: 'PUT',
-        url: 'http://localhost:3000/shop/cart' + editItem.id,
+        url: 'http://localhost:3000/shop/cart/' + editItem.id,
         headers: {
           access_token: localStorage.access_token
         },
-        data: editItem
+        data: { quantity: editItem.quantity }
       })
       .then(({ data }) => {
-        dispatch('products')
+        dispatch('shoppingCart')
         dispatch('swalMixin', data.message)
       })
       .catch(err => {
         dispatch('showError', err)
       })
     },
-    productFormReset(context) {
-      context.commit('productFormReset')
+    deleteCart({ dispatch }, id) {
+      Axios({
+        method: 'DELETE',
+        url: 'http://localhost:3000/shop/cart/' + id,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+      .then(() => {
+        dispatch('shoppingCart')
+        dispatch('swalMixin', 'Cart item deleted!')
+      })
+      .catch(err => {
+        dispatch('showError', err)
+      })
+    },
+    checkout({ dispatch }) {
+      Axios({
+        method: 'POST',
+        url: 'http://localhost:3000/shop/checkout',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+      .then(() => {
+        dispatch('shoppingCart')
+        dispatch('products')
+        dispatch('swalMixin', 'Thank You for your custom :)')
+      })
+      .catch(err => {
+        dispatch('showError', err)
+      })
     },
     showError(context, err) {
-      let message = '';
+      let message = ''
       if (err.response) {
         if (Array.isArray(err.response.data.message)) {
-          message = err.response.data.message.join('<br>');
+          message = err.response.data.message.join('<br>')
         } else {
-          message = err.response.data.message;
+          message = err.response.data.message
         }
+      } else if (err.message) {
+        message = err.message
       } else if (err.request) {
-        message = err.request;
+        message = err.request
       } else {
-        message = err.message;
+        message = 'Oops, something wen\'t wrong!'
       }
       Swal.fire({
         icon: 'error',
@@ -181,7 +224,8 @@ export default new Vuex.Store({
   },
   getters: {
     productsDesc: state => state.products.sort((a,b) => b.id -a.id),
-    checkoutList: state => state.shoppingCart
+    checkoutList: state => state.shoppingCart,
+    total: state => state.totalPrice.toLocaleString()
   },
   modules: {
   }

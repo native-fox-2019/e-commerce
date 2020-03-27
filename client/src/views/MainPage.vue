@@ -4,7 +4,10 @@
 
       <Navbar/>
 
-      <nav id="banner" class="banner-container shadow mb-3"></nav>
+      <nav id="banner" class="banner-container shadow mb-3 d-flex flex-row justify-content-start align-items-center">
+        <img src="../assets/logo.png" class="img-fluid">
+        <h1 class="m-0 text-light" style="font-size: 120px;">Tunggalika</h1>
+      </nav>
 
       <nav class="card-container shadow p-2">
         <div class="row">
