@@ -63,7 +63,6 @@ export default new Vuex.Store({
         }
       })
         .then(result => {
-          console.log(result)
           result.data.forEach(el => {
             el.price = new Intl.NumberFormat(['ban', 'id']).format(el.price)
           })
@@ -79,15 +78,12 @@ export default new Vuex.Store({
         }
       })
         .then(result => {
-          console.log('=======', result.data.data)
           if (result.data.data) {
             result.data.data.forEach(el => {
               el.Product.price = `Rp. ${new Intl.NumberFormat(['ban', 'id']).format(el.Product.price)}`
             })
-            console.log(123)
             commit('LIST_PRODUCT', result.data.data)
           } else {
-            console.log(456)
             commit('LIST_PRODUCT', null)
           }
         })

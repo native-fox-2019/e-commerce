@@ -64,7 +64,6 @@ export default {
         }
       })
         .then(data => {
-          console.log(data)
           localStorage.setItem('access_token', data.data.access_token)
           this.$router.push({ name: 'Home' })
           this.success.status = true

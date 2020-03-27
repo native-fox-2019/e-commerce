@@ -66,7 +66,6 @@ export default {
         }
       })
         .then(data => {
-          console.log(data)
           this.success.status = true
           this.success.msg = data.data.message
         })
