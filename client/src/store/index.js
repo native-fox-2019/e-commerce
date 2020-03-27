@@ -8,34 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    products: [{
-      id: 1,
-      name: 'risol',
-      price: 2000,
-      stocks: 5,
-      imageURL: 'https://craftlog.com/m/i/5214819=s1280=h960'
-    },
-    {
-      id: 2,
-      name: 'lemper',
-      price: 2000,
-      stocks: 5,
-      imageURL: 'https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/sasefoto/original/22659-arem-arem-ayam.jpg'
-    },
-    {
-      id: 3,
-      name: 'tahu isi',
-      price: 2000,
-      stocks: 5,
-      imageURL: 'https://i.ytimg.com/vi/juJCrwm-NJ8/maxresdefault.jpg'
-    },
-    {
-      id: 4,
-      name: 'pisang goreng',
-      price: 2000,
-      stocks: 5,
-      imageURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSuclaC_2mSE3vU9Gvkyc30ir9ZzMxxCKC339FhHKLAVujldz6N'
-    }]
+    products: []
   },
   mutations: {
     LIST_PRODUCT (state, payload) {

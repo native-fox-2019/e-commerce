@@ -13,8 +13,21 @@
         style="max-width: 20rem; margin: 1vh"
         class="mb-2 shadow p-3 mb-5 bg-white rounded">
           <b-card-text>
-            <h6>{{product.Product.price}}</h6>
-            <h4 v-if="product.amount">amount: {{product.amount}} pcs</h4>
+            <div>
+              <h6>{{product.Product.price}}</h6>
+            </div>
+            <div>
+              <a v-if="product.amount === product.Product.stocks ? false : true" @click.prevent="increaseAmount(product.Product.id, product)" href>
+              <i class="fas fa-plus-circle"></i>
+              </a>
+              <h4 v-if="product.amount">amount: {{product.amount}} pcs</h4>
+              <a v-if="product.amount !== 0 ? true : false" @click.prevent="decreaseAmount(product.Product.id, product)" href>
+              <i class="fas fa-minus-circle"></i>
+              </a>
+              <a v-if="product.amount === 0 ? true : false" @click.prevent="deleteProduct(product.id)" href>
+              <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
           </b-card-text>
         </b-card>
       </div>
@@ -56,6 +69,9 @@ export default {
       return this.$store.state.products
     }
   },
+  created () {
+    this.getCart()
+  },
   methods: {
     checkout () {
       axios({
@@ -77,14 +93,78 @@ export default {
     },
     getCart () {
       this.$store.dispatch('getAll')
+    },
+    decreaseAmount (id, product) {
+      axios({
+        url: `${url}/user/cart/${id}`,
+        method: 'put',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          UserId: product.UserId,
+          ProductId: product.ProductId,
+          amount: product.amount - 1
+        }
+      })
+        .then(() => {
+          this.$store.dispatch('getCart')
+        })
+        .catch(err => {
+          if (Array.isArray(err.response.data)) {
+            this.isError.msg = err.response.data.msg.join(', ')
+          } else {
+            this.isError.msg = err.response.data.msg
+          }
+          this.isError.status = true
+        })
+    },
+    increaseAmount (id, product) {
+      axios({
+        url: `${url}/user/cart/${id}`,
+        method: 'put',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          UserId: product.UserId,
+          ProductId: product.ProductId,
+          amount: product.amount + 1
+        }
+      })
+        .then(() => {
+          this.$store.dispatch('getCart')
+        })
+        .catch(err => {
+          if (Array.isArray(err.response.data)) {
+            this.isError.msg = err.response.data.msg.join(', ')
+          } else {
+            this.isError.msg = err.response.data.msg
+          }
+          this.isError.status = true
+        })
+    },
+    deleteProduct (id) {
+      axios({
+        url: `${url}/user/cart/${id}`,
+        method: 'delete',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(() => this.$store.dispatch('getCart'))
+        .catch(() => {
+          this.isError.status = true
+          this.isError.msg = 'cant delete this product'
+        })
     }
-  },
-  created () {
-    this.getCart()
   }
 }
 </script>
 
 <style>
-
+i:hover {
+  transform: scale(1.08);
+  cursor: pointer;
+}
 </style>
