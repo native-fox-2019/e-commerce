@@ -76,7 +76,11 @@ export default {
           this.$router.push({ name: 'Home' })
         })
         .catch(err => {
-          this.isError.msg = err.response.data.msg.join(' ,  \n')
+          if (Array.isArray(err.response.data)) {
+            this.isError.msg = err.response.data.msg.join(' ,  \n')
+          } else {
+            this.isError.msg = err.response.data.msg
+          }
           this.isError.status = true
         })
     }
