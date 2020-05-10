@@ -95,7 +95,6 @@
           }
         })
         .then(({ data }) => {
-          console.log(data);
             this.$router.push({path: "/login" })
             this.$store.commit('successMsg')
         })

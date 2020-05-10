@@ -97,7 +97,6 @@ export default {
         })
         .then(({ data }) => {
           if (data) {
-            console.log(data);
             localStorage.setItem('token', data.token)
               this.$router.push({ name: "Home"})
               this.$store.commit('setToken')

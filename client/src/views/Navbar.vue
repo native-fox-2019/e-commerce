@@ -53,7 +53,6 @@ export default {
       this.$router.push({name: "Login"})
     },
     logOut() {
-      console.log("woeeee");
       localStorage.removeItem("token")
       this.$router.push({name: 'Home'})
     },

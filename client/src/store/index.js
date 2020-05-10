@@ -42,7 +42,6 @@ export default new Vuex.Store({
       state.isLogin = localStorage.getItem('token')
     },
     banners(state, data) {
-      console.log(data, "MASUKKK WOEEEE");
       state.banners = data
     },
     editBanner(state, data) {
@@ -68,7 +67,6 @@ export default new Vuex.Store({
         url: this.state.baseURL + '/products',
       })
         .then(data => {
-          console.log(data);
           context.commit('allData', data.data)
         })
         .catch(({ response }) => {
@@ -82,7 +80,6 @@ export default new Vuex.Store({
         headers: ({ token: localStorage.getItem('token') })
       })
         .then(({ data }) => {
-          console.log(data);
           context.commit('allAdmins', data)
         })
         .catch(({ response }) => {
@@ -95,7 +92,6 @@ export default new Vuex.Store({
         url: this.state.baseURL + `/products/${id}`
       })
         .then(({ data }) => {
-          console.log(data, 'cekincekin');
           context.commit('oneProduct', data)
         })
         .catch(({ response }) => {

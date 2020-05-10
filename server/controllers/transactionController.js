@@ -70,16 +70,12 @@ class TransactionController {
               }
             })
             .then(data => {
-              console.log(data, "masuk kah?");
-              // res.send(data)
               if (data.length >= 1) {
                 throw {
                   status: 400,
                   msg: 'You added the product already. Please Check your cart to set the Quantity.'
                 }
               } else {
-                console.log('test1');
-
                 Transaction
                   .create({
                     ProductId,
@@ -125,28 +121,6 @@ class TransactionController {
       })
   }
 
-  // static destroyById(req, res, next) {
-  //   Transaction
-  //     .destroy({
-  //       where: {
-  //         id: req.params.id
-  //       }
-  //     })
-  //     .then(data => {
-  //       if (!data) {
-  //         throw {
-  //           status: 404,
-  //           msg: "Data not found."
-  //         }
-  //       } else {
-  //         res.status(200).json("Successfully Delete a data.")
-  //       }
-  //     })
-  //     .catch(err => {
-  //       next(err)
-  //     })
-  // }
-
   static updateQuantity(req, res, next) {
     let { quantity, ProductId } = req.body
     Transaction
@@ -169,7 +143,6 @@ class TransactionController {
               }
             })
             .then(data => {
-              console.log("masuk sini kah?", data, '?????????????????????????????????????????????????????????????????????????????????');
               if (!data) {
                 throw {
                   status: 404,
@@ -200,8 +173,6 @@ class TransactionController {
                       returning: true,
                     })
                   .then(data => {
-                    console.log(data, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-
                     res.status(200).json(data)
                   })
                   .catch(err => {

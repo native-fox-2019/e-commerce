@@ -68,7 +68,6 @@ export default {
         headers: ({token: localStorage.getItem('token')})
       })
       .then(({data})=>{
-        console.log(data);
         this.data = data
       })
       .catch(({response})=>{
@@ -89,13 +88,10 @@ export default {
         }
       })
         .then(({data}) => {
-          console.log(data, "APA SINI??");
           this.success = true
           this.err = false
         })
-        .catch(({response})=>{
-          console.log("SINI??");
-          
+        .catch(({response})=>{          
           console.log(response);
           this.success = false
           this.err =  true;

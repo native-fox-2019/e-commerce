@@ -130,7 +130,6 @@
         })
         .then(data=>{
           this.$store.dispatch("getAllTransaction")
-          console.log(data);
         })
         .catch(({response})=>{
           this.err = true,
