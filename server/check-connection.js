@@ -9,6 +9,9 @@ const client = new Client({
   database: config.database,
   password: config.password,
   port: config.port,
+  ssl: {
+    rejectUnauthorized: false
+  }
 })
 client.connect().then(() => {
   console.log('BERHIASIL CONNECT')
