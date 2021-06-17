@@ -9,7 +9,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-console.log('Using:'+env);
+console.log('Using:'+env, { config });
 
 const { Product } = require('./models');
 
