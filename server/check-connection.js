@@ -11,6 +11,8 @@ if (config.use_env_variable) {
 
 console.log('Using:'+env);
 
+const { Product } = require('./models');
+
 sequelize
   .authenticate()
   .then(() => {
@@ -19,3 +21,10 @@ sequelize
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+
+Product.findAll().then(products => {
+  console.log("All Products:", JSON.stringify(products.slice(0,5), null, 4));
+})
+.catch((err) => {
+  console.log('error on load product data',err);
+});
