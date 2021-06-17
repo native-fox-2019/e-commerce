@@ -4,20 +4,20 @@
     "password": "123456789",
     "database": "e-commerce",
     "host": "127.0.0.1",
-    "dialect": "postgres",
+    "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "123456789",
     "database": "e-commerce",
     "host": "127.0.0.1",
-    "dialect": "postgres",
+    "dialect": "postgres"
   },
   "production": {
     "username": "sbunbjwifxhjro",
     "password": "243440bfa7ba72caf68cd81c8713bde52670fb14d1be0b22b311c332a0eea2f4",
     "database": "dfotd13feat5tl",
     "host": "ec2-18-233-83-165.compute-1.amazonaws.com",
-    "dialect": "postgres",
+    "dialect": "postgres"
   }
 }
