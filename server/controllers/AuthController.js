@@ -13,7 +13,13 @@ class AuthController{
 
     static async checkConnection(req,res){
         console.log('Masuk ke check connection')
-        let sequelize = new Sequelize(config.database, config.username, config.password, config);
+        let sequelize
+        try{
+            sequelize = new Sequelize(config.database, config.username, config.password, config);
+        }catch(err){
+            console.log('Ada error saat koneksi ke database');
+            res.send(err);
+        }
         sequelize
         .authenticate()
         .then(() => {
