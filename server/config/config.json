@@ -14,10 +14,10 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "yduvqobamitkpl",
-    "password": "96de34a8823c7f7b3d95404dd693b8f354055e618a42ea7a661f51261bc472fe",
-    "database": "d2l19oj3h9vrr7",
-    "host": "ec2-54-90-211-192.compute-1.amazonaws.com",
+    "username": "fsyqjjfvidnlic",
+    "password": "f21a693c273f7e91568cf1ce4c975bbfc479ce500aa4557944817deb6d2133f4",
+    "database": "df5irdhnli5n4r",
+    "host": "ec2-50-19-251-65.compute-1.amazonaws.com",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
