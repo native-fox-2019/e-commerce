@@ -12,9 +12,9 @@ class AuthController{
 
     static async checkConnection(req,res){
         const { Client } = require('pg')
-
+        let client
         try{
-            const client = new Client({
+            client = new Client({
                 user: config.username,
                 host: config.host,
                 database: config.database,
