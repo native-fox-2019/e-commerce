@@ -32,6 +32,14 @@ export default {
       this.$store.commit('setCart',cartObj)
     }
   },
+  watch:{
+    '$route': () => {
+      window.scrollTo({
+        top: 0,
+        left: 0
+      });
+    }
+  }
 }
 </script>
 
