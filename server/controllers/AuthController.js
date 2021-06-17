@@ -1,11 +1,29 @@
 const {makeToken}=require('../helpers/token')
 const {User}=require('../models')
 const md5=require('md5')
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
+const Sequelize = require('sequelize');
 
 class AuthController{
 
     static async index(req,res){
         res.send('Server is on');
+    }
+
+    static async checkConnection(req,res){
+        console.log('Masuk ke check connection')
+        let sequelize = new Sequelize(config.database, config.username, config.password, config);
+        sequelize
+        .authenticate()
+        .then(() => {
+            console.log('Connection has been established successfully.');
+            res.send('Connection successfull');
+        })
+        .catch(err => {
+            console.error('Unable to connect to the database:', err);
+            res.send('Cannot connect',err);
+        });
     }
 
     static async login(req,res){
