@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <NavBar/>
-    <router-view id="view"></router-view>
+      <transition name="fade">
+        <router-view id="view"></router-view>
+      </transition>
     <Footer/>
   </div>
 </template>
@@ -63,5 +65,16 @@ export default {
 #view{
   min-height: 500px;
   margin-top:140px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-leave-active{
+  display: none;
+}
+.fade-enter, .fade-leave-to .fade-leave /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon index",
-    "start":"node index"
+    "start": "node index"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/hitsamtiammar123/e-commerce#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",

@@ -2,10 +2,19 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+let baseURL;
+
+if(process.env.NODE_ENV && process.env.NODE_ENV === 'development'){
+  baseURL = 'http://localhost:3011/';
+}
+else{
+  baseURL = 'https://aqueous-wildwood-99814.herokuapp.com/';
+}
+
 Vue.use(Vuex)
 const server=axios.create({
-  // baseURL: 'http://localhost:3000/',
-  baseURL:'https://aqueous-wildwood-99814.herokuapp.com/'
+  baseURL,
+  // baseURL:'https://aqueous-wildwood-99814.herokuapp.com/'
 })
 
 function HEADERS(){
