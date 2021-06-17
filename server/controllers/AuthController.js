@@ -3,6 +3,11 @@ const {User}=require('../models')
 const md5=require('md5')
 
 class AuthController{
+
+    static async index(req,res){
+        res.send('Server is on');
+    }
+
     static async login(req,res){
         let body=req.body;
         
