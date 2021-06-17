@@ -17,7 +17,7 @@ class AuthController{
         try{
             sequelize = new Sequelize(config.database, config.username, config.password, config);
         }catch(err){
-            console.log('Ada error saat koneksi ke database');
+            console.log('Ada error saat koneksi ke database', err);
             res.send(err);
         }
         sequelize
