@@ -3,7 +3,6 @@ const {User}=require('../models')
 const md5=require('md5')
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const Sequelize = require('sequelize');
 
 class AuthController{
 
@@ -12,24 +11,50 @@ class AuthController{
     }
 
     static async checkConnection(req,res){
-        console.log('Masuk ke check connection')
-        let sequelize
+        const { Client } = require('pg')
+
         try{
-            sequelize = new Sequelize(config.database, config.username, config.password, config);
+            const client = new Client({
+                user: config.username,
+                host: config.host,
+                database: config.database,
+                password: config.password,
+                port: config.port,
+                ssl: {
+                    rejectUnauthorized: false
+                }
+            })
         }catch(err){
-            console.log('Ada error saat koneksi ke database', err);
-            res.send(err);
+            console.log({err});
+            res.send({message: 'Ada error', err});
         }
-        sequelize
-        .authenticate()
-        .then(() => {
-            console.log('Connection has been established successfully.');
-            res.send('Connection successfull');
+        console.log('yeaaaah')
+        client.connect().then(() => {
+            console.log('BERHIASIL CONNECT')
+            res.send('Berhasil connect')
         })
-        .catch(err => {
-            console.error('Unable to connect to the database:', err);
-            res.send('Cannot connect',err);
-        });
+        .catch((err) => {
+            console.log('Gagal untuk connect',err);
+            res.send({message: 'Ada error', err});
+        })
+        // console.log('Masuk ke check connection')
+        // let sequelize
+        // try{
+        //     sequelize = new Sequelize(config.database, config.username, config.password, config);
+        // }catch(err){
+        //     console.log('Ada error saat koneksi ke database', err);
+        //     res.send(err);
+        // }
+        // sequelize
+        // .authenticate()
+        // .then(() => {
+        //     console.log('Connection has been established successfully.');
+        //     res.send('Connection successfull');
+        // })
+        // .catch(err => {
+        //     console.error('Unable to connect to the database:', err);
+        //     res.send('Cannot connect',err);
+        // });
     }
 
     static async login(req,res){
