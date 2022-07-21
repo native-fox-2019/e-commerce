@@ -2,13 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-let baseURL;
+let baseURL, IMG_SERVER, BANNER_SERVER;
 
 if(process.env.NODE_ENV && process.env.NODE_ENV === 'development'){
   baseURL = 'http://localhost:3011/';
+  IMG_SERVER = 'http://localhost:3001/img/';
+  BANNER_SERVER = 'https://aqueous-badlands-12134.herokuapp.com/banner/';
 }
 else{
   baseURL = 'https://aqueous-wildwood-99814.herokuapp.com/';
+  IMG_SERVER = 'https://aqueous-badlands-12134.herokuapp.com/img/';
+  BANNER_SERVER = 'https://aqueous-badlands-12134.herokuapp.com/banner/';
 }
 
 Vue.use(Vuex)
@@ -38,8 +42,8 @@ export default new Vuex.Store({
     _isLogin:false,
     // IMG_SERVER:'http://localhost:3001/img/',
     // BANNER_SERVER:'http://localhost:3001/banner/',
-    IMG_SERVER:'https://aqueous-badlands-12134.herokuapp.com/img/',
-    BANNER_SERVER:'https://aqueous-badlands-12134.herokuapp.com/banner/',
+    IMG_SERVER,
+    BANNER_SERVER,
     cart:[],
     searchText:''
   },
