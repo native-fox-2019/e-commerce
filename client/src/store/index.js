@@ -6,8 +6,8 @@ let baseURL, IMG_SERVER, BANNER_SERVER;
 
 if(process.env.NODE_ENV && process.env.NODE_ENV === 'development'){
   baseURL = 'http://localhost:3011/';
-  IMG_SERVER = 'http://localhost:3001/img/';
-  BANNER_SERVER = 'https://morning-gorge-26878.herokuapp.com//banner/';
+  IMG_SERVER = 'http://localhost:3011/img/';
+  BANNER_SERVER = 'https://morning-gorge-26878.herokuapp.com/banner/';
 }
 else{
   baseURL = 'https://morning-gorge-26878.herokuapp.com/';
