@@ -1,0 +1,37 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "E-Commerce",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "nodemon index",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hitsamtiammar123/e-commerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hitsamtiammar123/e-commerce/issues"
+  },
+  "homepage": "https://github.com/hitsamtiammar123/e-commerce#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.2.1",
+    "mysql2": "^2.2.5",
+    "pg": "^8.7.1",
+    "sequelize": "^6.12.0-alpha.1"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2"
+  }
+}

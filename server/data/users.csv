@@ -1,0 +1,5 @@
+"id","email","password","role","username","name","createdAt","updatedAt"
+1,"hehe@gmail.com","ffe553694f5096471590343432359e02","admin","hahahehe","Haha Hehe","2020-03-21 16:36:39.917+07","2020-03-21 16:36:39.917+07"
+2,"haha@gmail.com","ffe553694f5096471590343432359e02","admin","hahaha","Haha Hehe","2020-03-21 21:35:21.88+07","2020-03-21 21:35:21.88+07"
+4,"pipi@gmail.com","ffe553694f5096471590343432359e02","user","pipipipi","Papa Pipi","2020-03-25 21:28:53.067+07","2020-03-25 21:28:53.067+07"
+3,"papa@gmail.com","ffe553694f5096471590343432359e02","user","papa_pipi","Pipi Gembil","2020-03-25 20:45:27.184+07","2020-03-26 01:43:52.414+07"
